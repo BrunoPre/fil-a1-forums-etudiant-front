@@ -9,9 +9,27 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("./components/HelloWorld.vue"), // TODO: TBD
   },
   {
-    path: "/parcours",
-    alias: "/parcours",
-    name: "parcours",
+    path: "/parcourir",
+    alias: "/parcourir",
+    name: "parcourir",
+    component: () => import("./components/HelloWorld.vue"), // TODO: TBD
+  },
+  {
+    path: "/mes-questions",
+    alias: "/mes-questions",
+    name: "mes-questions",
+    component: () => import("./components/HelloWorld.vue"), // TODO: TBD
+  },
+  {
+    path: "/mes-reponses",
+    alias: "/mes-reponses",
+    name: "mes-reponses",
+    component: () => import("./components/HelloWorld.vue"), // TODO: TBD
+  },
+  {
+    path: "/suivis",
+    alias: "/suivis",
+    name: "suivis",
     component: () => import("./components/HelloWorld.vue"), // TODO: TBD
   },
 ];
