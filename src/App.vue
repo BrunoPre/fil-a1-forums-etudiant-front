@@ -1,8 +1,12 @@
 <template>
   <div class="container">
     <div class="navbar">
-      <div class="home-btn">Accueil</div>
-      <div class="navigate-btn">Parcourir</div>
+      <div class="home-btn">
+        <router-link to="/accueil" class="navbar-links">Accueil</router-link>
+      </div>
+      <div class="navigate-btn">
+        <router-link to="/parcourir" class="navbar-links">Parcourir</router-link>
+      </div>
     </div>
     <sidebar></sidebar>
     <div class="page-content">
@@ -55,6 +59,11 @@ export default defineComponent({
   color: white;
 }
 
+.navbar-links {
+  color: white;
+  text-decoration: none;
+}
+
 .home-btn {
   grid-area: home-btn;
   text-align: center;
@@ -64,6 +73,7 @@ export default defineComponent({
   grid-area: navigate-btn;
   text-align: center;
 }
+
 
 
 .page-content { grid-area: page-content; }
