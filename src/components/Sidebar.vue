@@ -23,9 +23,15 @@
       <img v-if="bookmarkIconPath" :src="bookmarkIconPath" alt="bookmarkIcon" />
       <i v-else class="bx bx-bookmarks" /> <!-- just in case -->
     </div>
-    <div class="button-label-1">Mes questions</div>
-    <div class="button-label-2">Mes réponses</div>
-    <div class="button-label-3">Suivis</div>
+    <div class="button-label-1">
+      <router-link to="/mes-questions" class="button-link">Mes questions</router-link>
+    </div>
+    <div class="button-label-2">
+      <router-link to="/mes-reponses" class="button-link">Mes réponses</router-link>
+    </div>
+    <div class="button-label-3">
+      <router-link to="/suivis" class="button-link">Suivis</router-link>
+    </div>
   </div>
   </div>
 </template>
@@ -112,6 +118,7 @@ export default defineComponent({
     "button-icon-2 button-label-2 button-label-2"
     "button-icon-3 button-label-3 button-label-3";
   grid-area: buttons;
+  color: black;
 }
 
 .buttons img {
@@ -131,5 +138,10 @@ export default defineComponent({
 .button-label-2 { grid-area: button-label-2; }
 
 .button-label-3 { grid-area: button-label-3; }
+
+.button-link {
+  color: black;
+  text-decoration: none;
+}
 
 </style>
