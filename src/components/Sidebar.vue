@@ -1,55 +1,61 @@
 <template>
   <div class="sidebar">
-  <div class="profile">
-    <div class="profile-picture">
-      <img v-if="profilePicPath" :src="profilePicPath" alt="profilePic" />
-      <i v-else class="bx bxs-user-circle" /> <!-- just in case -->
+    <div class="profile">
+      <div class="profile-picture">
+        <img v-if="profilePicPath" :src="profilePicPath" alt="profilePic" />
+        <i v-else class="bx bxs-user-circle" /> <!-- just in case -->
+      </div>
+      <div class="profile-attributes">
+        <div class="profile-attributes-username">{{ userName }}</div>
+        <div class="profile-attributes-school">{{ userSchool }}</div>
+      </div>
     </div>
-    <div class="profile-attributes">
-      <div class="profile-attributes-username">{{ userName }}</div>
-      <div class="profile-attributes-school">{{ userSchool }}</div>
+
+    <div class="grid-buttons">
+      <div v-for="[_,button] in buttons" :key="button.index" class="grid-one-button">
+          <router-link :to="button.route" class="button-icon">
+            <img v-if="button.iconPath" :src="require('./../assets/' + button.iconPath)" alt="{{button.buttonName}}" />
+            <i v-else class="bx" :class="button.iconBoxIcon" />
+          </router-link>
+        <router-link :to="button.route" class="button-link">{{button.label}}</router-link>
+      </div>
     </div>
-  </div>
-  <div class="buttons">
-    <div class="button-icon-1">
-      <img v-if="questionMarkIconPath" :src="questionMarkIconPath" alt="questionMarkIcon" />
-      <i v-else class="bx bx-question-mark" /> <!-- just in case -->
-    </div>
-    <div class="button-icon-2">
-      <img v-if="replyIconPath" :src="replyIconPath" alt="replyIcon" />
-      <i v-else class="bx bx-reply" /> <!-- just in case -->
-    </div>
-    <div class="button-icon-3">
-      <img v-if="bookmarkIconPath" :src="bookmarkIconPath" alt="bookmarkIcon" />
-      <i v-else class="bx bx-bookmarks" /> <!-- just in case -->
-    </div>
-    <div class="button-label-1">
-      <router-link to="/mes-questions" class="button-link">Mes questions</router-link>
-    </div>
-    <div class="button-label-2">
-      <router-link to="/mes-reponses" class="button-link">Mes réponses</router-link>
-    </div>
-    <div class="button-label-3">
-      <router-link to="/suivis" class="button-link">Suivis</router-link>
-    </div>
-  </div>
+
   </div>
 </template>
 
 <script lang="ts">
+import { ButtonSidebar } from "@/types/ButtonSidebar";
 import { defineComponent } from "vue";
+import buttonsJson from "./../assets/buttonsSidebar.json";
 
 export default defineComponent({
   name: "Sidebar",
-  props: {
-    // TODO: it should depend on user's actual profile pic
-    profilePicPath: {type: String, required: true, default : require('./../assets/profilePic.png')},
-    questionMarkIconPath: {type: String, required: true, default: require('./../assets/questionMarkIcon.png')},
-    replyIconPath : {type: String, required: true, default: require('./../assets/replyIcon.png')},
-    bookmarkIconPath : {type: String, required: true, default: require('./../assets/bookmarkIcon.png')},
-    userName : {type: String, required: true, default: 'User Name'},
-    userSchool: {type: String, required:false, default: 'IMT Atlantique'}
+  data() {
+    return {
+      buttons : new Map<number,ButtonSidebar>(),
+      profilePicPath : '',
+      userName : '',
+      userSchool : '',
+    } ;
   },
+  methods : {
+    setButtons() {
+      for (const b_json_index in buttonsJson) {
+        let button : ButtonSidebar = buttonsJson[b_json_index];
+        this.buttons.set(button.index,button);
+      }
+    },
+    setProfile() {
+      this.profilePicPath = require('./../assets/profilePic.png');
+      this.userName = 'User Name';
+      this.userSchool = 'IMT Atlantique';
+    }
+  },
+  mounted() {
+    this.setButtons();
+    this.setProfile();
+  }
 });
 </script>
 
@@ -59,19 +65,19 @@ export default defineComponent({
 
 .sidebar {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 0.7fr 0.7fr 1.6fr;
+  grid-template-rows: 0.5fr 1fr 2fr ;
   gap: 0px 0px;
   grid-auto-flow: row;
   grid-template-areas:
-    "profile profile profile"
-    "buttons buttons buttons"
-    ". . .";
+    "profile"
+    "grid-buttons"
+    "...";
   grid-area: sidebar;
   background: #F5F8FF;
 }
 
-.profile {  display: grid;
+.profile {
+  display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   gap: 0px 0px;
@@ -105,43 +111,36 @@ export default defineComponent({
   font-size: smaller;
 }
 
-.buttons {
-  font-weight: 500;
+.grid-buttons {
   display: grid;
-  padding-left: 20px;
-  grid-template-columns: 0.5fr 1fr 1fr;
   grid-template-rows: repeat(3, 0.5fr);
-  gap: 0px 0px;
-  grid-auto-flow: row;
-  grid-template-areas:
-    "button-icon-1 button-label-1 button-label-1"
-    "button-icon-2 button-label-2 button-label-2"
-    "button-icon-3 button-label-3 button-label-3";
-  grid-area: buttons;
-  color: black;
+  gap: 0px;
 }
 
-.buttons img {
+.grid-buttons img {
   margin: auto;
   display: block;
-  width : 50%
+  width : 60%
 }
 
-.button-icon-1 { grid-area: button-icon-1; }
+.grid-one-button {
+  display: grid;
+  grid-template-columns: 0.5fr 1.2fr;
+  gap : 0px;
+  justify-content: center;
+  align-content: center;
+}
 
-.button-icon-2 { grid-area: button-icon-2; }
-
-.button-icon-3 { grid-area: button-icon-3; }
-
-.button-label-1 { grid-area: button-label-1; }
-
-.button-label-2 { grid-area: button-label-2; }
-
-.button-label-3 { grid-area: button-label-3; }
+.button-icon {
+  margin: auto;
+  display: block;
+  width : 60%
+}
 
 .button-link {
   color: black;
   text-decoration: none;
+  font-weight: 500;
 }
 
 </style>
