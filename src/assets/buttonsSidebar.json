@@ -1,0 +1,26 @@
+[
+  {
+    "index" : 0,
+    "buttonName": "question",
+    "label" : "Mes questions",
+    "iconPath" : "questionMarkIcon.png",
+    "iconBoxIcon" : "bx-question-mark",
+    "route" : "/mes-questions"
+  },
+  {
+    "index" : 1,
+    "buttonName": "reply",
+    "label" : "Mes réponses",
+    "iconPath" : "replyIcon.png",
+    "iconBoxIcon" : "bx-reply",
+    "route" : "/mes-reponses"
+  },
+  {
+    "index" : 2,
+    "buttonName": "bookmarks",
+    "label" : "Suivis",
+    "iconPath" : "bookmarkIcon.png",
+    "iconBoxIcon" : "bx-bookmarks",
+    "route" : "/suivis"
+  }
+]
