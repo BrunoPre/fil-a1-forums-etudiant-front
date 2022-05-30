@@ -77,6 +77,7 @@ export default defineComponent({
 }
 
 .profile {
+  padding-left: 1em;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
@@ -96,6 +97,7 @@ export default defineComponent({
 .profile-picture img {
   margin: auto;
   display: block;
+  width : 60%;
 }
 
 .profile-attributes {
@@ -112,6 +114,7 @@ export default defineComponent({
 }
 
 .grid-buttons {
+  padding-left: 1em;
   display: grid;
   grid-template-rows: repeat(3, 0.5fr);
   gap: 0px;
