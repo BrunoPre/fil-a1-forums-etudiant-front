@@ -1,7 +1,6 @@
 <template>
 
-  <span style="font-weight: 500;">Votre réponse</span>
-  <hr style="border: 1px solid #E2E2E2;">
+  <div class="title-repondre">Votre réponse</div>
 
   <div class="answer-div">
     <textarea v-model="message" :placeholder="placeholder_ecrire_msg_ici" class="answer-box" required></textarea>
@@ -47,6 +46,7 @@ export default defineComponent({
 <style scoped>
 
 .answer-div {
+  padding-top: 3vh;
   padding-left: 3em;
   padding-right: 1.5em;
 }
@@ -75,6 +75,12 @@ export default defineComponent({
   font-weight: 500;
   margin: 4px 2px;
   cursor: pointer;
+}
+
+.title-repondre {
+  font-weight: 500;
+  padding: 0 0 1vh;
+  border-bottom: #e2e2e2 solid 1px;
 }
 
 </style>
