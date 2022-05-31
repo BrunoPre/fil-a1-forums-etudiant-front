@@ -1,9 +1,6 @@
 <template>
-  <div class="container">
-    <div class="sidebar"></div>
-    <div class="question-page">
-      <QuestionPage></QuestionPage>
-    </div>
+  <div class="question-page">
+    <QuestionPage></QuestionPage>
   </div>
 </template>
 
@@ -27,18 +24,6 @@ export default defineComponent({
   font-size: 100%;
 }
 
-.container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr;
-  gap: 0px 0px;
-  grid-template-areas: "sidebar question-page question-page question-page question-page question-page question-page";
-}
-.sidebar {
-  grid-area: sidebar;
-  background-color: #f5f8ff;
-  height: 100vh;
-}
 .question-page {
   grid-area: question-page;
   margin-left: 9vw;
