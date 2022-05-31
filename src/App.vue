@@ -5,7 +5,9 @@
         <router-link to="/accueil" class="navbar-links">Accueil</router-link>
       </div>
       <div class="navigate-btn">
-        <router-link to="/parcourir" class="navbar-links">Parcourir</router-link>
+        <router-link to="/parcourir" class="navbar-links"
+          >Parcourir</router-link
+        >
       </div>
     </div>
     <sidebar></sidebar>
@@ -22,9 +24,7 @@ import Sidebar from "@/components/Sidebar.vue";
 export default defineComponent({
   name: "App",
   components: { Sidebar },
-  props: {
-
-  },
+  props: {},
 });
 </script>
 
@@ -36,12 +36,6 @@ export default defineComponent({
   font-size: 100%;
 }
 
-.question-page {
-  grid-area: question-page;
-  margin-left: 9vw;
-  margin-right: 9vw;
-  margin-top: 5vh;
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 * {
   font-family: "Poppins", sans-serif;
 }
@@ -85,8 +79,10 @@ export default defineComponent({
   text-align: center;
 }
 
-
-
-.page-content { grid-area: page-content; }
-
+.page-content {
+  grid-area: page-content;
+  margin-left: 9vw;
+  margin-right: 9vw;
+  margin-top: 5vh;
+}
 </style>
