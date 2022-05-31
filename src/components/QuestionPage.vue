@@ -24,6 +24,7 @@
         <div v-for="answer in answers" :key="answer">
           <AnswerToQuestion :answer="answer"></AnswerToQuestion>
         </div>
+        <reply-to-question-input></reply-to-question-input>
       </div>
     </div>
     <div class="new-answer-container"></div>
@@ -32,9 +33,10 @@
 
 <script>
 import AnswerToQuestion from "@/components/AnswerToQuestion";
+import ReplyToQuestionInput from "@/components/ReplyToQuestionInput";
 export default {
   name: "QuestionPage",
-  components: { AnswerToQuestion },
+  components: { AnswerToQuestion, ReplyToQuestionInput },
   data() {
     return {
       question: {
