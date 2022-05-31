@@ -1,27 +1,81 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+  <div class="container">
+    <div class="navbar">
+      <div class="home-btn">
+        <router-link to="/accueil" class="navbar-links">Accueil</router-link>
+      </div>
+      <div class="navigate-btn">
+        <router-link to="/parcourir" class="navbar-links">Parcourir</router-link>
+      </div>
+    </div>
+    <sidebar></sidebar>
+    <div class="page-content">
+      <router-view />
+    </div>
+  </div>
 </template>
-
 <script lang="ts">
 import { defineComponent } from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
+import Sidebar from "@/components/Sidebar.vue";
 
 export default defineComponent({
   name: "App",
-  components: {
-    HelloWorld,
+  components: { Sidebar },
+  props: {
+
   },
 });
 </script>
 
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+* {
+  font-family: "Poppins", sans-serif;
 }
+.container {
+  display: grid;
+  grid-template-columns: 286px 1.65fr;
+  grid-template-rows: 56px 1.8fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    "navbar navbar"
+    "sidebar page-content";
+}
+
+.navbar {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    ". . . . . ."
+    ". . home-btn navigate-btn . ."
+    ". . . . . .";
+  grid-area: navbar;
+  background: rgba(106, 139, 255, 0.6);
+  color: white;
+}
+
+.navbar-links {
+  color: white;
+  text-decoration: none;
+}
+
+.home-btn {
+  grid-area: home-btn;
+  text-align: center;
+}
+
+.navigate-btn {
+  grid-area: navigate-btn;
+  text-align: center;
+}
+
+
+
+.page-content { grid-area: page-content; }
+
 </style>
+
