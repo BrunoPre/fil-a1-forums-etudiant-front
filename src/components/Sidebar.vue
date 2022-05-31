@@ -3,7 +3,8 @@
     <div class="profile">
       <div class="profile-picture">
         <img v-if="profilePicPath" :src="profilePicPath" alt="profilePic" />
-        <i v-else class="bx bxs-user-circle" /> <!-- just in case -->
+        <i v-else class="bx bxs-user-circle" />
+        <!-- just in case -->
       </div>
       <div class="profile-attributes">
         <div class="profile-attributes-username">{{ userName }}</div>
@@ -12,15 +13,24 @@
     </div>
 
     <div class="grid-buttons">
-      <div v-for="[_,button] in buttons" :key="button.index" class="grid-one-button">
-          <router-link :to="button.route" class="button-icon">
-            <img v-if="button.iconPath" :src="require('./../assets/' + button.iconPath)" alt="{{button.buttonName}}" />
-            <i v-else class="bx" :class="button.iconBoxIcon" />
-          </router-link>
-        <router-link :to="button.route" class="button-link">{{button.label}}</router-link>
+      <div
+        v-for="[_, button] in buttons"
+        :key="button.index"
+        class="grid-one-button"
+      >
+        <router-link :to="button.route" class="button-icon">
+          <img
+            v-if="button.iconPath"
+            :src="require('./../assets/' + button.iconPath)"
+            alt="{{button.buttonName}}"
+          />
+          <i v-else class="bx" :class="button.iconBoxIcon" />
+        </router-link>
+        <router-link :to="button.route" class="button-link">{{
+          button.label
+        }}</router-link>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -33,39 +43,38 @@ export default defineComponent({
   name: "Sidebar",
   data() {
     return {
-      buttons : new Map<number,ButtonSidebar>(),
-      profilePicPath : '',
-      userName : '',
-      userSchool : '',
-    } ;
+      buttons: new Map<number, ButtonSidebar>(),
+      profilePicPath: "",
+      userName: "",
+      userSchool: "",
+    };
   },
-  methods : {
+  methods: {
     setButtons() {
       for (const b_json_index in buttonsJson) {
-        let button : ButtonSidebar = buttonsJson[b_json_index];
-        this.buttons.set(button.index,button);
+        let button: ButtonSidebar = buttonsJson[b_json_index];
+        this.buttons.set(button.index, button);
       }
     },
     setProfile() {
-      this.profilePicPath = require('./../assets/profilePic.png');
-      this.userName = 'User Name';
-      this.userSchool = 'IMT Atlantique';
-    }
+      this.profilePicPath = require("./../assets/profilePic.png");
+      this.userName = "User Name";
+      this.userSchool = "IMT Atlantique";
+    },
   },
   mounted() {
     this.setButtons();
     this.setProfile();
-  }
+  },
 });
 </script>
 
 <style scoped>
 @import url("https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css");
 
-
 .sidebar {
   display: grid;
-  grid-template-rows: 0.5fr 1fr 2fr ;
+  grid-template-rows: 0.5fr 1fr 2fr;
   gap: 0px 0px;
   grid-auto-flow: row;
   grid-template-areas:
@@ -73,7 +82,7 @@ export default defineComponent({
     "grid-buttons"
     "...";
   grid-area: sidebar;
-  background: #F5F8FF;
+  background: #f5f8ff;
 }
 
 .profile {
@@ -97,7 +106,7 @@ export default defineComponent({
 .profile-picture img {
   margin: auto;
   display: block;
-  width : 60%;
+  width: 60%;
 }
 
 .profile-attributes {
@@ -123,14 +132,14 @@ export default defineComponent({
 .grid-buttons img {
   margin: auto;
   display: block;
-  width : 60%;
-  height:auto;
+  width: 60%;
+  height: auto;
 }
 
 .grid-one-button {
   display: grid;
   grid-template-columns: 0.5fr 1.2fr;
-  gap : 0px;
+  gap: 0px;
   justify-content: center;
   align-content: center;
 }
@@ -138,7 +147,7 @@ export default defineComponent({
 .button-icon {
   margin: auto;
   display: block;
-  width : 60%
+  width: 60%;
 }
 
 .button-link {
@@ -146,5 +155,4 @@ export default defineComponent({
   text-decoration: none;
   font-weight: 500;
 }
-
 </style>
