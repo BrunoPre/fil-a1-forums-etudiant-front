@@ -10,7 +10,6 @@
     </div>
     <sidebar></sidebar>
     <div class="page-content">
-      Hello team
       <router-view />
     </div>
   </div>
@@ -36,8 +35,8 @@ export default defineComponent({
 }
 .container {
   display: grid;
-  grid-template-columns: 0.35fr 1.65fr;
-  grid-template-rows: 0.2fr 1.8fr;
+  grid-template-columns: 286px 1.65fr;
+  grid-template-rows: 56px 1.8fr;
   gap: 0px 0px;
   grid-template-areas:
     "navbar navbar"
