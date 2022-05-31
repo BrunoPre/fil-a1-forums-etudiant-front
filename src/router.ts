@@ -32,6 +32,18 @@ const routes: Array<RouteRecordRaw> = [
     name: "suivis",
     component: () => import("./components/HelloWorld.vue"), // TODO: TBD
   },
+  {
+    path: "/reponse-msg",
+    alias: "/reponse-msg",
+    name: "reponse-msg",
+    component: () => import("./components/ReplyQuestion.vue"), // TODO: TBD
+  },
+  {
+    path: "/reponse-msg-test",
+    alias: "/reponse-msg-test",
+    name: "reponse-msg-test",
+    component: () => import("./components/ReplyComponentMocklyIntegrated.vue"), // TODO: TBD
+  },
 ];
 
 const router = createRouter({
