@@ -44,6 +44,12 @@ const routes: Array<RouteRecordRaw> = [
     name: "reponse-msg-test",
     component: () => import("./components/ReplyComponentMocklyIntegrated.vue"), // TODO: TBD
   },
+  {
+    path: "/question",
+    alias: "/question",
+    name: "question",
+    component: () => import("./components/QuestionPage.vue"), // TODO: TBD
+  },
 ];
 
 const router = createRouter({

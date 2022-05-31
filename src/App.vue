@@ -5,7 +5,9 @@
         <router-link to="/accueil" class="navbar-links">Accueil</router-link>
       </div>
       <div class="navigate-btn">
-        <router-link to="/parcourir" class="navbar-links">Parcourir</router-link>
+        <router-link to="/parcourir" class="navbar-links"
+          >Parcourir</router-link
+        >
       </div>
     </div>
     <sidebar></sidebar>
@@ -14,6 +16,7 @@
     </div>
   </div>
 </template>
+
 <script lang="ts">
 import { defineComponent } from "vue";
 import Sidebar from "@/components/Sidebar.vue";
@@ -21,15 +24,18 @@ import Sidebar from "@/components/Sidebar.vue";
 export default defineComponent({
   name: "App",
   components: { Sidebar },
-  props: {
-
-  },
+  props: {},
 });
 </script>
 
-
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+#app {
+  font-family: Poppins, sans-serif;
+  font-size: 100%;
+}
+
 * {
   font-family: "Poppins", sans-serif;
 }
@@ -73,9 +79,10 @@ export default defineComponent({
   text-align: center;
 }
 
-
-
-.page-content { grid-area: page-content; }
-
+.page-content {
+  grid-area: page-content;
+  margin-left: 9vw;
+  margin-right: 9vw;
+  margin-top: 5vh;
+}
 </style>
-
