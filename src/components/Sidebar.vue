@@ -116,14 +116,15 @@ export default defineComponent({
 .grid-buttons {
   padding-left: 1em;
   display: grid;
-  grid-template-rows: repeat(3, 0.5fr);
+  grid-template-rows: repeat(3, 50px);
   gap: 0px;
 }
 
 .grid-buttons img {
   margin: auto;
   display: block;
-  width : 60%
+  width : 60%;
+  height:auto;
 }
 
 .grid-one-button {
