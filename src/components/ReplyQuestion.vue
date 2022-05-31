@@ -71,7 +71,7 @@ export default defineComponent({
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   margin: 4px 2px;
   cursor: pointer;
