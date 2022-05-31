@@ -31,13 +31,9 @@ export default defineComponent({
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
-#app {
-  font-family: Poppins, sans-serif;
-  font-size: 100%;
-}
-
 * {
   font-family: "Poppins", sans-serif;
+  font-size: 100%;
 }
 .container {
   display: grid;

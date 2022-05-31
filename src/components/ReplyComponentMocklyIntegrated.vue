@@ -1,17 +1,17 @@
 <template>
   <div class="container-mock">
     <img :src="require('./../assets/mockThread.png')" class="img-mock">
-    <reply-question></reply-question>
+    <reply-to-question-input></reply-to-question-input>
   </div>
 </template>
 
 <script>
 import { defineComponent } from "vue";
-import ReplyQuestion from "./ReplyQuestion.vue";
+import ReplyToQuestionInput from "./ReplyToQuestionInput.vue";
 
 export default defineComponent({
   name: "ReplyComponentMocklyIntegrated",
-  components : {ReplyQuestion},
+  components : {ReplyToQuestionInput},
 });
 </script>
 

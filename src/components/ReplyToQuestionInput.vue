@@ -15,7 +15,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "ReplyQuestion",
+  name: "ReplyToQuestionInput",
   data() {
     return {
       message : '',

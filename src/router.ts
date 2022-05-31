@@ -6,37 +6,37 @@ const routes: Array<RouteRecordRaw> = [
     path: "/accueil",
     alias: "/accueil",
     name: "accueil",
-    component: () => import("./components/HelloWorld.vue"), // TODO: TBD
+    component: () => {}, // TODO: TBD
   },
   {
     path: "/parcourir",
     alias: "/parcourir",
     name: "parcourir",
-    component: () => import("./components/HelloWorld.vue"), // TODO: TBD
+    component: () => {}, // TODO: TBD
   },
   {
     path: "/mes-questions",
     alias: "/mes-questions",
     name: "mes-questions",
-    component: () => import("./components/HelloWorld.vue"), // TODO: TBD
+    component: () => {}, // TODO: TBD
   },
   {
     path: "/mes-reponses",
     alias: "/mes-reponses",
     name: "mes-reponses",
-    component: () => import("./components/HelloWorld.vue"), // TODO: TBD
+    component: () => {}, // TODO: TBD
   },
   {
     path: "/suivis",
     alias: "/suivis",
     name: "suivis",
-    component: () => import("./components/HelloWorld.vue"), // TODO: TBD
+    component: () => {}, // TODO: TBD
   },
   {
     path: "/reponse-msg",
     alias: "/reponse-msg",
     name: "reponse-msg",
-    component: () => import("./components/ReplyQuestion.vue"), // TODO: TBD
+    component: () => import("./components/ReplyToQuestionInput.vue"), // TODO: TBD
   },
   {
     path: "/reponse-msg-test",
