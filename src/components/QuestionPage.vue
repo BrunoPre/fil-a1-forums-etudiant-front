@@ -4,30 +4,26 @@
       <p>Ecoles / IMT Atlantique / Formations</p>
     </div>
     <div class="question-title">
-      <h1>Vestibulum ac condimentum metus ?</h1>
+      <h1>{{ question.title }}</h1>
     </div>
     <div class="question-infos">
       <div class="user-image">
         <img src="../assets/user_image_placeholder.png" alt="Profile picture" />
       </div>
       <p>
-        Question posée par <span class="user-span">User Name</span> le
-        <span class="date-span">24 Mai 2022</span>
+        Question posée par <span class="user-span">{{ question.user }}</span> le
+        <span class="date-span">{{ question.date }}</span>
       </p>
     </div>
-    <div class="question-description">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec lacus
-      nulla. Vivamus tempus diam et ligula finibus, vitae feugiat ipsum commodo.
-      Suspendisse potenti. Duis ac velit at libero efficitur ullamcorper ac
-      efficitur risus. Donec cursus pharetra vulputate. Donec eu imperdiet nibh.
-      Aliquam vitae rutrum mi, a fermentum elit.
-    </div>
+    <div class="question-description">{{ question.description }}</div>
     <div class="answers-container">
       <div class="answer-number">
-        <p>3 réponses</p>
+        <p>{{ Object.keys(answers).length }} réponses</p>
       </div>
       <div class="answers">
-        <AnswerToQuestion></AnswerToQuestion>
+        <div v-for="answer in answers" :key="answer">
+          <AnswerToQuestion :answer="answer"></AnswerToQuestion>
+        </div>
       </div>
     </div>
     <div class="new-answer-container"></div>
@@ -39,6 +35,52 @@ import AnswerToQuestion from "@/components/AnswerToQuestion";
 export default {
   name: "QuestionPage",
   components: { AnswerToQuestion },
+  data() {
+    return {
+      question: {
+        title: "Vestibulum ac condimentum metus ?",
+        description: ` Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec lacus
+      nulla. Vivamus tempus diam et ligula finibus, vitae feugiat ipsum commodo.
+      Suspendisse potenti. Duis ac velit at libero efficitur ullamcorper ac
+      efficitur risus. Donec cursus pharetra vulputate. Donec eu imperdiet nibh.
+      Aliquam vitae rutrum mi, a fermentum elit.`,
+        user: "User Name",
+        date: "24 Mai 2022",
+      },
+      answers: [
+        {
+          content: `        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec
+        lacus nulla. Vivamus tempus diam et ligula finibus, vitae feugiat ipsum
+        ipsum commodo. Suspendisse potenti. Duis ac velit at libero efficitur
+        ullamcorper ac efficitur risus. Donec cursus pharetra vulputate. Donec
+        eu imperdiet nibh. Aliquam vitae rutrum mi, a fermentum elit.`,
+          user: "Bip Bap",
+          date: "24 Mai 2022",
+          voteCount: 8,
+        },
+        {
+          content: `        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec
+        lacus nulla. Vivamus tempus diam et ligula finibus, vitae feugiat ipsum
+        ipsum commodo. Suspendisse potenti. Duis ac velit at libero efficitur
+        ullamcorper ac efficitur risus. Donec cursus pharetra vulputate. Donec
+        eu imperdiet nibh. Aliquam vitae rutrum mi, a fermentum elit.`,
+          user: "Bip Bap",
+          date: "25 Mai 2022",
+          voteCount: 2,
+        },
+        {
+          content: `        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec
+        lacus nulla. Vivamus tempus diam et ligula finibus, vitae feugiat ipsum
+        ipsum commodo. Suspendisse potenti. Duis ac velit at libero efficitur
+        ullamcorper ac efficitur risus. Donec cursus pharetra vulputate. Donec
+        eu imperdiet nibh. Aliquam vitae rutrum mi, a fermentum elit.`,
+          user: "Bip Bap",
+          date: "26 Mai 2022",
+          voteCount: 1,
+        },
+      ],
+    };
+  },
 };
 </script>
 
@@ -82,8 +124,8 @@ export default {
 
 .question-description {
   margin-top: 2.5vh;
-  font-weight: normal;
-  font-size: 1.3rem;
+  font-weight: 400;
+  font-size: 1.2rem;
 }
 
 span {
