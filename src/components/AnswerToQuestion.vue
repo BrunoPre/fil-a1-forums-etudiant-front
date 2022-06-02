@@ -1,5 +1,5 @@
 <template>
-  <div class="answer-to-question">
+  <div class="answer-to-question" :style="setBorderBottom()">
     <div class="vote">
       <div class="upvote">
         <img src="../assets/upvote-arrow.svg" alt="upvote" />
@@ -50,6 +50,7 @@ export default {
       date: String,
       voteCount: Number,
     },
+    isLastAnswer : Boolean,
   },
   data() {
     return {
@@ -75,6 +76,11 @@ export default {
       ],
     };
   },
+  methods: {
+    setBorderBottom() {
+      return this.isLastAnswer ? "" : "border-bottom: #e2e2e2 solid 1px;";
+    }
+  }
 };
 </script>
 
@@ -91,7 +97,6 @@ export default {
   align-items: center;
   margin-top: 3vh;
   margin-bottom: 3vh;
-  border-bottom: #e2e2e2 solid 1px;
 }
 
 .vote {

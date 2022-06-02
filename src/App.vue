@@ -39,6 +39,10 @@ html {
   font-family: "Poppins", sans-serif;
 }
 
+body {
+  margin: 0;
+}
+
 .container {
   display: grid;
   grid-template-columns: 286px 1.65fr;
