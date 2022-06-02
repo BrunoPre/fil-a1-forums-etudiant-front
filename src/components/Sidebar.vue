@@ -83,6 +83,9 @@ export default defineComponent({
     "...";
   grid-area: sidebar;
   background: #f5f8ff;
+  height: 100vh;
+  position: sticky;
+  top: 0;
 }
 
 .profile {
