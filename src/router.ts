@@ -50,6 +50,12 @@ const routes: Array<RouteRecordRaw> = [
     name: "question",
     component: () => import("./components/QuestionPage.vue"), // TODO: TBD
   },
+  {
+    path: "/sujet",
+    alias: "/sujet",
+    name: "sujet",
+    component: () => import("./components/SubjectPage.vue"), // TODO: TBD
+  },
 ];
 
 const router = createRouter({
