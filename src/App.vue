@@ -52,8 +52,7 @@ body {
 
 .container {
   display: grid;
-  grid-template-columns: 286px 1.65fr;
-  grid-template-rows: 56px 1.8fr;
+  grid-template-columns: 0.2fr 1fr;
   gap: 0px 0px;
   grid-template-areas:
     "navbar navbar"
@@ -63,7 +62,7 @@ body {
 .navbar {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-rows: .5fr 1fr .5fr;
   gap: 0px 0px;
   grid-auto-flow: row;
   grid-template-areas:
@@ -73,6 +72,8 @@ body {
   grid-area: navbar;
   background: rgba(106, 139, 255, 0.6);
   color: white;
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 
 .navbar-links {

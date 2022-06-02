@@ -3,7 +3,7 @@
     "index" : 0,
     "buttonName": "question",
     "label" : "Mes questions",
-    "iconPath" : "questionMarkIcon.png",
+    "iconPath" : "questionMarkIcon.svg",
     "iconBoxIcon" : "bx-question-mark",
     "route" : "/mes-questions"
   },
@@ -11,7 +11,7 @@
     "index" : 1,
     "buttonName": "reply",
     "label" : "Mes réponses",
-    "iconPath" : "replyIcon.png",
+    "iconPath" : "replyIcon.svg",
     "iconBoxIcon" : "bx-reply",
     "route" : "/mes-reponses"
   },
@@ -19,7 +19,7 @@
     "index" : 2,
     "buttonName": "bookmarks",
     "label" : "Suivis",
-    "iconPath" : "bookmarkIcon.png",
+    "iconPath" : "bookmarkIcon.svg",
     "iconBoxIcon" : "bx-bookmarks",
     "route" : "/suivis"
   }
