@@ -13,6 +13,10 @@
       <div class="questions-container">
         <div class="question-header">
           <h2>Questions les plus pertinentes</h2>
+          <div class="ask-question">
+            <a>Poser une question</a>
+            <img src="../assets/new-question.svg" alt="" />
+          </div>
         </div>
         <div class="questions">
           <div v-for="question in questions" :key="question">
@@ -128,8 +132,40 @@ h1 {
 .questions-container h2 {
   font-weight: 600;
   font-size: 1.6rem;
+  margin: 0;
+}
+
+.question-header {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  margin-top: 2.2vh;
   margin-bottom: 6vh;
 }
+
+.ask-question {
+  justify-self: end;
+  align-self: end;
+  cursor: pointer;
+}
+.ask-question img {
+  vertical-align: middle;
+  margin-left: 1vh;
+}
+
+.ask-question:hover img {
+  filter: invert(64%) sepia(67%) saturate(4842%) hue-rotate(207deg)
+    brightness(103%) contrast(101%);
+}
+
+.ask-question a {
+  color: #6a8bff;
+  font-weight: 500;
+}
+
+.ask-question:hover a {
+  color: #4971ff;
+}
+
 </style>
 
 <style>

@@ -62,7 +62,7 @@
         </div>
         <div class="more">
           <!--TODO Rediriger vers page question-->
-          <p>Montrer + de réponses →</p>
+          <a>Montrer + de réponses →</a>
         </div>
       </div>
     </div>
@@ -125,6 +125,7 @@ export default {
   display: inline-block;
   float: right;
   margin-top: 0.8vh;
+  cursor: pointer;
 }
 
 .question-infos {
@@ -189,7 +190,11 @@ h3 {
   grid-area: answer;
 }
 
-.more p {
+.more {
+  margin-bottom: 1vh;
+}
+
+.more a {
   color: #6a8bff;
   font-weight: 500;
 }
