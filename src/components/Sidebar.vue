@@ -83,6 +83,9 @@ export default defineComponent({
     "...";
   grid-area: sidebar;
   background: #f5f8ff;
+  height: 100vh;
+  position: sticky;
+  top: 0;
 }
 
 .profile {
@@ -115,25 +118,25 @@ export default defineComponent({
 
 .profile-attributes-username {
   font-weight: 600;
-  font-size: large;
+  font-size: 1.3rem;
 }
 
 .profile-attributes-school {
-  font-size: smaller;
+  font-size: 1rem;
 }
 
 .grid-buttons {
   padding-left: 1em;
   display: grid;
-  grid-template-rows: repeat(3, 50px);
+  grid-template-rows: repeat(3, 18%);
   gap: 0px;
 }
 
 .grid-buttons img {
   margin: auto;
   display: block;
-  width: 60%;
   height: auto;
+  max-height: 100%;
 }
 
 .grid-one-button {
@@ -147,12 +150,15 @@ export default defineComponent({
 .button-icon {
   margin: auto;
   display: block;
-  width: 60%;
+  height: 90%;
+  align-self: center;
 }
 
 .button-link {
   color: black;
   text-decoration: none;
   font-weight: 500;
+  font-size: 1.2rem;
+  align-self: center;
 }
 </style>

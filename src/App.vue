@@ -31,12 +31,11 @@ export default defineComponent({
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
-
 html {
   font-size: 80%;
 }
 
-@media screen and (min-width: 1920px){
+@media screen and (min-width: 1920px) {
   html {
     font-size: 100%;
   }
@@ -52,8 +51,7 @@ body {
 
 .container {
   display: grid;
-  grid-template-columns: 286px 1.65fr;
-  grid-template-rows: 56px 1.8fr;
+  grid-template-columns: 0.2fr 1fr;
   gap: 0px 0px;
   grid-template-areas:
     "navbar navbar"
@@ -63,7 +61,7 @@ body {
 .navbar {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-rows: 0.5fr 1fr 0.5fr;
   gap: 0px 0px;
   grid-auto-flow: row;
   grid-template-areas:
@@ -73,6 +71,8 @@ body {
   grid-area: navbar;
   background: rgba(106, 139, 255, 0.6);
   color: white;
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 
 .navbar-links {
