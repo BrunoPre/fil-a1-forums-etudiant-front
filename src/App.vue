@@ -31,8 +31,15 @@ export default defineComponent({
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
+
 html {
-  font-size: 100%;
+  font-size: 80%;
+}
+
+@media screen and (min-width: 1920px){
+  html {
+    font-size: 100%;
+  }
 }
 
 * {
