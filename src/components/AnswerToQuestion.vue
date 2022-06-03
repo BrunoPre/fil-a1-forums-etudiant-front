@@ -28,12 +28,11 @@
       <p>Répondre</p>
       <img src="../assets/reply.svg" alt="Reply" />
     </div>
-    <div class="comments-container">
+    <div class="comments-container" v-if="reply || comments.length !== 0">
       <div v-for="comment in comments" :key="comment">
         <CommentToAnswer :comment="comment"></CommentToAnswer>
       </div>
       <CommentToAnswerInput
-        v-if="reply || !comments.length !== 0"
         @new-comment="newComment"
       ></CommentToAnswerInput>
     </div>
