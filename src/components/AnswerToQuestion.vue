@@ -1,11 +1,11 @@
 <template>
   <div class="answer-to-question" :style="setBorderBottom()">
     <div class="vote">
-      <div class="upvote">
+      <div class="upvote" v-on:click="upvote">
         <img src="../assets/upvote-arrow.svg" alt="upvote" />
       </div>
       <div class="vote-count">{{ answer.voteCount }}</div>
-      <div class="downvote">
+      <div class="downvote" v-on:click="downvote">
         <img src="../assets/upvote-arrow.svg" alt="upvote" />
       </div>
     </div>
@@ -30,11 +30,9 @@
     </div>
     <div class="comments-container" v-if="reply || comments.length !== 0">
       <div v-for="comment in comments" :key="comment">
-        <CommentToAnswer :comment="comment"></CommentToAnswer>
+        <CommentToAnswer :comment-prop="comment"></CommentToAnswer>
       </div>
-      <CommentToAnswerInput
-        @new-comment="newComment"
-      ></CommentToAnswerInput>
+      <CommentToAnswerInput @new-comment="newComment"></CommentToAnswerInput>
     </div>
   </div>
 </template>
@@ -46,7 +44,7 @@ export default {
   name: "AnswerToQuestion",
   components: { CommentToAnswerInput, CommentToAnswer },
   props: {
-    answer: {
+    answerProp: {
       content: String,
       user: String,
       date: String,
@@ -54,8 +52,14 @@ export default {
     },
     isLastAnswer: Boolean,
   },
-  data() {
+  data: function () {
     return {
+      answer: {
+        content: this.answerProp.content,
+        user: this.answerProp.user,
+        date: this.answerProp.date,
+        voteCount: this.answerProp.voteCount,
+      },
       comments: [
         {
           content: "Done cursus pharetra vulputate. Donec eu imperdiet nibh.",
@@ -91,6 +95,14 @@ export default {
         voteCount: 0,
       });
       console.log(this.comments);
+    },
+    upvote() {
+      if (this.answer.voteCount < 0) return;
+      this.answer.voteCount += 1;
+    },
+    downvote() {
+      if (this.answer.voteCount <= 0) return;
+      this.answer.voteCount -= 1;
     },
   },
 };
@@ -147,12 +159,11 @@ span {
 .vote {
   grid-area: vote;
   margin-left: 1vw;
-  /*TODO mettre une grid ici ?*/
 }
 
 .vote-count {
   font-size: 1.6rem;
-  margin-left: 0.2vw;
+  text-align: center;
 }
 .answer-container {
   grid-area: answer-container;
