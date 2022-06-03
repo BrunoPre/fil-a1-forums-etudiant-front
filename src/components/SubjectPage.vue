@@ -89,7 +89,7 @@ export default {
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec lacus nulla. Vivamus tempus diam et
             ligula finibus, vitae feugiat ipsum commodo. Suspendisse potenti. Duis ac velit at libero efficitur
             ullamcorper ac efficitur risus. Donec cursus pharetra vulputate. Donec eu imperdiet nibh. Aliquam vitae
-            rutrum mi, a fermentum elit. `,
+            rutrum mi, a fermentum elit.`,
             user: "Bip Bap",
             date: "24 Mai 2022",
             voteCount: 8,
@@ -165,7 +165,6 @@ h1 {
 .ask-question:hover a {
   color: #4971ff;
 }
-
 </style>
 
 <style>
