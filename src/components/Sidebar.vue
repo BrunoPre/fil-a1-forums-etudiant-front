@@ -150,7 +150,7 @@ export default defineComponent({
 .button-icon {
   margin: auto;
   display: block;
-  height: 90%;
+  height: 100%;
   align-self: center;
 }
 

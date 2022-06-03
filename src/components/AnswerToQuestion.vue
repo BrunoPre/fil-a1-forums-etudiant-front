@@ -24,15 +24,17 @@
       </div>
       <div class="answer">{{ answer.content }}</div>
     </div>
-    <div class="reply">
+    <div class="reply" v-on:click="reply = true">
       <p>Répondre</p>
       <img src="../assets/reply.svg" alt="Reply" />
     </div>
-    <div class="comments-container">
+    <div class="comments-container" v-if="reply || comments.length !== 0">
       <div v-for="comment in comments" :key="comment">
         <CommentToAnswer :comment="comment"></CommentToAnswer>
       </div>
-      <CommentToAnswerInput></CommentToAnswerInput>
+      <CommentToAnswerInput
+        @new-comment="newComment"
+      ></CommentToAnswerInput>
     </div>
   </div>
 </template>
@@ -50,7 +52,7 @@ export default {
       date: String,
       voteCount: Number,
     },
-    isLastAnswer : Boolean,
+    isLastAnswer: Boolean,
   },
   data() {
     return {
@@ -74,13 +76,23 @@ export default {
           voteCount: 1,
         },
       ],
+      reply: false,
     };
   },
   methods: {
     setBorderBottom() {
       return this.isLastAnswer ? "" : "border-bottom: #e2e2e2 solid 1px;";
-    }
-  }
+    },
+    newComment(comment) {
+      this.comments.push({
+        content: comment,
+        date: "03 Juin 2022",
+        user: "Test",
+        voteCount: 0,
+      });
+      console.log(this.comments);
+    },
+  },
 };
 </script>
 

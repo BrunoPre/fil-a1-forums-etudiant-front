@@ -7,10 +7,11 @@
     </div>
     <div class="comment">
       <p>
-        Done cursus pharetra vulputate. Donec eu imperdiet nibh.
-        <span class="comment-info"
-          >&nbsp;- 24 Mai 2022 par <a href="">Bap Bop</a></span
-        >
+        {{ comment.content }}
+        <span class="comment-info">
+          &nbsp;- {{ comment.date }} par
+          <a href="">{{ comment.user }}</a>
+        </span>
       </p>
     </div>
   </div>
@@ -21,6 +22,7 @@ export default {
   name: "CommentToAnswer",
   props: {
     comment: {
+      content: String,
       date: String,
       user: String,
       voteCount: Number,
