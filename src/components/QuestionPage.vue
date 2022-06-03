@@ -21,13 +21,15 @@
         <p>{{ Object.keys(answers).length }} réponses</p>
       </div>
       <div class="answers">
-        <div v-for="(answer,index) in answers" :key="answer">
-          <AnswerToQuestion :answer="answer" :isLastAnswer="isLastAnswer(index,answers.length)"></AnswerToQuestion>
+        <div v-for="(answer, index) in answers" :key="answer">
+          <AnswerToQuestion
+            :answer="answer"
+            :isLastAnswer="isLastAnswer(index, answers.length)"
+          ></AnswerToQuestion>
         </div>
         <reply-to-question-input></reply-to-question-input>
       </div>
     </div>
-    <div class="new-answer-container"></div>
   </div>
 </template>
 
@@ -89,9 +91,9 @@ export default {
       is the last one from the given length
       of the array of answers
        */
-      return index === lengthArray-1;
-    }
-  }
+      return index === lengthArray - 1;
+    },
+  },
 };
 </script>
 
