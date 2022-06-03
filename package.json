@@ -29,14 +29,17 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^8.0.3",
     "husky": "^8.0.1",
+    "lint-staged": "^13.0.0",
     "typescript": "~4.5.5"
   },
   "lint-staged": {
-    "*.js": [
-      "lint"
-    ],
-    "*.vue": [
+    "src/**/*.{js,ts,vue}": [
       "lint"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
