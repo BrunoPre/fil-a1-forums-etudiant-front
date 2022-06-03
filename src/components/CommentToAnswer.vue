@@ -1,9 +1,19 @@
 <template>
   <div class="comment-to-answer">
     <div class="vote">
-      <img class="upvote" src="../assets/upvote-arrow.svg" alt="upvote" />
+      <img
+        class="upvote"
+        src="../assets/upvote-arrow.svg"
+        alt="upvote"
+        v-on:click="upvote"
+      />
       <p class="vote-count">{{ comment.voteCount }}</p>
-      <img class="downvote" src="../assets/upvote-arrow.svg" alt="downvote" />
+      <img
+        class="downvote"
+        src="../assets/upvote-arrow.svg"
+        alt="downvote"
+        v-on:click="downvote"
+      />
     </div>
     <div class="comment">
       <p>
@@ -21,11 +31,31 @@
 export default {
   name: "CommentToAnswer",
   props: {
-    comment: {
+    commentProp: {
       content: String,
       date: String,
       user: String,
       voteCount: Number,
+    },
+  },
+  data() {
+    return {
+      comment: {
+        content: this.commentProp.content,
+        date: this.commentProp.date,
+        user: this.commentProp.user,
+        voteCount: this.commentProp.voteCount,
+      },
+    };
+  },
+  methods: {
+    upvote() {
+      if (this.comment.voteCount < 0) return;
+      this.comment.voteCount += 1;
+    },
+    downvote() {
+      if (this.comment.voteCount <= 0) return;
+      this.comment.voteCount -= 1;
     },
   },
 };

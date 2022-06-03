@@ -23,7 +23,7 @@
       <div class="answers">
         <div v-for="(answer, index) in answers" :key="answer">
           <AnswerToQuestion
-            :answer="answer"
+            :answer-prop="answer"
             :isLastAnswer="isLastAnswer(index, answers.length)"
           ></AnswerToQuestion>
         </div>
