@@ -6,31 +6,31 @@ const routes: Array<RouteRecordRaw> = [
     path: "/accueil",
     alias: "/accueil",
     name: "accueil",
-    component: () => {}, // TODO: TBD
+    component: () => import("./components/EmptyComponent.vue"), // TODO: TBD
   },
   {
     path: "/parcourir",
     alias: "/parcourir",
     name: "parcourir",
-    component: () => {}, // TODO: TBD
+    component: () => import("./components/EmptyComponent.vue"), // TODO: TBD
   },
   {
     path: "/mes-questions",
     alias: "/mes-questions",
     name: "mes-questions",
-    component: () => {}, // TODO: TBD
+    component: () => import("./components/EmptyComponent.vue"), // TODO: TBD
   },
   {
     path: "/mes-reponses",
     alias: "/mes-reponses",
     name: "mes-reponses",
-    component: () => {}, // TODO: TBD
+    component: () => import("./components/EmptyComponent.vue"), // TODO: TBD
   },
   {
     path: "/suivis",
     alias: "/suivis",
     name: "suivis",
-    component: () => {}, // TODO: TBD
+    component: () => import("./components/EmptyComponent.vue"), // TODO: TBD
   },
   {
     path: "/reponse-msg",
