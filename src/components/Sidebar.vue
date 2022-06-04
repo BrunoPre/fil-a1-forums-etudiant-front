@@ -14,8 +14,8 @@
 
     <div class="grid-buttons">
       <div
-        v-for="[_, button] in buttons"
-        :key="button.index"
+        v-for="[index, button] in buttons"
+        :key="index"
         class="grid-one-button"
       >
         <router-link :to="button.route" class="button-icon">
@@ -40,6 +40,7 @@ import { defineComponent } from "vue";
 import buttonsJson from "./../assets/buttonsSidebar.json";
 
 export default defineComponent({
+  // eslint-disable-next-line vue/multi-word-component-names
   name: "Sidebar",
   data() {
     return {

@@ -62,7 +62,7 @@
         </div>
         <div class="more">
           <!--TODO Rediriger vers page question-->
-          <a>Montrer + de réponses →</a>
+          <a href="http://localhost:8080/question">Montrer + de réponses →</a>
         </div>
       </div>
     </div>
@@ -197,5 +197,6 @@ h3 {
 .more a {
   color: #6a8bff;
   font-weight: 500;
+  text-decoration: none;
 }
 </style>
