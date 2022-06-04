@@ -34,7 +34,8 @@
   },
   "lint-staged": {
     "src/**/*.{js,ts,vue}": [
-      "lint"
+      "eslint --fix",
+      "git add"
     ]
   },
   "husky": {
