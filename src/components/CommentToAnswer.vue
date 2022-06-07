@@ -64,24 +64,31 @@ export default {
 <style scoped>
 .comment-to-answer {
   border-bottom: #e2e2e2 solid 1px;
+  display: grid;
+  grid-template-columns: 0.1fr 1fr;
+  grid-gap: 1vw;
+  padding-top: 0.3vh;
+  padding-bottom: 0.3vh;
 }
 
 .vote {
   margin-left: 1vw;
-  display: inline-block;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  width: 100%;
+  align-items: center;
+  justify-items: center;
 }
 
 .vote p {
-  display: inline-block;
-  margin: 1vh 0.5vw 1vh 0;
   font-size: 1.2rem;
+  margin: 0;
 }
 
 .upvote {
   filter: invert(90%) sepia(25%) saturate(404%) hue-rotate(63deg)
     brightness(103%) contrast(106%);
   transition: 0.3s ease-in-out;
-  margin-right: 0.5vw;
 }
 
 .upvote:hover {
