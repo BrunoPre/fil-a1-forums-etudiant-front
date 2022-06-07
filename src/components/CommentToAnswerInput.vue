@@ -32,7 +32,7 @@ export default {
 
 <style scoped>
 .new-comment input[type="text"] {
-  margin-left: 6vw;
+  margin-left: 7.3vw;
   width: 75%;
   border: none;
   margin-top: 1vh;
