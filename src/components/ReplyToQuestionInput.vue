@@ -31,13 +31,14 @@ export default defineComponent({
       // Submits a message
       if (event && !message) {
         // TODO: add more UI elements
-        alert("Veuillez écrire un commentaire avant de l'envoyer");
+        window.alert("Veuillez écrire un commentaire avant de l'envoyer");
       } else if (event) {
         // TODO: post message
-        alert("Commentaire posté !");
+        window.alert("Commentaire posté !");
+        window.location.reload();
       } else {
         // TODO: exception handling
-        alert("Erreur : le message n'a pas pu être envoyé");
+        window.alert("Erreur : le message n'a pas pu être envoyé");
       }
     },
   },

@@ -39,12 +39,6 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("./components/ReplyToQuestionInput.vue"), // TODO: TBD
   },
   {
-    path: "/reponse-msg-test",
-    alias: "/reponse-msg-test",
-    name: "reponse-msg-test",
-    component: () => import("./components/ReplyComponentMocklyIntegrated.vue"), // TODO: TBD
-  },
-  {
     path: "/question",
     alias: "/question",
     name: "question",
