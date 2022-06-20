@@ -1,35 +1,52 @@
 <template>
   <div class="create-question">
     <textarea
-      v-model="question"
+      v-model="question.title"
       :placeholder="placeholder_ecrire_msg_ici"
       class="question-box"
       required
     ></textarea>
     <textarea
-      v-model="description"
+      v-model="question.description"
       :placeholder="placeholder_ecrire_description_ici"
       class="description-box"
-      required
     ></textarea>
-    <button
-      @click="(event) => submit(question, description, event)"
-      class="button-submit"
-    >
+    <button @click="(event) => submitQuestion(event)" class="button-submit">
       {{ reply_label }}
     </button>
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "ReplyToQuestionInput",
+  props: {
+    questionProp: {
+      title: String,
+      description: String,
+      user: String,
+      date: String,
+      voteCount: Number,
+      bestAnswer: {
+        content: String,
+        user: String,
+        date: String,
+        voteCount: Number,
+      },
+    },
+  },
   data() {
     return {
-      question: "",
-      description: "",
+      question: {
+        title: "",
+        description: "",
+        user: "User Name",
+        date: new Date().getDate() + " Juin 2022",
+        voteCount: 0,
+        bestAnswer: null,
+      },
       placeholder_ecrire_msg_ici: "Ecrivez votre question ici...",
       placeholder_ecrire_description_ici:
         "Ecrivez la description de votre question (facultative)",
@@ -37,15 +54,14 @@ export default defineComponent({
     };
   },
   methods: {
-    submit(question: string, description: string, event: Event) {
+    submitQuestion: function (event) {
       // Submits a message
-      if (event && !question) {
-        // TODO: add more UI elements
-        window.alert("Veuillez écrire une question avant de l'envoyer");
-      } else if (event) {
+      if (event) {
         // TODO: post message
         window.alert("Question postée !");
-        window.location.reload();
+        this.$emit("newQuestion", this.question);
+        this.question = null;
+        //window.location.reload();
       } else {
         // TODO: exception handling
         window.alert("Erreur : le message n'a pas pu être envoyé");

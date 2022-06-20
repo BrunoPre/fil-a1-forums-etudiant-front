@@ -26,7 +26,10 @@
             <img src="../assets/new-question-cancel.svg" alt="" />
           </div>
         </div>
-        <CreateQuestion v-if="isAddQuestionButtonClicked"></CreateQuestion>
+        <CreateQuestion
+          v-if="isAddQuestionButtonClicked"
+          @new-question="newQuestion"
+        ></CreateQuestion>
         <div class="questions">
           <div v-for="question in questions" :key="question">
             <QuestionCard :question="question"></QuestionCard>
@@ -118,6 +121,10 @@ export default {
     },
     setPaddingQuestionHeader() {
       return this.isAddQuestionButtonClicked ? "" : "margin-bottom: 6vh";
+    },
+    newQuestion(question) {
+      this.questions.push(question);
+      console.log(this.questions);
     },
   },
 };

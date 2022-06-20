@@ -11,7 +11,8 @@
         <img src="../assets/user_image_placeholder.png" alt="Profile picture" />
       </div>
       <p>
-        Question posée par <span class="user-span">{{ question.user }}</span> le
+        Question posée par
+        <span class="user-span">{{ question.user }}</span> le
         <span class="date-span">{{ question.date }}</span>
       </p>
     </div>
