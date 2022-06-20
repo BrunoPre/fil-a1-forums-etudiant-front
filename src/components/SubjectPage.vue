@@ -11,13 +11,25 @@
         <div class="description" v-html="description"></div>
       </div>
       <div class="questions-container">
-        <div class="question-header">
+        <div class="question-header" :style="setPaddingQuestionHeader()">
           <h2>Questions les plus pertinentes</h2>
-          <div class="ask-question">
+          <div
+            v-if="!isAddQuestionButtonClicked"
+            @click="clickAddQuestion"
+            class="ask-question"
+          >
             <a>Poser une question</a>
             <img src="../assets/new-question.svg" alt="" />
           </div>
+          <div v-else @click="clickAddQuestion" class="ask-question">
+            <a>Annuler</a>
+            <img src="../assets/new-question-cancel.svg" alt="" />
+          </div>
         </div>
+        <CreateQuestion
+          v-if="isAddQuestionButtonClicked"
+          @new-question="newQuestion"
+        ></CreateQuestion>
         <div class="questions">
           <div v-for="question in questions" :key="question">
             <QuestionCard :question="question"></QuestionCard>
@@ -30,14 +42,16 @@
 
 <script>
 import QuestionCard from "@/components/QuestionCard";
+import CreateQuestion from "@/components/CreateQuestion";
 
 export default {
   name: "SubjectPage",
-  components: { QuestionCard },
+  components: { QuestionCard, CreateQuestion },
 
   data() {
     return {
       sujet: "Formations",
+      isAddQuestionButtonClicked: false,
       description: `
         <h2>Est dolorem</h2>
         <p>
@@ -98,6 +112,21 @@ export default {
       ],
     };
   },
+  methods: {
+    clickAddQuestion() {
+      this.isAddQuestionButtonClicked = !this.isAddQuestionButtonClicked;
+      console.log(
+        "isAddQuestionButtonClicked = " + this.isAddQuestionButtonClicked
+      );
+    },
+    setPaddingQuestionHeader() {
+      return this.isAddQuestionButtonClicked ? "" : "margin-bottom: 6vh";
+    },
+    newQuestion(question) {
+      this.questions.push(question);
+      console.log(this.questions);
+    },
+  },
 };
 </script>
 
@@ -139,7 +168,6 @@ h1 {
   display: grid;
   grid-template-columns: repeat(2, auto);
   margin-top: 2.2vh;
-  margin-bottom: 6vh;
 }
 
 .ask-question {

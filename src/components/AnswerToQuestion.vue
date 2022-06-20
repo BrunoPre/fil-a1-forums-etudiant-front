@@ -18,7 +18,8 @@
           />
         </div>
         <p>
-          Question posée par <span class="user-span">{{ answer.user }}</span> le
+          Question posée par
+          <span class="user-span">{{ answer.user }}</span> le
           <span class="date-span">{{ answer.date }}</span>
         </p>
       </div>
