@@ -88,10 +88,15 @@ textarea {
   padding: 10px 15px 0;
   color: #446dff;
   border: none;
+  margin-bottom: 1vh;
 }
 
 textarea::placeholder {
   color: #6a8bff;
+}
+
+textarea:focus {
+  outline: none;
 }
 
 .question-box {

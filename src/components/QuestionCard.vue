@@ -118,7 +118,6 @@ export default {
 
 .show-question-button {
   transform: rotate(180deg);
-  padding: 10px;
 }
 
 .show-question-button,
