@@ -3,42 +3,52 @@
 
   <div class="answer-div">
     <textarea
-      v-model="message"
+      v-model="answer.content"
       :placeholder="placeholder_ecrire_msg_ici"
       class="answer-box"
       required
     ></textarea>
-    <button @click="(event) => submit(message, event)" class="button-reply">
+    <button
+      @click="(event) => submitAnswer(answer, event)"
+      class="button-reply"
+    >
       {{ reply_label }}
     </button>
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "ReplyToQuestionInput",
   data() {
     return {
-      message: "",
+      answer: {
+        id: Math.floor(Math.random() * 10000),
+        content: "",
+        user: "User Name",
+        date: new Date().getDate() + " Juin 2022",
+        voteCount: 0,
+      },
       placeholder_ecrire_msg_ici: "Ecrivez votre réponse ici...",
       reply_label: "Répondre",
     };
   },
   methods: {
-    submit(message: string, event: Event) {
+    submitAnswer(message, event) {
       // Submits a message
       if (event && !message) {
         // TODO: add more UI elements
-        window.alert("Veuillez écrire un commentaire avant de l'envoyer");
+        window.alert("Veuillez écrire une réponse avant de l'envoyer");
       } else if (event) {
         // TODO: post message
-        window.alert("Commentaire posté !");
-        window.location.reload();
+        window.alert("Réponse postée !");
+        this.$emit("newAnswer", this.answer);
+        this.answer = null;
       } else {
         // TODO: exception handling
-        window.alert("Erreur : le message n'a pas pu être envoyé");
+        window.alert("Erreur : la réponse n'a pas pu être envoyée");
       }
     },
   },
