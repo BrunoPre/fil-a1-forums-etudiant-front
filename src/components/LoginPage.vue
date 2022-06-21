@@ -41,7 +41,6 @@
           />
         </div>
       </div>
-      <div style="padding-bottom: 3vh"></div>
       <router-link :to="registerRoute" class="register"
         >Créer un compte</router-link
       >
@@ -84,13 +83,19 @@ export default {
 };
 </script>
 
+<style>
+.page-content {
+  margin: 0;
+}
+</style>
+
 <style scoped>
 .login-parent-container {
   display: grid;
-  grid-template-columns: 1fr 1.2fr 1fr;
+  grid-template-columns: repeat(5, 1fr);
   grid-template-rows: 1fr;
   gap: 0px 0px;
-  grid-template-areas: ". login-child-container .";
+  grid-template-areas: ". login-child-container login-child-container . .";
 }
 
 .login-child-container {
@@ -101,31 +106,33 @@ export default {
   top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 50%;
 }
 
 h1 {
   font-weight: 700;
-  font-size: 36px;
+  font-size: 2rem;
   color: #6a8bff;
 }
 
 h2 {
   font-weight: 500;
-  font-size: 18px;
-  line-height: 27px;
+  font-size: 1.1rem;
+  margin-bottom: 2vh;
 }
 
 .form-container {
-  background: #f8f9ff;
+  background: #f5f8ff;
   resize: none;
   border: none;
   border-radius: 5px;
   color: #446dff;
   display: grid;
-  grid-template-columns: 0.3fr 1.6fr 0.3fr;
+  grid-template-columns: 15% 70% 15%;
   grid-template-rows: 1fr;
   gap: 0px 0px;
   grid-template-areas: "icon input icon2";
+  margin-bottom: 2vh;
 }
 
 input {
@@ -133,12 +140,14 @@ input {
   border: none;
   outline: none;
   background: #f8f9ff;
-  height: 50px;
   color: #446dff;
+  font-size: 1rem;
+  height: 6vh;
 }
 
 input::placeholder {
   color: #6a8bff;
+  font-size: 1rem;
 }
 
 .icon {
@@ -181,8 +190,13 @@ img {
   /* text attributes */
   text-align: center;
   text-decoration: none;
-  font-size: 17px;
-  font-weight: 400;
+  font-size: 1.1rem;
+  font-weight: 500;
   color: white;
+  transition: 0.2s;
+}
+
+.login-button:hover {
+  background-color: #6a8bff;
 }
 </style>
