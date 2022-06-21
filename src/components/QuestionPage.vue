@@ -32,7 +32,9 @@
             @delete-answer="deleteAnswer"
           ></AnswerToQuestion>
         </div>
-        <reply-to-question-input></reply-to-question-input>
+        <reply-to-question-input
+          @new-answer="newAnswer"
+        ></reply-to-question-input>
       </div>
     </div>
     <div class="administration">
@@ -118,6 +120,10 @@ export default {
     deleteQuestion() {
       // TODO DELETE request
       window.alert("Question supprimée !");
+    },
+    newAnswer(answer) {
+      this.answers.push(answer);
+      console.log(this.answers);
     },
   },
 };
