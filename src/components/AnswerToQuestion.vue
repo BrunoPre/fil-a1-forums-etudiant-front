@@ -25,9 +25,14 @@
       </div>
       <div class="answer">{{ answer.content }}</div>
     </div>
-    <div class="reply" v-on:click="reply = true">
-      <p>Répondre</p>
-      <img src="../assets/reply.svg" alt="Reply" />
+    <div class="actions" v-on:click="reply = true">
+      <div class="reply">
+        <p>Répondre</p>
+        <img src="../assets/reply.svg" alt="Reply" />
+      </div>
+      <div class="delete-answer">
+        <p>Supprimer</p>
+      </div>
     </div>
     <div class="comments-container" v-if="reply || comments.length !== 0">
       <div v-for="comment in comments" :key="comment">
@@ -197,14 +202,18 @@ span {
 
 .upvote,
 .downvote,
-.reply {
+.actions {
   cursor: pointer;
 }
 
-.reply {
+.actions {
   grid-area: reply;
   justify-self: end;
   margin-right: 2vw;
+}
+
+.reply {
+  display: inline-block;
 }
 
 .reply p {
@@ -219,7 +228,22 @@ span {
   color: #4971ff;
 }
 
-.reply img {
+.delete-answer {
+  display: inline-block;
+  margin-left: 2vw;
+}
+
+.delete-answer p {
+  color: #ff7c94;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.delete-answer p:hover {
+  color: #ff4869;
+}
+
+.actions img {
   filter: invert(64%) sepia(67%) saturate(4842%) hue-rotate(207deg)
     brightness(103%) contrast(101%);
   display: inline-block;
@@ -227,7 +251,7 @@ span {
   transition: 0.3s;
 }
 
-.reply:hover img {
+.actions:hover img {
   filter: invert(35%) sepia(86%) saturate(2059%) hue-rotate(217deg)
     brightness(102%) contrast(104%);
 }
