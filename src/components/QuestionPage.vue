@@ -19,17 +19,29 @@
     <div class="question-description">{{ question.description }}</div>
     <div class="answers-container">
       <div class="answer-number">
-        <p>{{ Object.keys(answers).length }} réponses</p>
+        <h3>{{ Object.keys(answers).length }} réponses</h3>
       </div>
       <div class="answers">
+        <div v-if="answers.length === 0">
+          <p class="no-answer">Aucune réponse pour l'instant ...</p>
+        </div>
         <div v-for="(answer, index) in answers" :key="answer">
           <AnswerToQuestion
             :answer-prop="answer"
             :isLastAnswer="isLastAnswer(index, answers.length)"
+            @delete-answer="deleteAnswer"
           ></AnswerToQuestion>
         </div>
         <reply-to-question-input></reply-to-question-input>
       </div>
+    </div>
+    <div class="administration">
+      <div class="answer-number">
+        <h3>Administration</h3>
+      </div>
+      <button class="delete-question" @click="deleteQuestion">
+        Supprimer la question
+      </button>
     </div>
   </div>
 </template>
@@ -43,6 +55,7 @@ export default {
   data() {
     return {
       question: {
+        id: 10,
         title: "Vestibulum ac condimentum metus ?",
         description: ` Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec lacus
       nulla. Vivamus tempus diam et ligula finibus, vitae feugiat ipsum commodo.
@@ -54,6 +67,7 @@ export default {
       },
       answers: [
         {
+          id: 3,
           content: `        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec
         lacus nulla. Vivamus tempus diam et ligula finibus, vitae feugiat ipsum
         ipsum commodo. Suspendisse potenti. Duis ac velit at libero efficitur
@@ -64,6 +78,7 @@ export default {
           voteCount: 8,
         },
         {
+          id: 19329,
           content: `        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec
         lacus nulla. Vivamus tempus diam et ligula finibus, vitae feugiat ipsum
         ipsum commodo. Suspendisse potenti. Duis ac velit at libero efficitur
@@ -74,6 +89,7 @@ export default {
           voteCount: 2,
         },
         {
+          id: 20233,
           content: `        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec
         lacus nulla. Vivamus tempus diam et ligula finibus, vitae feugiat ipsum
         ipsum commodo. Suspendisse potenti. Duis ac velit at libero efficitur
@@ -93,6 +109,15 @@ export default {
       of the array of answers
        */
       return index === lengthArray - 1;
+    },
+    deleteAnswer(answer) {
+      // TODO DELETE request
+      console.log(answer);
+      this.answers = this.answers.filter((a) => a.id !== answer.id);
+    },
+    deleteQuestion() {
+      // TODO DELETE request
+      window.alert("Question supprimée !");
     },
   },
 };
@@ -150,11 +175,37 @@ span {
   margin-top: 6vh;
 }
 
-.answers-container p {
+h3 {
   font-weight: 500;
   font-size: 1.3rem;
   margin: 0;
   padding: 0 0 1vh;
   border-bottom: #e2e2e2 solid 1px;
+}
+
+.no-answer {
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  color: #4971ff;
+}
+
+.administration {
+  margin-top: 9vh;
+}
+
+.delete-question {
+  margin-top: 2vh;
+  padding: 1vh 2vw;
+  font-size: 1rem;
+  color: white;
+  background-color: #ff7c94;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.delete-question:hover {
+  background-color: #ff4869;
 }
 </style>

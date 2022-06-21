@@ -25,13 +25,21 @@
       </div>
       <div class="answer">{{ answer.content }}</div>
     </div>
-    <div class="reply" v-on:click="reply = true">
-      <p>Répondre</p>
-      <img src="../assets/reply.svg" alt="Reply" />
+    <div class="actions" v-on:click="reply = true">
+      <div class="reply">
+        <p>Répondre</p>
+        <img src="../assets/reply.svg" alt="Reply" />
+      </div>
+      <div class="delete-answer" @click="deleteAnswer">
+        <p>Supprimer</p>
+      </div>
     </div>
     <div class="comments-container" v-if="reply || comments.length !== 0">
       <div v-for="comment in comments" :key="comment">
-        <CommentToAnswer :comment-prop="comment"></CommentToAnswer>
+        <CommentToAnswer
+          :comment-prop="comment"
+          @delete-comment="deleteComment"
+        ></CommentToAnswer>
       </div>
       <CommentToAnswerInput @new-comment="newComment"></CommentToAnswerInput>
     </div>
@@ -46,6 +54,7 @@ export default {
   components: { CommentToAnswerInput, CommentToAnswer },
   props: {
     answerProp: {
+      id: Number,
       content: String,
       user: String,
       date: String,
@@ -56,6 +65,7 @@ export default {
   data: function () {
     return {
       answer: {
+        id: this.answerProp.id,
         content: this.answerProp.content,
         user: this.answerProp.user,
         date: this.answerProp.date,
@@ -63,18 +73,21 @@ export default {
       },
       comments: [
         {
+          id: 1,
           content: "Done cursus pharetra vulputate. Donec eu imperdiet nibh.",
           date: "24 Mai 2022",
           user: "Bop Bap",
           voteCount: 4,
         },
         {
+          id: 5,
           content: "Done cursus pharetra vulputate. Donec eu imperdiet nibh.",
           date: "24 Mai 2022",
           user: "Bop Bap",
           voteCount: 2,
         },
         {
+          id: 2,
           content: "Done cursus pharetra vulputate. Donec eu imperdiet nibh.",
           date: "24 Mai 2022",
           user: "Bop Bap",
@@ -104,6 +117,13 @@ export default {
     downvote() {
       if (this.answer.voteCount <= 0) return;
       this.answer.voteCount -= 1;
+    },
+    deleteComment(comment) {
+      // TODO DELETE request
+      this.comments = this.comments.filter((c) => c.id !== comment.id);
+    },
+    deleteAnswer() {
+      this.$emit("deleteAnswer", this.answer);
     },
   },
 };
@@ -197,14 +217,18 @@ span {
 
 .upvote,
 .downvote,
-.reply {
+.actions {
   cursor: pointer;
 }
 
-.reply {
+.actions {
   grid-area: reply;
   justify-self: end;
   margin-right: 2vw;
+}
+
+.reply {
+  display: inline-block;
 }
 
 .reply p {
@@ -219,7 +243,22 @@ span {
   color: #4971ff;
 }
 
-.reply img {
+.delete-answer {
+  display: inline-block;
+  margin-left: 2vw;
+}
+
+.delete-answer p {
+  color: #ff7c94;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.delete-answer p:hover {
+  color: #ff4869;
+}
+
+.actions img {
   filter: invert(64%) sepia(67%) saturate(4842%) hue-rotate(207deg)
     brightness(103%) contrast(101%);
   display: inline-block;
@@ -227,7 +266,7 @@ span {
   transition: 0.3s;
 }
 
-.reply:hover img {
+.actions:hover img {
   filter: invert(35%) sepia(86%) saturate(2059%) hue-rotate(217deg)
     brightness(102%) contrast(104%);
 }

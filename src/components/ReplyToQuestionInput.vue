@@ -1,5 +1,5 @@
 <template>
-  <div class="title-repondre">Votre réponse</div>
+  <h3 class="title-repondre">Votre réponse</h3>
 
   <div class="answer-div">
     <textarea
@@ -84,5 +84,6 @@ export default defineComponent({
   font-size: 1.3rem;
   padding: 0 0 1vh;
   border-bottom: #e2e2e2 solid 1px;
+  margin: 0;
 }
 </style>
