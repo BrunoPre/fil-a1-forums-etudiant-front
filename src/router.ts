@@ -50,6 +50,18 @@ const routes: Array<RouteRecordRaw> = [
     name: "sujet",
     component: () => import("./components/SubjectPage.vue"), // TODO: TBD
   },
+  {
+    path: "/connexion",
+    alias: "/login",
+    name: "connexion",
+    component: () => import("./components/LoginPage.vue"), // TODO: TBD
+  },
+  {
+    path: "/register",
+    alias: "/signup",
+    name: "inscription",
+    component: () => import("./components/EmptyComponent.vue"), // TODO: TBD
+  },
 ];
 
 const router = createRouter({

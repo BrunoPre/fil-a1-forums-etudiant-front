@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar">
-    <div class="profile">
+    <router-link :to="logInRoute" class="profile">
       <div class="profile-picture">
         <img v-if="profilePicPath" :src="profilePicPath" alt="profilePic" />
         <i v-else class="bx bxs-user-circle" />
@@ -10,7 +10,7 @@
         <div class="profile-attributes-username">{{ userName }}</div>
         <div class="profile-attributes-school">{{ userSchool }}</div>
       </div>
-    </div>
+    </router-link>
 
     <div class="grid-buttons">
       <div
@@ -48,6 +48,7 @@ export default defineComponent({
       profilePicPath: "",
       userName: "",
       userSchool: "",
+      logInRoute: "/connexion",
     };
   },
   methods: {
@@ -101,6 +102,8 @@ export default defineComponent({
     "profile-picture profile-attributes profile-attributes"
     ". . .";
   grid-area: profile;
+  color: black;
+  text-decoration: none;
 }
 
 .profile-picture {
