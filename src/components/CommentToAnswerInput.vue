@@ -37,7 +37,7 @@ export default {
   border: none;
   margin-top: 1vh;
   margin-bottom: 3vh;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-family: "Poppins", sans-serif;
   display: inline-block;
 }
@@ -48,7 +48,7 @@ export default {
 
 .new-comment input[type="text"]::placeholder {
   font-family: "Poppins", sans-serif;
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 .submit-comment {

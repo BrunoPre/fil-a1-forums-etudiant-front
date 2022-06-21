@@ -35,6 +35,14 @@
         <reply-to-question-input></reply-to-question-input>
       </div>
     </div>
+    <div class="administration">
+      <div class="answer-number">
+        <h3>Administration</h3>
+      </div>
+      <button class="delete-question" @click="deleteQuestion">
+        Supprimer la question
+      </button>
+    </div>
   </div>
 </template>
 
@@ -107,6 +115,10 @@ export default {
       console.log(answer);
       this.answers = this.answers.filter((a) => a.id !== answer.id);
     },
+    deleteQuestion() {
+      // TODO DELETE request
+      window.alert("Question supprimée !");
+    },
   },
 };
 </script>
@@ -163,7 +175,7 @@ span {
   margin-top: 6vh;
 }
 
-.answers-container h3 {
+h3 {
   font-weight: 500;
   font-size: 1.3rem;
   margin: 0;
@@ -175,5 +187,25 @@ span {
   margin-top: 5vh;
   margin-bottom: 5vh;
   color: #4971ff;
+}
+
+.administration {
+  margin-top: 9vh;
+}
+
+.delete-question {
+  margin-top: 2vh;
+  padding: 1vh 2vw;
+  font-size: 1rem;
+  color: white;
+  background-color: #ff7c94;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.delete-question:hover {
+  background-color: #ff4869;
 }
 </style>

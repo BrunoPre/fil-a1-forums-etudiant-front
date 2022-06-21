@@ -92,8 +92,6 @@ body {
 
 .page-content {
   grid-area: page-content;
-  margin-left: 9vw;
-  margin-right: 9vw;
-  margin-top: 5vh;
+  margin: 5vh 9vw;
 }
 </style>
