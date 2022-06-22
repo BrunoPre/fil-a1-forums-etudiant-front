@@ -68,6 +68,7 @@ export default {
         btns: [
           ["viewHTML"],
           ["strong", "em", "del"],
+          ["unorderedList", "orderedList"],
           ["formatting"],
           ["link"],
           ["fullscreen"],
@@ -77,6 +78,7 @@ export default {
   },
   methods: {
     save() {
+      console.log(this.description);
       window.alert("Sujet mis à jour !");
     },
   },
