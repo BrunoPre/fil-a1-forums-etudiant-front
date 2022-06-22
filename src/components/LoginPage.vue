@@ -94,8 +94,12 @@ export default {
       });
       if (this.getLoginApiStatus === "success") {
         await this.$router.push("/login-success");
+      } else if (this.getLoginApiStatus === "invalidPassword") {
+        window.alert("Mot de passe incorrect !");
+      } else if (this.getLoginApiStatus === "mismatchedUsername") {
+        window.alert("Utilisateur inconnu !");
       } else {
-        alert("failed");
+        window.alert("failed");
       }
     },
   },
