@@ -60,7 +60,13 @@ const routes: Array<RouteRecordRaw> = [
     path: "/register",
     alias: "/signup",
     name: "inscription",
-    component: () => import("./components/EmptyComponent.vue"), // TODO: TBD
+    component: () => import("./components/RegisterPage.vue"), // TODO: TBD
+  },
+  {
+    path: "/login-success",
+    alias: "/login-success",
+    name: "login-success",
+    component: () => import("./components/LoginSuccess.vue"), // TODO: TBD
   },
 ];
 

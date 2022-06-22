@@ -51,6 +51,8 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+
 export default {
   name: "LoginPage",
   data() {
@@ -65,6 +67,11 @@ export default {
       hidePassword: true,
     };
   },
+  computed: {
+    ...mapGetters("auth", {
+      getLoginApiStatus: "getLoginApiStatus",
+    }),
+  },
   methods: {
     changePasswordDisclosureState() {
       var x = document.getElementById("password-input");
@@ -76,8 +83,20 @@ export default {
         x.type = "password";
       }
     },
-    postLogIn() {
-      //TODO: authentication
+    ...mapActions("auth", {
+      actionLoginApi: "loginApi",
+    }),
+    async postLogIn() {
+      console.log("pseudo = " + this.pseudo, "password = " + this.password);
+      await this.actionLoginApi({
+        username: this.pseudo,
+        password: this.password,
+      });
+      if (this.getLoginApiStatus === "success") {
+        await this.$router.push("/login-success");
+      } else {
+        alert("failed");
+      }
     },
   },
 };
