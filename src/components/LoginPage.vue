@@ -92,6 +92,7 @@ export default {
         username: this.pseudo,
         password: this.password,
       });
+      console.log(this.getLoginApiStatus);
       if (this.getLoginApiStatus === "success") {
         await this.$router.push("/login-success");
       } else if (this.getLoginApiStatus === "invalidPassword") {

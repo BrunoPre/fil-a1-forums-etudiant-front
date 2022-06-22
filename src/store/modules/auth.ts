@@ -34,24 +34,27 @@ const actions = {
       .post(BASE_URL + LOGIN_ROUTE, null, {
         params: { username: payload.username, password: payload.password },
       })
+      .then((response) => {
+        const statusCode = response?.status;
+        const cookie = "";
+        console.log(statusCode);
+        if (statusCode === 200) {
+          context.commit("setLoginApiStatus", "success");
+        } else {
+          // just in case
+          context.commit("setLoginApiStatus", "failed");
+        }
+      })
       .catch((err) => {
         console.log(err);
         const errorMessage = err.response?.data.message;
+        console.log(errorMessage);
         if (errorMessage === "Invalid credentials") {
           context.commit("setLoginApiStatus", "invalidPassword");
         } else {
           context.commit("setLoginApiStatus", "mismatchedUsername");
         }
       });
-    const statusCode = response?.status;
-    const errorMessage = response?.data.message;
-    const cookie = "";
-    console.log(statusCode, errorMessage);
-    if (statusCode === 200) {
-      context.commit("setLoginApiStatus", "success");
-    } else {
-      context.commit("setLoginApiStatus", "failed");
-    }
   },
   async registerApi(
     context: ActionContext<any, any>,
@@ -59,22 +62,30 @@ const actions = {
   ) {
     const response: AxiosResponse<any> | void = await axios
       .post(BASE_URL + REGSITER_ROUTE, payload, {})
-      .catch((err: Error) => {
+      .then((response) => {
+        const statusCode = response?.status;
+        const cookie = "";
+        console.log(statusCode);
+        if (statusCode === 201) {
+          context.commit("setRegisterApiStatus", "success");
+        } else {
+          // just in case
+          context.commit("setRegisterApiStatus", "failed");
+        }
+      })
+      .catch((err) => {
         console.log(err);
-        window.alert(err);
+        const statusCode = err.response?.status;
+        console.log(statusCode);
+        if (statusCode === 400) {
+          context.commit("setRegisterApiStatus", "usernameAlreadyTaken");
+        } else if (statusCode === 500) {
+          context.commit("setRegisterApiStatus", "internalServerError");
+        } else {
+          // just in case
+          context.commit("setRegisterApiStatus", "failed");
+        }
       });
-    const statusCode = response?.status;
-    const cookie = "";
-    console.log(statusCode);
-    if (statusCode === 201) {
-      context.commit("setRegisterApiStatus", "success");
-    } else if (statusCode === 400) {
-      context.commit("setRegisterApiStatus", "usernameAlreadyTaken");
-    } else if (statusCode === 500) {
-      context.commit("setRegisterApiStatus", "internalServerError");
-    } else {
-      context.commit("setRegisterApiStatus", "failed");
-    }
   },
 };
 

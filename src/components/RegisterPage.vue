@@ -89,12 +89,15 @@ export default {
         password: this.password,
       });
       if (this.getRegisterApiStatus === "success") {
+        window.alert(
+          "Compte créé ! Connectez-vous à présent avec les identifiants créés."
+        );
         await this.$router.push("/login");
       } else if (this.getRegisterApiStatus === "usernameAlreadyTaken") {
         window.alert(
           "Nom d'utilisateur déjà utilisé ! Merci de réessayer avec un autre pseudo."
         );
-        window.reload();
+        window.location.reload();
       } else {
         alert("Erreur interne");
       }
