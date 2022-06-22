@@ -11,7 +11,7 @@
         <div class="description" v-html="description"></div>
       </div>
       <div class="questions-container">
-        <div class="question-header" :style="setPaddingQuestionHeader()">
+        <div class="question-header">
           <h2>Questions les plus pertinentes</h2>
           <div
             v-if="!isAddQuestionButtonClicked"
@@ -30,8 +30,46 @@
           v-if="isAddQuestionButtonClicked"
           @new-question="newQuestion"
         ></CreateQuestion>
+        <div class="categories" v-if="!isAddQuestionButtonClicked">
+          <div class="categories-container" v-if="!moreCategories">
+            <button
+              v-for="categorie in categories.slice(0, 4)"
+              :key="categorie"
+              @click="updateCategorie(categorie)"
+              :class="
+                selectedCategorie === categorie
+                  ? 'selected-categorie'
+                  : 'categorie-button'
+              "
+            >
+              {{ categorie }}
+            </button>
+          </div>
+          <div class="categories-container" v-else>
+            <button
+              v-for="categorie in categories"
+              :key="categorie"
+              @click="updateCategorie(categorie)"
+              :class="
+                selectedCategorie === categorie
+                  ? 'selected-categorie'
+                  : 'categorie-button'
+              "
+            >
+              {{ categorie }}
+            </button>
+          </div>
+          <div class="more-categories">
+            <p v-if="moreCategories === false" @click="moreCategories = true">
+              Montrer + de catégories ↓
+            </p>
+            <p v-else @click="moreCategories = false">
+              Montrer - de catégories ↑
+            </p>
+          </div>
+        </div>
         <div class="questions">
-          <div v-for="question in questions" :key="question">
+          <div v-for="question in filteredQuestions" :key="question">
             <QuestionCard :question="question"></QuestionCard>
           </div>
         </div>
@@ -52,6 +90,19 @@ export default {
     return {
       sujet: "Formations",
       isAddQuestionButtonClicked: false,
+      categories: [
+        "Administration",
+        "Mathématiques",
+        "Entreprise",
+        "Législation",
+        "FIL",
+        "ITII",
+        "Projet Agile",
+        "Bipbapbop",
+        "Législation",
+      ],
+      selectedCategorie: null,
+      moreCategories: false,
       description: `
         <h2>Est dolorem</h2>
         <p>
@@ -77,6 +128,7 @@ export default {
           excepturi explicabo Ea animi ut quaerat sapiente.
         </p>
       `,
+      filteredQuestions: [],
       questions: [
         {
           title: "Vestibulum ac condimentum metus ?",
@@ -88,6 +140,7 @@ export default {
           user: "User Name",
           date: "24 Mai 2022",
           bestAnswer: null,
+          categories: ["Administration", "Législation"],
         },
         {
           title: "Vestibulum ac condimentum metus ?",
@@ -108,6 +161,7 @@ export default {
             date: "24 Mai 2022",
             voteCount: 8,
           },
+          categories: ["Mathématiques"],
         },
       ],
     };
@@ -119,13 +173,43 @@ export default {
         "isAddQuestionButtonClicked = " + this.isAddQuestionButtonClicked
       );
     },
-    setPaddingQuestionHeader() {
-      return this.isAddQuestionButtonClicked ? "" : "margin-bottom: 6vh";
-    },
     newQuestion(question) {
       this.questions.push(question);
       console.log(this.questions);
     },
+    updateCategorie(categorie) {
+      if (this.isCategorieSelected(categorie)) {
+        this.selectedCategorie = null;
+      } else {
+        this.selectedCategorie = categorie;
+      }
+      console.log("Cat updated to : " + this.selectedCategorie);
+      this.filterByCategorie();
+    },
+    filterByCategorie() {
+      if (this.selectedCategorie === null) {
+        this.filteredQuestions = [...this.questions];
+        return;
+      }
+      this.filteredQuestions = [];
+      this.questions.forEach((q) => {
+        q.categories.forEach((c) => {
+          if (
+            c === this.selectedCategorie &&
+            !this.filteredQuestions.includes(q)
+          ) {
+            this.filteredQuestions.push(q);
+          }
+        });
+      });
+      console.log(this.filteredQuestions);
+    },
+    isCategorieSelected(categorie) {
+      return this.selectedCategorie === categorie;
+    },
+  },
+  async mounted() {
+    this.filteredQuestions = [...this.questions];
   },
 };
 </script>
@@ -206,5 +290,52 @@ h1 {
 .description p {
   font-size: 1.2rem;
   margin-top: 0.5vh;
+}
+
+.categories {
+  margin-top: 2vh;
+  margin-bottom: 6vh;
+}
+
+.categories-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 2vh;
+  row-gap: 0.5vw;
+}
+
+.categorie-button {
+  background-color: #f8f9ff;
+  color: #6a8bff;
+}
+
+.categorie-button:hover {
+  background-color: #c9d1ff;
+}
+
+.categories p {
+  color: #6a8bff;
+  font-weight: 500;
+}
+
+.selected-categorie {
+  background-color: #6a8bff;
+  color: white;
+}
+
+.categorie-button,
+.selected-categorie {
+  border: none;
+  font-size: 100%;
+  font-weight: 500;
+  border-radius: 5px;
+  padding: 0.7vh 1vw;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.more-categories {
+  cursor: pointer;
 }
 </style>

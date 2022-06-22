@@ -14,7 +14,6 @@
           required
         />
       </div>
-      <br />
       <div class="form-container">
         <div class="icon">
           <img :src="passwordIconPath" />
