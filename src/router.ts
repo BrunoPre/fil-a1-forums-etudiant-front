@@ -60,7 +60,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/register",
     alias: "/signup",
     name: "inscription",
-    component: () => import("./components/EmptyComponent.vue"), // TODO: TBD
+    component: () => import("./components/CreateAccountPage.vue"), // TODO: TBD
   },
 ];
 
