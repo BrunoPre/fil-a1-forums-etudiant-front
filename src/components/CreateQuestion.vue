@@ -11,6 +11,42 @@
       :placeholder="placeholder_ecrire_description_ici"
       class="description-box"
     ></textarea>
+    <div class="categories">
+      <div class="categories-container" v-if="!moreCategories">
+        <button
+          v-for="categorie in categories.slice(0, 4)"
+          :key="categorie"
+          @click="updateSelectedCategories(categorie)"
+          :class="
+            selectedCategories.includes(categorie)
+              ? 'selected-categorie'
+              : 'categorie-button'
+          "
+        >
+          {{ categorie }}
+        </button>
+      </div>
+      <div class="categories-container" v-else>
+        <button
+          v-for="categorie in categories"
+          :key="categorie"
+          @click="updateSelectedCategories(categorie)"
+          :class="
+            selectedCategories.includes(categorie)
+              ? 'selected-categorie'
+              : 'categorie-button'
+          "
+        >
+          {{ categorie }}
+        </button>
+      </div>
+      <div class="more-categories">
+        <p v-if="moreCategories === false" @click="moreCategories = true">
+          Montrer + de catégories ↓
+        </p>
+        <p v-else @click="moreCategories = false">Montrer - de catégories ↑</p>
+      </div>
+    </div>
     <button @click="(event) => submitQuestion(event)" class="button-submit">
       {{ reply_label }}
     </button>
@@ -36,6 +72,7 @@ export default defineComponent({
         voteCount: Number,
       },
     },
+    categories: Array,
   },
   data() {
     return {
@@ -46,11 +83,14 @@ export default defineComponent({
         date: new Date().getDate() + " Juin 2022",
         voteCount: 0,
         bestAnswer: null,
+        categories: [],
       },
       placeholder_ecrire_msg_ici: "Ecrivez votre question ici...",
       placeholder_ecrire_description_ici:
         "Ecrivez la description de votre question (facultative)",
       reply_label: "Poster",
+      selectedCategories: [],
+      moreCategories: false,
     };
   },
   methods: {
@@ -58,13 +98,29 @@ export default defineComponent({
       // Submits a message
       if (event) {
         // TODO: post message
-        window.alert("Question postée !");
+        // TODO: Do dynamic or at least a better validation
+        if (this.question.title === "") {
+          return;
+        }
+        this.question.categories = [...this.selectedCategories];
         this.$emit("newQuestion", this.question);
-        this.question = null;
+        this.question = "";
+        this.selectedCategories = [];
+        this.moreCategories = false;
+        window.alert("Question postée !");
         //window.location.reload();
       } else {
         // TODO: exception handling
         window.alert("Erreur : le message n'a pas pu être envoyé");
+      }
+    },
+    updateSelectedCategories(categorie) {
+      if (this.selectedCategories.includes(categorie)) {
+        this.selectedCategories = this.selectedCategories.filter(
+          (c) => c !== categorie
+        );
+      } else {
+        this.selectedCategories.push(categorie);
       }
     },
   },
@@ -122,5 +178,57 @@ textarea:focus {
   font-size: 17px;
   font-weight: 400;
   color: white;
+}
+
+.categories {
+  margin-top: 0;
+  margin-bottom: 2vh;
+}
+
+.categories-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 2vh;
+  row-gap: 0.5vw;
+}
+
+.categorie-button {
+  background-color: #f8f9ff;
+  color: #6a8bff;
+}
+
+.categorie-button:hover {
+  background-color: #c9d1ff;
+}
+
+.categories p {
+  color: #6a8bff;
+  font-weight: 500;
+}
+
+.selected-categorie {
+  background-color: #6a8bff;
+  color: white;
+}
+
+.categorie-button,
+.selected-categorie {
+  border: none;
+  font-size: 100%;
+  font-weight: 500;
+  border-radius: 5px;
+  padding: 0.7vh 1vw;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.more-categories {
+  cursor: pointer;
+  margin-left: 0.1vw;
+}
+
+.more-categories p {
+  font-weight: 300;
 }
 </style>

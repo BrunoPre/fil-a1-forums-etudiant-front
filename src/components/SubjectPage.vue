@@ -29,6 +29,7 @@
         <CreateQuestion
           v-if="isAddQuestionButtonClicked"
           @new-question="newQuestion"
+          :categories="categories"
         ></CreateQuestion>
         <div class="categories" v-if="!isAddQuestionButtonClicked">
           <div class="categories-container" v-if="!moreCategories">
@@ -99,7 +100,6 @@ export default {
         "ITII",
         "Projet Agile",
         "Bipbapbop",
-        "Législation",
       ],
       selectedCategorie: null,
       moreCategories: false,
@@ -176,6 +176,8 @@ export default {
     newQuestion(question) {
       this.questions.push(question);
       console.log(this.questions);
+      this.isAddQuestionButtonClicked = false;
+      this.filterByCategorie();
     },
     updateCategorie(categorie) {
       if (this.isCategorieSelected(categorie)) {
@@ -337,5 +339,10 @@ h1 {
 
 .more-categories {
   cursor: pointer;
+  margin-left: 0.1vw;
+}
+
+.more-categories p {
+  font-weight: 300;
 }
 </style>
