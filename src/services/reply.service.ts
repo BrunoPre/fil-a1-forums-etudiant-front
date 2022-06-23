@@ -35,6 +35,20 @@ class ReplyService {
       content: payload,
     }); // TODO: get response
   }
+
+  postCommentToAnswer(
+    postId: string,
+    replyId: string,
+    userName: string,
+    payload: string
+  ) {
+    return axios.post(API_URL, {
+      postId: postId,
+      replyId: replyId,
+      userName: userName,
+      content: payload,
+    }); // TODO: get response
+  }
 }
 
 export default new ReplyService();

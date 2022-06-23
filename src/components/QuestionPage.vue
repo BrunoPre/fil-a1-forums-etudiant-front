@@ -83,7 +83,6 @@ export default {
       window.alert("Question supprimée !");
     },
     newAnswer(answer) {
-      // TODO PUSH answer
       ReplyService.postAnswer(this.question.id, answer.user, answer.content);
       this.answers.push(answer);
       console.log(this.answers);

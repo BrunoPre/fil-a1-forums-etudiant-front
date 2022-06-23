@@ -51,13 +51,19 @@ import CommentToAnswer from "@/components/CommentToAnswer";
 import CommentToAnswerInput from "@/components/CommentToAnswerInput";
 import ReplyService from "@/services/reply.service";
 import VoteService from "@/services/vote.service";
-import Utils from "@/utils/Utils";
+import { mapGetters } from "vuex";
 export default {
   name: "AnswerToQuestion",
   components: { CommentToAnswerInput, CommentToAnswer },
+  computed: {
+    ...mapGetters("auth", {
+      getState: "getState",
+    }),
+  },
   props: {
     answerProp: {
       id: String,
+      postId: String,
       content: String,
       user: String,
       date: String,
@@ -77,10 +83,26 @@ export default {
       return this.isLastAnswer ? "" : "border-bottom: #e2e2e2 solid 1px;";
     },
     newComment(comment) {
+      console.log(
+        "this.parentPostId,\n" +
+          "        this.answer.id,\n" +
+          "        this.getState.user.username,\n" +
+          "        comment",
+        this.answer.postId,
+        this.answer.id,
+        this.getState.user.username,
+        comment
+      );
+      ReplyService.postCommentToAnswer(
+        this.answer.postId,
+        this.answer.id,
+        this.getState.user.username,
+        comment
+      );
       this.comments.push({
         content: comment,
-        date: "03 Juin 2022",
-        user: "Test",
+        date: new Date().getDate() + " Juin 2022", // TODO: change it
+        user: this.getState.user.username,
         voteCount: 0,
       });
       console.log(this.comments);
