@@ -105,7 +105,6 @@
 <script>
 import QuestionCard from "@/components/QuestionCard";
 import CreateQuestion from "@/components/CreateQuestion";
-import ModifySubject from "@/components/ModifySubject";
 
 export default {
   name: "SubjectPage",
