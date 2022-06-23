@@ -1,11 +1,6 @@
 <template>
   <div class="container">
     <div class="navbar">
-      <div class="logout-button">
-        <button v-if="isLoggedIn" v-on:click="logOut" class="logout-button">
-          Déconnexion
-        </button>
-      </div>
       <div class="home-btn">
         <router-link to="/accueil" class="navbar-links">Accueil</router-link>
       </div>
@@ -34,20 +29,13 @@ export default defineComponent({
   computed: {
     ...mapGetters("auth", {
       getState: "getState",
-      isLoggedIn: "isLoggedIn",
     }),
     currentUser() {
       return this.$store.state.auth.user;
     },
   },
   //data() {},
-  methods: {
-    logOut() {
-      store.dispatch("auth/logout");
-      this.$router.push("/login");
-      window.location.reload();
-    },
-  },
+  methods: {},
   //mounted() {this.userName =  Object(this.getUserProfile).userName},
 });
 </script>
@@ -97,10 +85,6 @@ body {
   color: white;
   font-size: 1.2rem;
   font-weight: 500;
-}
-
-.logout-button {
-  grid-area: logout-button;
 }
 
 .navbar-links {

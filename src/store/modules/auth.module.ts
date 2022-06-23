@@ -8,9 +8,10 @@ export interface State {
   status: { loggedIn: boolean };
   user: any;
 }
-const initialState: State = user
-  ? { status: { loggedIn: true }, user }
-  : { status: { loggedIn: false }, user: null };
+const initialState: State =
+  user === {}
+    ? { status: { loggedIn: false }, user: "" }
+    : { status: { loggedIn: true }, user };
 
 const actions = {
   async login({ commit }: { commit: Commit }, user: any) {
@@ -53,7 +54,7 @@ const mutations = {
   },
   loginFailure(state: State) {
     state.status.loggedIn = false;
-    state.user = null;
+    state.user = "";
   },
   registerSuccess(state: State) {
     state.status.loggedIn = false;
@@ -63,7 +64,7 @@ const mutations = {
   },
   logout(state: State) {
     state.status.loggedIn = false;
-    state.user = null;
+    state.user = "";
   },
 };
 

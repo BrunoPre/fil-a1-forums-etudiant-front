@@ -8,11 +8,16 @@
       </div>
       <div class="profile-attributes">
         <div class="profile-attributes-username">
-          {{ currentUser ? currentUser : "User Name" }}
+          {{ currentUser || "Se connecter" }}
         </div>
         <div class="profile-attributes-school">{{ userSchool }}</div>
       </div>
     </router-link>
+    <div class="logout-button">
+      <button v-if="checkIsLoggedIn" v-on:click="logOut" class="logout-button">
+        Déconnexion
+      </button>
+    </div>
 
     <div class="grid-buttons">
       <div
@@ -53,8 +58,17 @@ export default defineComponent({
     }),
     currentUser() {
       const s: State = (this as any).getState;
-      console.log(s.user.username);
+      console.log("username", s.user.username);
       return s.user.username;
+    },
+    checkIsLoggedIn() {
+      const s: State = (this as any).getState;
+      if (s.status.loggedIn && localStorage.getItem("user") === null) {
+        console.log("initial state");
+        return false;
+      }
+      console.log(s.status.loggedIn);
+      return s.status.loggedIn;
     },
   },
   data() {
@@ -76,6 +90,11 @@ export default defineComponent({
       this.profilePicPath = require("./../assets/profilePic.png");
       this.userSchool = "IMT Atlantique";
     },
+    logOut() {
+      store.dispatch("auth/logout");
+      this.$router.push("/login");
+      //window.location.reload();
+    },
   },
   mounted() {
     this.setButtons();
@@ -89,18 +108,23 @@ export default defineComponent({
 
 .sidebar {
   display: grid;
-  grid-template-rows: 0.5fr 1fr 2fr;
+  grid-template-rows: 0.5fr 1fr 0.5fr 2fr;
   gap: 0px 0px;
   grid-auto-flow: row;
   grid-template-areas:
     "profile"
     "grid-buttons"
+    "logout-button"
     "...";
   grid-area: sidebar;
   background: #f5f8ff;
   height: 100vh;
   position: sticky;
   top: 0;
+}
+
+.logout-button {
+  grid-area: logout-button;
 }
 
 .profile {
