@@ -21,7 +21,11 @@
           </div>
           <div class="group-list-container">
             <div v-for="groupe in groupes" :key="groupe" class="group">
-              <h3>{{ groupe.name }}</h3>
+              <router-link to="/sujet">
+                <div class="group-link-container">
+                  <h3>{{ groupe.name }}</h3>
+                </div>
+              </router-link>
             </div>
           </div>
         </div>
@@ -405,6 +409,11 @@ h1 {
   position: absolute;
   top: 50%;
   transform: translate(0, -50%);
+}
+
+.group-link-container {
+  width: 100%;
+  height: 100%;
 }
 
 .administration {
