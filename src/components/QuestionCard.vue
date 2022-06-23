@@ -29,6 +29,15 @@
           <span class="date-span">{{ question.date }}</span>
         </p>
       </div>
+      <div class="question-categories">
+        <div
+          class="categorie"
+          v-for="categorie in question.categories"
+          :key="categorie"
+        >
+          {{ categorie }}
+        </div>
+      </div>
       <div v-if="showQuestion">
         <div class="question-description">
           <p>{{ question.description }}</p>
@@ -84,6 +93,7 @@ export default {
         date: String,
         voteCount: Number,
       },
+      categories: Array,
     },
   },
   data() {
@@ -105,7 +115,7 @@ export default {
   margin-left: 3vh;
   margin-right: 3vh;
   padding-top: 1.5vh;
-  padding-bottom: 0.5vh;
+  padding-bottom: 1.5vh;
 }
 
 .question-card h2 {
@@ -165,6 +175,7 @@ h3 {
 
 .question-description {
   font-size: 1.1rem;
+  margin-top: 3vh;
 }
 
 .question-description p {
@@ -198,5 +209,22 @@ h3 {
   color: #6a8bff;
   font-weight: 500;
   text-decoration: none;
+}
+
+.question-categories {
+  display: inline-block;
+  margin-top: 0.3vh;
+}
+
+.categorie {
+  display: inline-block;
+  font-size: 0.8rem;
+  background-color: white;
+  border-radius: 5px;
+  padding: 0.3vh 0.5vw;
+  margin-right: 1vw;
+  font-weight: 500;
+  color: #6a8bff;
+  margin-bottom: 0.5vh;
 }
 </style>

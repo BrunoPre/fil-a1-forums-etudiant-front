@@ -17,6 +17,15 @@
       </p>
     </div>
     <div class="question-description">{{ question.description }}</div>
+    <div class="question-categories">
+      <div
+        class="categorie"
+        v-for="categorie in question.categories"
+        :key="categorie"
+      >
+        {{ categorie }}
+      </div>
+    </div>
     <div class="answers-container">
       <div class="answer-number">
         <h3>{{ Object.keys(answers).length }} réponses</h3>
@@ -66,6 +75,7 @@ export default {
       Aliquam vitae rutrum mi, a fermentum elit.`,
         user: "User Name",
         date: "24 Mai 2022",
+        categories: ["Mathématiques", "Législation"],
       },
       answers: [
         {
@@ -213,5 +223,22 @@ h3 {
 
 .delete-question:hover {
   background-color: #ff4869;
+}
+
+.question-categories {
+  margin-top: 3vh;
+}
+
+.categorie {
+  display: inline-block;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 5px;
+  padding: 0.7vh 1vw;
+  text-align: center;
+  background-color: #f8f9ff;
+  color: #6a8bff;
+  margin-right: 1vw;
 }
 </style>
