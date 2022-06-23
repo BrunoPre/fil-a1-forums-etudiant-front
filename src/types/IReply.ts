@@ -1,8 +1,8 @@
 export interface IReply {
   id: string;
   postId: string;
+  replyId: string;
   content: string;
-  user: string;
-  date: string;
-  voteCount: bigint;
+  userName: string;
+  createdAt: string;
 }

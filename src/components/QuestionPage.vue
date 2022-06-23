@@ -53,6 +53,7 @@ import AnswerToQuestion from "@/components/AnswerToQuestion";
 import ReplyToQuestionInput from "@/components/ReplyToQuestionInput";
 import PostService from "@/services/post.service";
 import Utils from "@/utils/Utils";
+import ReplyService from "@/services/reply.service";
 export default {
   name: "QuestionPage",
   components: { AnswerToQuestion, ReplyToQuestionInput },
@@ -146,10 +147,17 @@ export default {
           history.back();
         });
     },
-    //getAnswersbyPostId(questionId) {},
+    getAnswersByPostId(questionId) {
+      ReplyService.getAnswersByPostId(questionId).then((ans) => {
+        //TODO: translate date & map voteCount
+        //ans = ans.map((a) => Utils.convertTimestampToHumanReadable(a.date));
+        this.answers = ans;
+      });
+    },
   },
   mounted() {
     this.getQuestion(this.$route.params.id);
+    this.getAnswersByPostId(this.$route.params.id);
   },
 };
 </script>

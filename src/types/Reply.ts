@@ -6,12 +6,12 @@ export class Reply {
   public content: string;
   public user: string;
   public date: string;
-  public voteCount: number;
 
   constructor(replyFetched: IReply) {
     this.id = replyFetched.id;
     this.content = replyFetched.content;
-    this.postId = this.user = this.date = "";
-    this.voteCount = 0;
+    this.postId = replyFetched.postId;
+    this.user = replyFetched.userName;
+    this.date = replyFetched.createdAt;
   }
 }

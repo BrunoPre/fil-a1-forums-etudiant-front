@@ -1,51 +1,31 @@
 import axios from "axios";
-import { IPost } from "@/types/IPost";
-import { IPostFetched } from "@/types/IPostFetched";
-import { PostFetched } from "@/types/PostFetched";
+import { Reply } from "@/types/Reply";
+import { IReply } from "@/types/IReply";
 
 const API_URL = "http://localhost:8080/api/replies/";
 
-class PostService {
-  getAnswersbyPostId(postId: string) {
+class ReplyService {
+  getAnswersByPostId(postId: string) {
     return axios
-      .get(API_URL + postId, { params: { postId: postId } })
-      .then((response) =>
-        Promise.resolve(new PostFetched(response.data as IPostFetched))
-      );
-  }
-
-  getPostByGrpId(groupId: bigint) {
-    return axios
-      .get(API_URL, { params: { groupId: groupId } })
+      .get(API_URL, { params: { postId: postId } })
       .then((response) => {
-        return Promise.resolve(new PostFetched(response.data as IPostFetched));
-      })
-      .catch((err) => {
-        return Promise.reject(err);
+        const listReplies: IReply[] = [];
+        response.data.forEach(function (reply: IReply) {
+          listReplies.push(new Reply(reply));
+        });
+        return Promise.resolve(listReplies);
       });
   }
 
-  getPostByUserId(userId: string) {
-    return axios
-      .get(API_URL + userId)
-      .then((response) => {
-        return Promise.resolve(new PostFetched(response.data as IPostFetched));
-      })
-      .catch((err) => {
-        return Promise.reject(err);
+  getCommentsByReplyId(replyId: string) {
+    return axios.get(API_URL + replyId + "/comments").then((response) => {
+      const listComments: IReply[] = [];
+      response.data.forEach(function (reply: IReply) {
+        listComments.push(new Reply(reply));
       });
-  }
-
-  postPost(userId: string, post: IPost) {
-    return axios
-      .post(API_URL, post, { params: { userId: userId } })
-      .then((res) => Promise.resolve())
-      .catch((err) => Promise.reject(err)); // 500 internal server error
-  }
-
-  deletePost(postId: bigint) {
-    return axios.delete(API_URL + postId);
+      return Promise.resolve(listComments);
+    });
   }
 }
 
-export default new PostService();
+export default new ReplyService();

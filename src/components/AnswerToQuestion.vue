@@ -49,6 +49,7 @@
 <script>
 import CommentToAnswer from "@/components/CommentToAnswer";
 import CommentToAnswerInput from "@/components/CommentToAnswerInput";
+import ReplyService from "@/services/reply.service";
 export default {
   name: "AnswerToQuestion",
   components: { CommentToAnswerInput, CommentToAnswer },
@@ -125,6 +126,16 @@ export default {
     deleteAnswer() {
       this.$emit("deleteAnswer", this.answer);
     },
+    getComments() {
+      ReplyService.getCommentsByReplyId(this.answer.id).then((coms) => {
+        //TODO: translate date & map voteCount
+        //coms = coms.map((c) => Utils.convertTimestampToHumanReadable(c.date));
+        this.comments = coms;
+      });
+    },
+  },
+  mounted() {
+    this.getComments();
   },
 };
 </script>
