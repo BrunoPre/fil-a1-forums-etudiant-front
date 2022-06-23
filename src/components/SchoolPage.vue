@@ -105,6 +105,7 @@
 <script>
 import QuestionCard from "@/components/QuestionCard";
 import CreateQuestion from "@/components/CreateQuestion";
+import ModifySubject from "@/components/ModifySubject";
 
 export default {
   name: "SubjectPage",
@@ -405,6 +406,46 @@ h1 {
   position: absolute;
   top: 50%;
   transform: translate(0, -50%);
+}
+
+.administration {
+  margin-top: 9vh;
+}
+
+.administration h3 {
+  font-weight: 500;
+  font-size: 1.3rem;
+  margin: 0;
+  padding: 0 0 1vh;
+  border-bottom: #e2e2e2 solid 1px;
+}
+.delete-school,
+.modify-school {
+  margin-top: 2vh;
+  padding: 1vh 2vw;
+  font-size: 1rem;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.delete-school {
+  background-color: #ff7c94;
+}
+
+.modify-school {
+  background-color: #a6b9ff;
+  margin-right: 2vw;
+}
+
+.delete-school:hover {
+  background-color: #ff4869;
+}
+
+.modify-school:hover {
+  background-color: #6a8bff;
 }
 
 .administration {
