@@ -51,6 +51,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("./components/SchoolPage.vue"), // TODO: TBD
   },
   {
+    path: "/ecole/creer",
+    alias: "/ecole/creer",
+    name: "Créer une école",
+    component: () => import("./components/CreateSchool.vue"), // TODO: TBD
+  },
+  {
     path: "/ecole/modifier",
     alias: "/ecole/modifier",
     name: "Modifier une école",
