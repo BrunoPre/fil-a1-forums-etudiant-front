@@ -145,10 +145,12 @@ textarea {
   color: #446dff;
   border: none;
   margin-bottom: 1vh;
+  font-size: 1rem;
 }
 
 textarea::placeholder {
   color: #6a8bff;
+  font-size: 1rem;
 }
 
 textarea:focus {
