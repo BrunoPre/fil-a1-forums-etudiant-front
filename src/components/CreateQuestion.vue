@@ -180,6 +180,11 @@ textarea:focus {
   font-size: 17px;
   font-weight: 400;
   color: white;
+  transition: 0.2s;
+}
+
+.button-submit:hover {
+  background-color: #6a8bff;
 }
 
 .categories {
