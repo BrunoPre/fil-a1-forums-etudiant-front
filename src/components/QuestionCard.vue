@@ -175,7 +175,6 @@ h3 {
 
 .question-description {
   font-size: 1.1rem;
-  margin-top: 3vh;
 }
 
 .question-description p {
