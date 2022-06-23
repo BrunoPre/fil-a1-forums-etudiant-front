@@ -145,10 +145,12 @@ textarea {
   color: #446dff;
   border: none;
   margin-bottom: 1vh;
+  font-size: 1rem;
 }
 
 textarea::placeholder {
   color: #6a8bff;
+  font-size: 1rem;
 }
 
 textarea:focus {
@@ -178,6 +180,11 @@ textarea:focus {
   font-size: 17px;
   font-weight: 400;
   color: white;
+  transition: 0.2s;
+}
+
+.button-submit:hover {
+  background-color: #6a8bff;
 }
 
 .categories {
