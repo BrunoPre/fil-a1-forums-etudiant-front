@@ -74,7 +74,6 @@ export default {
       return index === lengthArray - 1;
     },
     deleteAnswer(answer) {
-      // TODO DELETE request
       console.log(answer);
       this.answers = this.answers.filter((a) => a.id !== answer.id);
     },

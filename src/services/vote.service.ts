@@ -7,6 +7,20 @@ class VoteService {
       .get(API_URL + "/amount", { params: { contentId: replyId } })
       .then((response) => Promise.resolve(response.data as number));
   }
+
+  postLike(userId: string, replyId: string) {
+    return axios.post(API_URL, {
+      params: { userId: userId, contentId: replyId },
+    });
+    // TODO: return response
+  }
+
+  postDislike(userId: string, replyId: string) {
+    return axios.delete(API_URL, {
+      params: { userId: userId, contentId: replyId },
+    });
+    // TODO: return response
+  }
 }
 
 export default new VoteService();

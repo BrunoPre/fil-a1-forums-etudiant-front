@@ -109,10 +109,12 @@ export default {
     },
     upvote() {
       if (this.answer.voteCount < 0) return;
+      VoteService.postLike(this.getState.user.username, this.answer.id);
       this.answer.voteCount += 1;
     },
     downvote() {
       if (this.answer.voteCount <= 0) return;
+      VoteService.postDislike(this.getState.user.username, this.answer.id);
       this.answer.voteCount -= 1;
     },
     deleteComment(comment) {
