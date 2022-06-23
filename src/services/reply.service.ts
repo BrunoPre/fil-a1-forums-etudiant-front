@@ -49,6 +49,10 @@ class ReplyService {
       content: payload,
     }); // TODO: get response
   }
+
+  deleteReply(replyId: string) {
+    return axios.delete(API_URL + "/" + replyId); // TODO: get response
+  }
 }
 
 export default new ReplyService();

@@ -45,7 +45,7 @@ export default {
   name: "CommentToAnswer",
   props: {
     commentProp: {
-      id: Number,
+      id: String,
       content: String,
       date: String,
       user: String,

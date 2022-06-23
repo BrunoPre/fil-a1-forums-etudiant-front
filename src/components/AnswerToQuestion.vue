@@ -116,10 +116,11 @@ export default {
       this.answer.voteCount -= 1;
     },
     deleteComment(comment) {
-      // TODO DELETE request
+      ReplyService.deleteReply(comment.id);
       this.comments = this.comments.filter((c) => c.id !== comment.id);
     },
     deleteAnswer() {
+      ReplyService.deleteReply(this.answer.id);
       this.$emit("deleteAnswer", this.answer);
     },
     setComments() {

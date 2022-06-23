@@ -79,13 +79,13 @@ export default {
       this.answers = this.answers.filter((a) => a.id !== answer.id);
     },
     deleteQuestion() {
-      // TODO DELETE request
       window.alert("Question supprimée !");
     },
     newAnswer(answer) {
       ReplyService.postAnswer(this.question.id, answer.user, answer.content);
       this.answers.push(answer);
       console.log(this.answers);
+      window.location.reload();
     },
     async setQuestion(questionId) {
       PostService.getPostByPostId(questionId)
