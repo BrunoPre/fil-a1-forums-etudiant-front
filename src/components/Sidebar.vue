@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar">
-    <router-link :to="logInRoute" class="profile">
+    <router-link v-if="currentUser" :to="logInRoute" class="profile">
       <div class="profile-picture">
         <img v-if="profilePicPath" :src="profilePicPath" alt="profilePic" />
         <i v-else class="bx bxs-user-circle" />
@@ -12,6 +12,9 @@
         </div>
         <div class="profile-attributes-school">{{ userSchool }}</div>
       </div>
+    </router-link>
+    <router-link v-else :to="logInRoute" class="login">
+      <div>Se connecter</div>
     </router-link>
     <div class="grid-buttons">
       <div
@@ -34,7 +37,7 @@
     </div>
     <div class="logout">
       <div class="grid-buttons">
-        <div class="grid-one-button" v-if="checkIsLoggedIn" v-on:click="logOut">
+        <div class="grid-one-button" v-if="currentUser" v-on:click="logOut">
           <img src="../assets/logout.svg" alt="logout" />
           <p class="button-link">Déconnexion</p>
         </div>
@@ -139,6 +142,17 @@ export default defineComponent({
   grid-area: profile;
   color: black;
   text-decoration: none;
+}
+
+.login {
+  grid-area: profile;
+  color: black;
+  text-decoration: none;
+  align-self: center;
+  justify-self: center;
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: #6a8bff;
 }
 
 .profile-picture {
