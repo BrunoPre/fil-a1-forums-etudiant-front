@@ -7,7 +7,9 @@
         <!-- just in case -->
       </div>
       <div class="profile-attributes">
-        <div class="profile-attributes-username">{{ userName }}</div>
+        <div class="profile-attributes-username">
+          {{ currentUser ? currentUser : "User Name" }}
+        </div>
         <div class="profile-attributes-school">{{ userSchool }}</div>
       </div>
     </router-link>
@@ -38,15 +40,27 @@
 import { ButtonSidebar } from "@/types/ButtonSidebar";
 import { defineComponent } from "vue";
 import buttonsJson from "./../assets/buttonsSidebar.json";
+import { mapGetters } from "vuex";
+import { State } from "@/store/modules/auth.module";
+import store from "@/store";
 
 export default defineComponent({
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Sidebar",
+  computed: {
+    ...mapGetters("auth", {
+      getState: "getState",
+    }),
+    currentUser() {
+      const s: State = (this as any).getState;
+      console.log(s.user.username);
+      return s.user.username;
+    },
+  },
   data() {
     return {
       buttons: new Map<number, ButtonSidebar>(),
       profilePicPath: "",
-      userName: "",
       userSchool: "",
       logInRoute: "/connexion",
     };
@@ -60,7 +74,6 @@ export default defineComponent({
     },
     setProfile() {
       this.profilePicPath = require("./../assets/profilePic.png");
-      this.userName = "User Name";
       this.userSchool = "IMT Atlantique";
     },
   },
