@@ -107,7 +107,7 @@ import QuestionCard from "@/components/QuestionCard";
 import CreateQuestion from "@/components/CreateQuestion";
 
 export default {
-  name: "SubjectPage",
+  name: "SchoolPage",
   components: { QuestionCard, CreateQuestion },
 
   data() {

@@ -155,6 +155,10 @@ label {
   background-color: #f5f8ff;
 }
 
+.cancel-modifications:hover {
+  background-color: #c9d1ff;
+}
+
 .save-modifications:hover {
   background-color: #6a8bff;
 }
