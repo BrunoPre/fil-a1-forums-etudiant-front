@@ -171,7 +171,7 @@ label {
   background-color: #f5f8ff;
 }
 
-.cancel-modifications {
+.cancel-modifications:hover {
   background-color: #c9d1ff;
 }
 
