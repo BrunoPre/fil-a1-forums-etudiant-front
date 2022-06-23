@@ -42,6 +42,7 @@ import { defineComponent } from "vue";
 import buttonsJson from "./../assets/buttonsSidebar.json";
 import { mapGetters } from "vuex";
 import { State } from "@/store/modules/auth.module";
+import store from "@/store";
 
 export default defineComponent({
   // eslint-disable-next-line vue/multi-word-component-names

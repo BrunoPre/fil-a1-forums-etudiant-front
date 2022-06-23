@@ -39,6 +39,11 @@ const actions = {
       }
     );
   },
+
+  async logout({ commit }: { commit: Commit }) {
+    AuthService.logout();
+    commit("logout");
+  },
 };
 
 const mutations = {
@@ -56,11 +61,19 @@ const mutations = {
   registerFailure(state: State) {
     state.status.loggedIn = false;
   },
+  logout(state: State) {
+    state.status.loggedIn = false;
+    state.user = null;
+  },
 };
 
 const getters = {
   getState(state: State): State {
     return state;
+  },
+  isLoggedIn(state: State): boolean {
+    console.log(state.status.loggedIn);
+    return state.status.loggedIn;
   },
 };
 
