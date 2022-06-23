@@ -224,9 +224,14 @@ export default {
       // TODO DELETE request
       window.alert("Sujet supprimée !");
     },
+    /*getGroup(groupId) {
+      //TODO
+      return;
+    },*/
   },
   async mounted() {
     this.filteredQuestions = [...this.questions];
+    this.getGroup(this.$route.params.id);
   },
 };
 </script>

@@ -51,6 +51,8 @@
 <script>
 import AnswerToQuestion from "@/components/AnswerToQuestion";
 import ReplyToQuestionInput from "@/components/ReplyToQuestionInput";
+import PostService from "@/services/post.service";
+import Utils from "@/utils/Utils";
 export default {
   name: "QuestionPage",
   components: { AnswerToQuestion, ReplyToQuestionInput },
@@ -125,6 +127,29 @@ export default {
       this.answers.push(answer);
       console.log(this.answers);
     },
+    getQuestion(questionId) {
+      PostService.getPostByPostId(questionId)
+        .then((postFetched) => {
+          this.question.id = postFetched.id;
+          this.question.date = Utils.convertTimestampToHumanReadable(
+            postFetched.createdAt
+          );
+          this.question.user = postFetched.userName;
+          this.question.title = postFetched.title;
+          this.question.description = postFetched.content;
+        })
+        .catch((err) => {
+          console.log(err);
+          window.alert(
+            "Erreur : la question n'a pu être chargée, veuillez réessayer"
+          );
+          history.back();
+        });
+    },
+    //getAnswersbyPostId(questionId) {},
+  },
+  mounted() {
+    this.getQuestion(this.$route.params.id);
   },
 };
 </script>
