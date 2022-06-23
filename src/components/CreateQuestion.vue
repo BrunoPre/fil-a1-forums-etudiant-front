@@ -97,7 +97,7 @@ export default defineComponent({
     };
   },
   methods: {
-    async submitQuestion: function (event) {
+    async submitQuestion(event) {
       // Submits a message
       if (event) {
         // TODO: post message
@@ -106,7 +106,7 @@ export default defineComponent({
           return;
         }
         this.question.categories = [...this.selectedCategories];
-        postService.postPost(UserService.getCurrentUser(), )
+        postService.postPost(UserService.getCurrentUser());
         this.$emit("newQuestion", this.question);
         this.question = "";
         this.selectedCategories = [];

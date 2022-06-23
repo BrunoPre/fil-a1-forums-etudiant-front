@@ -1,4 +1,4 @@
-import { IQuestion } from "@/types/IQuestion";
+import IQuestion from "@/types/IQuestion";
 
 export class Post {
   public groupId: string;

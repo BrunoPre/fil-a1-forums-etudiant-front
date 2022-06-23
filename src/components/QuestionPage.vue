@@ -57,56 +57,13 @@ import ReplyService from "@/services/reply.service";
 export default {
   name: "QuestionPage",
   components: { AnswerToQuestion, ReplyToQuestionInput },
-  data() {
+  data: function () {
     return {
-      question: {
-        id: 10,
-        title: "Vestibulum ac condimentum metus ?",
-        description: ` Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec lacus
-      nulla. Vivamus tempus diam et ligula finibus, vitae feugiat ipsum commodo.
-      Suspendisse potenti. Duis ac velit at libero efficitur ullamcorper ac
-      efficitur risus. Donec cursus pharetra vulputate. Donec eu imperdiet nibh.
-      Aliquam vitae rutrum mi, a fermentum elit.`,
-        user: "User Name",
-        date: "24 Mai 2022",
-      },
-      answers: [
-        {
-          id: 3,
-          content: `        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec
-        lacus nulla. Vivamus tempus diam et ligula finibus, vitae feugiat ipsum
-        ipsum commodo. Suspendisse potenti. Duis ac velit at libero efficitur
-        ullamcorper ac efficitur risus. Donec cursus pharetra vulputate. Donec
-        eu imperdiet nibh. Aliquam vitae rutrum mi, a fermentum elit.`,
-          user: "Bip Bap",
-          date: "24 Mai 2022",
-          voteCount: 8,
-        },
-        {
-          id: 19329,
-          content: `        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec
-        lacus nulla. Vivamus tempus diam et ligula finibus, vitae feugiat ipsum
-        ipsum commodo. Suspendisse potenti. Duis ac velit at libero efficitur
-        ullamcorper ac efficitur risus. Donec cursus pharetra vulputate. Donec
-        eu imperdiet nibh. Aliquam vitae rutrum mi, a fermentum elit.`,
-          user: "Bip Bap",
-          date: "25 Mai 2022",
-          voteCount: 2,
-        },
-        {
-          id: 20233,
-          content: `        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec
-        lacus nulla. Vivamus tempus diam et ligula finibus, vitae feugiat ipsum
-        ipsum commodo. Suspendisse potenti. Duis ac velit at libero efficitur
-        ullamcorper ac efficitur risus. Donec cursus pharetra vulputate. Donec
-        eu imperdiet nibh. Aliquam vitae rutrum mi, a fermentum elit.`,
-          user: "Bip Bap",
-          date: "26 Mai 2022",
-          voteCount: 1,
-        },
-      ],
+      question: {},
+      answers: [],
     };
   },
+
   methods: {
     isLastAnswer(index, lengthArray) {
       /* Checks if the `index`-th answer
@@ -128,7 +85,7 @@ export default {
       this.answers.push(answer);
       console.log(this.answers);
     },
-    getQuestion(questionId) {
+    async setQuestion(questionId) {
       PostService.getPostByPostId(questionId)
         .then((postFetched) => {
           this.question.id = postFetched.id;
@@ -147,7 +104,7 @@ export default {
           history.back();
         });
     },
-    getAnswersByPostId(questionId) {
+    async setAnswersByPostId(questionId) {
       ReplyService.getAnswersByPostId(questionId).then((ans) => {
         //TODO: translate date & map voteCount
         //ans = ans.map((a) => Utils.convertTimestampToHumanReadable(a.date));
@@ -155,9 +112,9 @@ export default {
       });
     },
   },
-  mounted() {
-    this.getQuestion(this.$route.params.id);
-    this.getAnswersByPostId(this.$route.params.id);
+  async mounted() {
+    await this.setQuestion(this.$route.params.id);
+    await this.setAnswersByPostId(this.$route.params.id);
   },
 };
 </script>

@@ -9,7 +9,7 @@ class ReplyService {
     return axios
       .get(API_URL, { params: { postId: postId } })
       .then((response) => {
-        const listReplies: IReply[] = [];
+        const listReplies: Reply[] = [];
         response.data.forEach(function (reply: IReply) {
           listReplies.push(new Reply(reply));
         });
@@ -19,7 +19,7 @@ class ReplyService {
 
   getCommentsByReplyId(replyId: string) {
     return axios.get(API_URL + replyId + "/comments").then((response) => {
-      const listComments: IReply[] = [];
+      const listComments: Reply[] = [];
       response.data.forEach(function (reply: IReply) {
         listComments.push(new Reply(reply));
       });

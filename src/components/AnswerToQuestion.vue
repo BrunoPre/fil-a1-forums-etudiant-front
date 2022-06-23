@@ -50,6 +50,8 @@
 import CommentToAnswer from "@/components/CommentToAnswer";
 import CommentToAnswerInput from "@/components/CommentToAnswerInput";
 import ReplyService from "@/services/reply.service";
+import VoteService from "@/services/vote.service";
+import Utils from "@/utils/Utils";
 export default {
   name: "AnswerToQuestion",
   components: { CommentToAnswerInput, CommentToAnswer },
@@ -65,36 +67,8 @@ export default {
   },
   data: function () {
     return {
-      answer: {
-        id: this.answerProp.id,
-        content: this.answerProp.content,
-        user: this.answerProp.user,
-        date: this.answerProp.date,
-        voteCount: this.answerProp.voteCount,
-      },
-      comments: [
-        {
-          id: 1,
-          content: "Done cursus pharetra vulputate. Donec eu imperdiet nibh.",
-          date: "24 Mai 2022",
-          user: "Bop Bap",
-          voteCount: 4,
-        },
-        {
-          id: 5,
-          content: "Done cursus pharetra vulputate. Donec eu imperdiet nibh.",
-          date: "24 Mai 2022",
-          user: "Bop Bap",
-          voteCount: 2,
-        },
-        {
-          id: 2,
-          content: "Done cursus pharetra vulputate. Donec eu imperdiet nibh.",
-          date: "24 Mai 2022",
-          user: "Bop Bap",
-          voteCount: 1,
-        },
-      ],
+      answer: this.answerProp,
+      comments: [],
       reply: false,
     };
   },
@@ -126,16 +100,43 @@ export default {
     deleteAnswer() {
       this.$emit("deleteAnswer", this.answer);
     },
-    getComments() {
+    setComments() {
       ReplyService.getCommentsByReplyId(this.answer.id).then((coms) => {
         //TODO: translate date & map voteCount
-        //coms = coms.map((c) => Utils.convertTimestampToHumanReadable(c.date));
         this.comments = coms;
+        /*this.comments.forEach(
+          (c) => (c.date = Utils.convertTimestampToHumanReadable(c.date))
+        );*/
+        this.setVoteCounterComments();
+      });
+    },
+    setVoteCounterAnswer() {
+      console.log(this.answer.id);
+      VoteService.getVoteCounter(this.answer.id).then((val) => {
+        this.answer.voteCount = val;
+      });
+    },
+    setVoteCounterComments() {
+      /*this.comments = this.comments.map((com) =>
+        VoteService.getVoteCounter(com.id).then((val) => {
+          console.log(val);
+          com.voteCount = val;
+        })
+      );*/
+      this.comments.forEach((com) => {
+        console.log(com);
+        VoteService.getVoteCounter(com.id).then((val) => {
+          console.log(val);
+          com.voteCount = val;
+          console.log(com.voteCount);
+        });
       });
     },
   },
-  mounted() {
-    this.getComments();
+  async mounted() {
+    await this.setVoteCounterAnswer();
+    await this.setComments();
+    //await this.setVoteCounterComments();
   },
 };
 </script>
