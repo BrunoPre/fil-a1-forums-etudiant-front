@@ -13,12 +13,6 @@
         <div class="profile-attributes-school">{{ userSchool }}</div>
       </div>
     </router-link>
-    <div class="logout-button">
-      <button v-if="checkIsLoggedIn" v-on:click="logOut" class="logout-button">
-        Déconnexion
-      </button>
-    </div>
-
     <div class="grid-buttons">
       <div
         v-for="[index, button] in buttons"
@@ -36,6 +30,14 @@
         <router-link :to="button.route" class="button-link">{{
           button.label
         }}</router-link>
+      </div>
+    </div>
+    <div class="logout">
+      <div class="grid-buttons">
+        <div class="grid-one-button" v-if="checkIsLoggedIn" v-on:click="logOut">
+          <img src="../assets/logout.svg" alt="logout" />
+          <p class="button-link">Déconnexion</p>
+        </div>
       </div>
     </div>
   </div>
@@ -108,23 +110,19 @@ export default defineComponent({
 
 .sidebar {
   display: grid;
-  grid-template-rows: 0.5fr 1fr 0.5fr 2fr;
+  grid-template-rows: 15% 25% 50%;
   gap: 0px 0px;
   grid-auto-flow: row;
   grid-template-areas:
     "profile"
     "grid-buttons"
-    "logout-button"
-    "...";
+    "..."
+    "logout-button";
   grid-area: sidebar;
   background: #f5f8ff;
   height: 100vh;
   position: sticky;
   top: 0;
-}
-
-.logout-button {
-  grid-area: logout-button;
 }
 
 .profile {
@@ -201,5 +199,14 @@ export default defineComponent({
   font-weight: 500;
   font-size: 1.2rem;
   align-self: center;
+}
+
+.logout {
+  cursor: pointer;
+  align-self: end;
+}
+
+.logout p {
+  color: #ff7c94;
 }
 </style>
