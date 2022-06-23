@@ -17,14 +17,21 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent } from "vue";
 import Sidebar from "@/components/Sidebar.vue";
 
 export default defineComponent({
   name: "App",
   components: { Sidebar },
-  props: {},
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
+  //data() {},
+  methods: {},
+  //mounted() {this.userName =  Object(this.getUserProfile).userName},
 });
 </script>
 

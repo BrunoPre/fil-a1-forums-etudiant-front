@@ -10,7 +10,7 @@
         <input
           type="text"
           placeholder="Nom d'utilisateur"
-          v-model="pseudo"
+          v-model="user.username"
           required
         />
       </div>
@@ -22,7 +22,7 @@
         <input
           type="password"
           placeholder="Mot de passe"
-          v-model="password"
+          v-model="user.password"
           autocomplete="current-password"
           id="password-input"
           required
@@ -42,20 +42,19 @@
         </div>
       </div>
       <div style="padding-top: 5vh"></div>
-      <div class="login-button" v-on:click="postRegister">S'inscrire</div>
+      <div class="login-button" v-on:click="handleRegister">S'inscrire</div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "RegisterPage",
   data() {
     return {
-      pseudo: null,
-      password: null,
+      user: { username: "", password: "" },
       logInIconPath: require("./../assets/login/profilePicLoginIcon.svg"),
       passwordIconPath: require("./../assets/login/passwordIcon.svg"),
       revealPasswordIconPath: require("../assets/login/revealPasswordIcon.svg"),
@@ -79,28 +78,34 @@ export default {
         x.type = "password";
       }
     },
-    ...mapActions("auth", {
-      actionRegisterApi: "registerApi",
-    }),
-    async postRegister() {
-      console.log("pseudo = " + this.pseudo, "password = " + this.password);
-      await this.actionRegisterApi({
-        username: this.pseudo,
-        password: this.password,
-      });
-      if (this.getRegisterApiStatus === "success") {
-        window.alert(
-          "Compte créé ! Connectez-vous à présent avec les identifiants créés."
-        );
-        await this.$router.push("/login");
-      } else if (this.getRegisterApiStatus === "usernameAlreadyTaken") {
-        window.alert(
-          "Nom d'utilisateur déjà utilisé ! Merci de réessayer avec un autre pseudo."
-        );
-        window.location.reload();
-      } else {
-        alert("Erreur interne");
-      }
+    async handleRegister() {
+      this.successful = false;
+      this.loading = true;
+
+      this.$store.dispatch("auth/register", this.user).then(
+        (data) => {
+          window.alert(
+            "Compte créé ! Connectez-vous à présent avec les identifiants créés."
+          );
+          this.message = data.message;
+          this.successful = true;
+          this.loading = false;
+        },
+        (error) => {
+          console.log(error);
+          this.errorMessage = error.response.data.message || error.toString();
+          this.statusCode = error.response.status || 400;
+          if (this.statusCode === 400) {
+            window.alert(
+              "Nom d'utilisateur déjà utilisé ! Merci de réessayer avec un autre pseudo."
+            );
+          } else {
+            window.alert("Erreur interne, merci de réessayer.");
+          }
+          this.successful = false;
+          this.loading = false;
+        }
+      );
     },
   },
 };

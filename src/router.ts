@@ -1,5 +1,4 @@
-import { createWebHistory, createRouter } from "vue-router";
-import { RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -54,25 +53,41 @@ const routes: Array<RouteRecordRaw> = [
     path: "/connexion",
     alias: "/login",
     name: "connexion",
-    component: () => import("./components/LoginPage.vue"), // TODO: TBD
+    component: () => import("./components/LoginPage.vue"),
+    //meta: { requiredAuth: false },
   },
   {
     path: "/register",
     alias: "/signup",
     name: "inscription",
-    component: () => import("./components/RegisterPage.vue"), // TODO: TBD
+    component: () => import("./components/RegisterPage.vue"),
+    //meta: { requiredAuth: false },
   },
   {
     path: "/login-success",
     alias: "/login-success",
     name: "login-success",
-    component: () => import("./components/LoginSuccess.vue"), // TODO: TBD
+    component: () => import("./components/LoginSuccess.vue"),
+    meta: { requiredAuth: true },
   },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach(async (to, from, next) => {
+  const publicPages = ["/login", "/register", "/login-success"];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = localStorage.getItem("user");
+  // trying to access a restricted page + not logged in
+  // redirect to login page
+  if (authRequired && !loggedIn) {
+    next("/login");
+  } else {
+    next();
+  }
 });
 
 export default router;
