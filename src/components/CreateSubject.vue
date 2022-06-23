@@ -2,8 +2,8 @@
   <div class="path">
     <p>Ecoles / IMT Atlantique</p>
   </div>
-  <h1>Modifier un sujet</h1>
-  <div class="modify-subject-container">
+  <h1>Créer un sujet</h1>
+  <div class="create-subject-container">
     <div class="title">
       <label for="subject-title">Titre du sujet</label>
       <input id="subject-title" type="text" v-model="title" />
@@ -18,8 +18,11 @@
       ></trumbowyg>
     </div>
     <div class="buttons">
-      <button class="save-modifications" @click="save">Enregistrer</button>
+      <button class="save-modifications" @click="save">Créer le sujet</button>
       <button class="cancel-modifications">Annuler</button>
+      <p>
+        * la création d'un sujet est soumise à l'approbation d'un administrateur
+      </p>
     </div>
   </div>
 </template>
@@ -29,38 +32,14 @@ import Trumbowyg from "vue-trumbowyg";
 import "trumbowyg/dist/ui/trumbowyg.css";
 
 export default {
-  name: "ModifySubject",
+  name: "CreateSubject",
   components: {
     Trumbowyg,
   },
   data() {
     return {
-      title: "Administration",
-      description: `
-        <h2>Est dolorem</h2>
-        <p>
-          Ut omnis nostrum sit nihil Quis vel blanditiis dolor rem libero galisum. Aut veniam aliquid aut porro nemo
-          et quibusdam atque? Aut ipsa rerum et adipisci aperiam aut impedit veritatis! Quo molestiae officiis 33 nulla
-          et repellat libero nam accusamus voluptatem aut aspernatur possimus 33 nobis sunt. Est dolorem dolorem et
-          excepturi explicabo Ea animi ut quaerat sapiente.
-        </p>
-        <br>
-        <h2>Quo dolore</h2>
-        <p>
-          Ut omnis nostrum sit nihil Quis vel blanditiis dolor rem libero galisum. Aut veniam aliquid aut porro nemo
-          et quibusdam atque? Aut ipsa rerum et adipisci aperiam aut impedit veritatis! Quo molestiae officiis 33 nulla
-          et repellat libero nam accusamus voluptatem aut aspernatur possimus 33 nobis sunt. Est dolorem dolorem et
-          excepturi explicabo Ea animi ut quaerat sapiente.
-        </p>
-        <br>
-        <h2>Quo molestiae</h2>
-        <p>
-          Ut omnis nostrum sit nihil Quis vel blanditiis dolor rem libero galisum. Aut veniam aliquid aut porro nemo
-          et quibusdam atque? Aut ipsa rerum et adipisci aperiam aut impedit veritatis! Quo molestiae officiis 33 nulla
-          et repellat libero nam accusamus voluptatem aut aspernatur possimus 33 nobis sunt. Est dolorem dolorem et
-          excepturi explicabo Ea animi ut quaerat sapiente.
-        </p>
-      `,
+      title: "",
+      description: ``,
       config: {
         autogrow: true,
         removeformatPasted: true,
@@ -78,6 +57,7 @@ export default {
   },
   methods: {
     save() {
+      console.log(this.title);
       console.log(this.description);
       window.alert("Sujet mis à jour !");
     },
@@ -110,7 +90,7 @@ h1 {
   margin-bottom: 5vh;
 }
 
-.modify-subject-container {
+.create-subject-container {
   margin-left: 12.5%;
   margin-right: auto;
   width: 60%;
@@ -147,6 +127,10 @@ label {
 
 .buttons {
   margin-top: 2vh;
+}
+
+.buttons p {
+  font-size: 0.7rem;
 }
 
 .save-modifications,
