@@ -90,12 +90,22 @@
         </div>
       </div>
     </div>
+    <div class="administration">
+      <div class="administration-header">
+        <h3>Administration</h3>
+      </div>
+      <button class="modify-school">Modifier l'école</button>
+      <button class="delete-school" @click="deleteSchool">
+        Supprimer l'école
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
 import QuestionCard from "@/components/QuestionCard";
 import CreateQuestion from "@/components/CreateQuestion";
+import ModifySubject from "@/components/ModifySubject";
 
 export default {
   name: "SubjectPage",
@@ -236,6 +246,10 @@ export default {
     },
     isCategorieSelected(categorie) {
       return this.selectedCategorie === categorie;
+    },
+    deleteSchool() {
+      // TODO DELETE request
+      window.alert("Ecole supprimée !");
     },
   },
   async mounted() {
@@ -391,6 +405,46 @@ h1 {
   position: absolute; /* 2 */
   top: 50%; /* 3 */
   transform: translate(0, -50%); /* 4 */
+}
+
+.administration {
+  margin-top: 9vh;
+}
+
+.administration h3 {
+  font-weight: 500;
+  font-size: 1.3rem;
+  margin: 0;
+  padding: 0 0 1vh;
+  border-bottom: #e2e2e2 solid 1px;
+}
+.delete-school,
+.modify-school {
+  margin-top: 2vh;
+  padding: 1vh 2vw;
+  font-size: 1rem;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.delete-school {
+  background-color: #ff7c94;
+}
+
+.modify-school {
+  background-color: #a6b9ff;
+  margin-right: 2vw;
+}
+
+.delete-school:hover {
+  background-color: #ff4869;
+}
+
+.modify-school:hover {
+  background-color: #6a8bff;
 }
 </style>
 
