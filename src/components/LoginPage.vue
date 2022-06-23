@@ -10,7 +10,7 @@
         <input
           type="text"
           placeholder="Nom d'utilisateur"
-          v-model="pseudo"
+          v-model="user.username"
           required
         />
       </div>
@@ -21,7 +21,7 @@
         <input
           type="password"
           placeholder="Mot de passe"
-          v-model="password"
+          v-model="user.password"
           autocomplete="current-password"
           id="password-input"
           required
@@ -44,7 +44,7 @@
         >Créer un compte</router-link
       >
       <div style="padding-top: 5vh"></div>
-      <div class="login-button" v-on:click="postLogIn">Se connecter</div>
+      <div class="login-button" v-on:click="handleLogin">Se connecter</div>
     </div>
   </div>
 </template>
@@ -54,8 +54,7 @@ export default {
   name: "LoginPage",
   data() {
     return {
-      pseudo: null,
-      password: null,
+      user: { username: "", password: "" },
       logInIconPath: require("./../assets/login/profilePicLoginIcon.svg"),
       passwordIconPath: require("./../assets/login/passwordIcon.svg"),
       revealPasswordIconPath: require("../assets/login/revealPasswordIcon.svg"),
@@ -75,8 +74,24 @@ export default {
         x.type = "password";
       }
     },
-    postLogIn() {
-      //TODO: authentication
+    async handleLogin() {
+      this.loading = true;
+      console.log("user = ", this.user);
+      this.$store.dispatch("auth/login", this.user).then(
+        () => {
+          this.$router.push("/login-success"); // TODO: "/profile"
+        },
+        (error) => {
+          console.log(error);
+          this.loading = false;
+          this.errorMessage = error.response.data.message || error.toString();
+          if (this.errorMessage === "Invalid credentials") {
+            window.alert("Mot de passe incorrect !");
+          } else {
+            window.alert("Utilisateur inconnu !");
+          }
+        }
+      );
     },
   },
 };

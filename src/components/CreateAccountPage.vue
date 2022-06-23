@@ -10,7 +10,7 @@
         <input
           type="text"
           placeholder="Nom d'utilisateur"
-          v-model="pseudo"
+          v-model="user.username"
           required
         />
       </div>
@@ -38,7 +38,7 @@
         <input
           type="password"
           placeholder="Mot de passe"
-          v-model="password"
+          v-model="user.password"
           autocomplete="current-password"
           id="password-input-0"
           required
@@ -87,7 +87,7 @@
         >Déjà un compte ? Connectez-vous</router-link
       >
       <div style="padding-top: 5vh"></div>
-      <div class="login-button" v-on:click="postLogIn">Se connecter</div>
+      <div class="login-button" v-on:click="postSignUp">S'inscrire</div>
     </div>
   </div>
 </template>
@@ -97,9 +97,8 @@ export default {
   name: "LoginPage",
   data() {
     return {
-      pseudo: null,
-      selectedSchool: null,
-      password: null,
+      user: { username: "", password: "" },
+      selectedSchool: null, // TODO: POST school to /api/register aswell
       confirmPassword: null,
       logInIconPath: require("./../assets/login/profilePicLoginIcon.svg"),
       schoolIconPath: require("./../assets/school.svg"),
@@ -140,11 +139,44 @@ export default {
         x.type = "password";
       }
     },
-    postLogIn() {
-      let school = this.schools.find(this.selectedSchool);
-      if (school === null || this.password !== this.confirmPassword) {
+    postSignUp() {
+      console.log(this.selectedSchool);
+      let school = this.schools.find((e) => e.name === this.selectedSchool);
+      console.log(school);
+      if (school === null) {
+        window.alert("Veuillez renseigner une école");
         return;
       }
+      if (this.user.password !== this.confirmPassword) {
+        window.alert(
+          "Les mots de passe sont différents, veuillez révérifier leur saisie"
+        );
+        return;
+      }
+      this.$store.dispatch("auth/register", this.user).then(
+        (data) => {
+          window.alert(
+            "Compte créé ! Connectez-vous à présent avec les identifiants créés."
+          );
+          this.message = data.message;
+          this.successful = true;
+          this.loading = false;
+        },
+        (error) => {
+          console.log(error);
+          this.errorMessage = error.response.data.message || error.toString();
+          this.statusCode = error.response.status || 400;
+          if (this.statusCode === 400) {
+            window.alert(
+              "Nom d'utilisateur déjà utilisé ! Merci de réessayer avec un autre pseudo."
+            );
+          } else {
+            window.alert("Erreur interne, merci de réessayer.");
+          }
+          this.successful = false;
+          this.loading = false;
+        }
+      );
       //TODO: authentication
     },
   },
