@@ -57,7 +57,7 @@ export default {
   components: { CommentToAnswerInput, CommentToAnswer },
   props: {
     answerProp: {
-      id: Number,
+      id: String,
       content: String,
       user: String,
       date: String,
@@ -107,7 +107,6 @@ export default {
         /*this.comments.forEach(
           (c) => (c.date = Utils.convertTimestampToHumanReadable(c.date))
         );*/
-        this.setVoteCounterComments();
       });
     },
     setVoteCounterAnswer() {
@@ -136,7 +135,7 @@ export default {
   async mounted() {
     await this.setVoteCounterAnswer();
     await this.setComments();
-    //await this.setVoteCounterComments();
+    await this.setVoteCounterComments();
   },
 };
 </script>

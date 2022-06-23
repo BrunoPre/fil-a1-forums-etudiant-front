@@ -19,16 +19,22 @@
 
 <script>
 import { defineComponent } from "vue";
+import { mapGetters } from "vuex";
 
 export default defineComponent({
   name: "ReplyToQuestionInput",
+  computed: {
+    ...mapGetters("auth", {
+      getState: "getState",
+    }),
+  },
   data() {
     return {
       answer: {
-        id: Math.floor(Math.random() * 10000),
+        id: Math.floor(Math.random() * 10000), // TODO: remove it
         content: "",
-        user: "User Name",
-        date: new Date().getDate() + " Juin 2022",
+        user: "",
+        date: new Date().getDate() + " Juin 2022", // TODO: change it
         voteCount: 0,
       },
       placeholder_ecrire_msg_ici: "Ecrivez votre réponse ici...",
@@ -44,7 +50,9 @@ export default defineComponent({
       } else if (event) {
         // TODO: post message
         window.alert("Réponse postée !");
-        this.$emit("newAnswer", this.answer);
+        let ans = this.answer;
+        ans.user = this.getState.user.username;
+        this.$emit("newAnswer", ans);
         this.answer = null;
       } else {
         // TODO: exception handling

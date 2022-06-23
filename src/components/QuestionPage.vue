@@ -54,6 +54,7 @@ import ReplyToQuestionInput from "@/components/ReplyToQuestionInput";
 import PostService from "@/services/post.service";
 import Utils from "@/utils/Utils";
 import ReplyService from "@/services/reply.service";
+import { Reply } from "@/types/Reply";
 export default {
   name: "QuestionPage",
   components: { AnswerToQuestion, ReplyToQuestionInput },
@@ -82,6 +83,8 @@ export default {
       window.alert("Question supprimée !");
     },
     newAnswer(answer) {
+      // TODO PUSH answer
+      ReplyService.postAnswer(this.question.id, answer.user, answer.content);
       this.answers.push(answer);
       console.log(this.answers);
     },

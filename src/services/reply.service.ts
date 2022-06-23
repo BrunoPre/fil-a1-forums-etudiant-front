@@ -2,7 +2,7 @@ import axios from "axios";
 import { Reply } from "@/types/Reply";
 import { IReply } from "@/types/IReply";
 
-const API_URL = "http://localhost:8080/api/replies/";
+const API_URL = "http://localhost:8080/api/replies";
 
 class ReplyService {
   getAnswersByPostId(postId: string) {
@@ -18,13 +18,22 @@ class ReplyService {
   }
 
   getCommentsByReplyId(replyId: string) {
-    return axios.get(API_URL + replyId + "/comments").then((response) => {
+    return axios.get(API_URL + "/" + replyId + "/comments").then((response) => {
       const listComments: Reply[] = [];
       response.data.forEach(function (reply: IReply) {
         listComments.push(new Reply(reply));
       });
       return Promise.resolve(listComments);
     });
+  }
+
+  postAnswer(postId: string, userName: string, payload: string) {
+    return axios.post(API_URL, {
+      postId: postId,
+      replyId: null,
+      userName: userName,
+      content: payload,
+    }); // TODO: get response
   }
 }
 
