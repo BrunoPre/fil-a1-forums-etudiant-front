@@ -225,5 +225,6 @@ h3 {
   margin-right: 1vw;
   font-weight: 500;
   color: #6a8bff;
+  margin-bottom: 0.5vh;
 }
 </style>
