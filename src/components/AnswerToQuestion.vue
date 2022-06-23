@@ -101,13 +101,18 @@ export default {
       this.$emit("deleteAnswer", this.answer);
     },
     setComments() {
-      ReplyService.getCommentsByReplyId(this.answer.id).then((coms) => {
-        //TODO: translate date & map voteCount
-        this.comments = coms;
-        /*this.comments.forEach(
+      ReplyService.getCommentsByReplyId(this.answer.id)
+        .then((coms) => {
+          //TODO: translate date & map voteCount
+          this.comments = coms;
+          /*this.comments.forEach(
           (c) => (c.date = Utils.convertTimestampToHumanReadable(c.date))
         );*/
-      });
+        })
+        .catch((err) => {
+          console.log("no comment for reply id ", this.answer.id);
+          this.comments = []; // just in case
+        });
     },
     setVoteCounterAnswer() {
       console.log(this.answer.id);
