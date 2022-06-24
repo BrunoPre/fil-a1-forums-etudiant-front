@@ -86,7 +86,10 @@ export default {
       this.answers = this.answers.filter((a) => a.id !== answer.id);
     },
     deleteQuestion() {
+      PostService.deletePost(this.$route.params.id);
+      console.log();
       window.alert("Question supprimée !");
+      history.back();
     },
     newAnswer(answer) {
       let answerId = ReplyService.postAnswer(

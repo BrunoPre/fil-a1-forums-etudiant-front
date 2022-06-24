@@ -45,7 +45,7 @@ class PostService {
       .catch((err) => Promise.reject(err)); // 500 internal server error
   }
 
-  deletePost(postId: bigint) {
+  deletePost(postId: string | RouteParamValue[]) {
     return axios.delete(API_URL + postId);
   }
 
