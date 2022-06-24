@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Reply } from "@/types/Reply";
 import { IReply } from "@/types/IReply";
+import { IPostFetched } from "@/types/IPostFetched";
 
 const API_URL = "http://localhost:8080/api/replies";
 
@@ -28,12 +29,16 @@ class ReplyService {
   }
 
   postAnswer(postId: string, userName: string, payload: string) {
-    return axios.post(API_URL, {
-      postId: postId,
-      replyId: null,
-      userName: userName,
-      content: payload,
-    }); // TODO: get response
+    return axios
+      .post(API_URL, {
+        postId: postId,
+        replyId: null,
+        userName: userName,
+        content: payload,
+      })
+      .then((res) => {
+        return res.data.id;
+      }); // TODO: get response
   }
 
   postCommentToAnswer(

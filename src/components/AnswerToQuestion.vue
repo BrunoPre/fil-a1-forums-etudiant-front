@@ -135,7 +135,7 @@ export default {
         );*/
         })
         .catch((err) => {
-          console.log("no comment for reply id ", this.answer.id);
+          console.log("no comment for reply id ", this.answer.id, err);
           this.comments = []; // just in case
         });
     },

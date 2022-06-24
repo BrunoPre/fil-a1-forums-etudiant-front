@@ -89,10 +89,13 @@ export default {
       window.alert("Question supprimée !");
     },
     newAnswer(answer) {
-      ReplyService.postAnswer(this.question.id, answer.user, answer.content);
+      let answerId = ReplyService.postAnswer(
+        this.question.id,
+        answer.user,
+        answer.content
+      ).then((ansId) => (answer.id = ansId));
       this.answers.push(answer);
       console.log(this.answers);
-      window.location.reload();
     },
     async setQuestion(questionId) {
       PostService.getPostByPostId(questionId)

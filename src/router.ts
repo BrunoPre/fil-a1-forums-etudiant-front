@@ -62,7 +62,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("./components/ModifySchool.vue"), // TODO: TBD
   },
   {
-    path: "/sujet/:id",
+    path: "/ecole/:id1/sujet/:id2",
     alias: "/sujet",
     name: "sujet",
     component: () => import("./components/SubjectPage.vue"), // TODO: TBD

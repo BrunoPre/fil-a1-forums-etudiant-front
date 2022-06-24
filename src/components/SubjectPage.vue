@@ -6,9 +6,9 @@
     <div class="container">
       <div class="description-container">
         <div class="question-title">
-          <h1>{{ sujet }}</h1>
+          <h1>{{ groupe.label }}</h1>
         </div>
-        <div class="description" v-html="description"></div>
+        <div class="description" v-html="groupe.description"></div>
       </div>
       <div class="questions-container">
         <div class="question-header">
@@ -29,12 +29,13 @@
         <CreateQuestion
           v-if="isAddQuestionButtonClicked"
           @new-question="newQuestion"
-          :categories="categories"
+          :categories="groupe.categories"
         ></CreateQuestion>
         <div class="categories" v-if="!isAddQuestionButtonClicked">
           <div class="categories-container" v-if="!moreCategories">
+            <!-- TODO: add slice(0,4) -->
             <button
-              v-for="categorie in categories.slice(0, 4)"
+              v-for="categorie in groupe.categories"
               :key="categorie"
               @click="updateCategorie(categorie)"
               :class="
@@ -43,12 +44,12 @@
                   : 'categorie-button'
               "
             >
-              {{ categorie }}
+              {{ categorie.libelle }}
             </button>
           </div>
           <div class="categories-container" v-else>
             <button
-              v-for="categorie in categories"
+              v-for="categorie in groupe.categories"
               :key="categorie"
               @click="updateCategorie(categorie)"
               :class="
@@ -57,7 +58,7 @@
                   : 'categorie-button'
               "
             >
-              {{ categorie }}
+              {{ categorie.libelle }}
             </button>
           </div>
           <div class="more-categories">
@@ -71,7 +72,7 @@
         </div>
         <div class="questions">
           <div v-for="question in filteredQuestions" :key="question">
-            <QuestionCard :question="question"></QuestionCard>
+            <QuestionCard :question-prop="question"></QuestionCard>
           </div>
         </div>
       </div>
@@ -93,6 +94,9 @@
 <script>
 import QuestionCard from "@/components/QuestionCard";
 import CreateQuestion from "@/components/CreateQuestion";
+import GroupService from "@/services/group.service";
+import { ICategory } from "@/types/ICategory";
+import PostService from "@/services/post.service";
 
 export default {
   name: "SubjectPage",
@@ -100,6 +104,7 @@ export default {
 
   data() {
     return {
+      groupe: [],
       sujet: "Formations",
       isAddQuestionButtonClicked: false,
       categories: [
@@ -199,12 +204,18 @@ export default {
       console.log("Cat updated to : " + this.selectedCategorie);
       this.filterByCategorie();
     },
-    filterByCategorie() {
+    async filterByCategorie() {
       if (this.selectedCategorie === null) {
         this.filteredQuestions = [...this.questions];
         return;
       }
-      this.filteredQuestions = [];
+      let groupId = this.$route.params.id2;
+      console.log("groupeid=", groupId, " catId=", this.selectedCategorie.id);
+      await PostService.getQuestionsByCategoryId(
+        groupId,
+        this.selectedCategorie.id
+      ).then((questions) => (this.filteredQuestions = questions));
+      /*this.filteredQuestions = [];
       this.questions.forEach((q) => {
         q.categories.forEach((c) => {
           if (
@@ -214,7 +225,7 @@ export default {
             this.filteredQuestions.push(q);
           }
         });
-      });
+      });*/
       console.log(this.filteredQuestions);
     },
     isCategorieSelected(categorie) {
@@ -224,14 +235,18 @@ export default {
       // TODO DELETE request
       window.alert("Sujet supprimée !");
     },
-    /*getGroup(groupId) {
-      //TODO
-      return;
-    },*/
+    async setGroup() {
+      console.log(this.$route.params);
+      let params = this.$route.params;
+      let groupId = params.id2;
+      await GroupService.getGroupById(groupId).then((group) => {
+        this.groupe = group;
+      });
+    },
   },
   async mounted() {
+    await this.setGroup();
     this.filteredQuestions = [...this.questions];
-    this.getGroup(this.$route.params.id);
   },
 };
 </script>

@@ -1,7 +1,9 @@
-import axios from "axios";
+import axios, { Axios, AxiosResponse } from "axios";
 import { IPost } from "@/types/IPost";
 import { IPostFetched } from "@/types/IPostFetched";
 import { PostFetched } from "@/types/PostFetched";
+import { Post } from "@/types/Post";
+import { RouteParamValue } from "vue-router";
 
 const API_URL = "http://localhost:8080/api/posts/";
 
@@ -36,15 +38,24 @@ class PostService {
       });
   }
 
-  postPost(userId: string, post: IPost) {
+  postPost(post: IPost) {
     return axios
-      .post(API_URL, post, { params: { userId: userId } })
-      .then((res) => Promise.resolve(res))
+      .post("http://localhost:8080/api/posts", post)
+      .then((res) => Promise.resolve(new PostFetched(res.data as IPostFetched)))
       .catch((err) => Promise.reject(err)); // 500 internal server error
   }
 
   deletePost(postId: bigint) {
     return axios.delete(API_URL + postId);
+  }
+
+  getQuestionsByCategoryId(
+    groupId: string | RouteParamValue[],
+    categoryId: string
+  ) {
+    return axios
+      .get(API_URL + groupId, { params: { categoryId: categoryId } })
+      .then((res) => res.data as IPostFetched[]);
   }
 }
 

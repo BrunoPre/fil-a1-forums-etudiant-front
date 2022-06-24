@@ -21,7 +21,9 @@
           </div>
           <div class="group-list-container">
             <div v-for="groupe in groupes" :key="groupe" class="group">
-              <router-link to="/sujet">
+              <router-link
+                :to="'/ecole/' + this.$route.params.id + '/sujet/' + groupe.id"
+              >
                 <div class="group-link-container">
                   <h3>{{ groupe.label }}</h3>
                 </div>
@@ -160,9 +162,9 @@ export default {
       });
     },
     setGroups(schoolId) {
-      GroupService.getGroupsBySchoolId(schoolId).then((res) => {
-        res.forEach((group) => (this.groupes = group));
-      });
+      GroupService.getGroupsBySchoolId(schoolId).then(
+        (res) => (this.groupes = res)
+      );
     },
   },
   async mounted() {

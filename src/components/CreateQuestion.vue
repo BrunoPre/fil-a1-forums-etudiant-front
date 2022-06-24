@@ -23,7 +23,7 @@
               : 'categorie-button'
           "
         >
-          {{ categorie }}
+          {{ categorie.libelle }}
         </button>
       </div>
       <div class="categories-container" v-else>
@@ -37,7 +37,7 @@
               : 'categorie-button'
           "
         >
-          {{ categorie }}
+          {{ categorie.libelle }}
         </button>
       </div>
       <div class="more-categories">
@@ -57,6 +57,7 @@
 import { defineComponent } from "vue";
 import postService from "@/services/post.service";
 import UserService from "@/services/user.service";
+import { mapGetters } from "vuex";
 
 export default defineComponent({
   name: "ReplyToQuestionInput",
@@ -75,7 +76,12 @@ export default defineComponent({
       },
     },
     categories: Array,
-    groupId: Number,
+    groupId: String,
+  },
+  computed: {
+    ...mapGetters("auth", {
+      getState: "getState",
+    }),
   },
   data() {
     return {
@@ -106,13 +112,19 @@ export default defineComponent({
           return;
         }
         this.question.categories = [...this.selectedCategories];
-        postService.postPost(UserService.getCurrentUser());
+        let params = this.$route.params;
+        let post = {
+          groupId: params.id2,
+          title: this.question.title,
+          content: this.question.description,
+          categoryId: this.selectedCategories[0].id,
+          userName: this.getState.user.username,
+        };
+        await postService.postPost(post);
         this.$emit("newQuestion", this.question);
         this.question = "";
         this.selectedCategories = [];
         this.moreCategories = false;
-        window.alert("Question postée !");
-        //window.location.reload();
       } else {
         // TODO: exception handling
         window.alert("Erreur : le message n'a pas pu être envoyé");
@@ -126,6 +138,7 @@ export default defineComponent({
       } else {
         this.selectedCategories.push(categorie);
       }
+      console.log(this.selectedCategories);
     },
   },
   //mounted() {},

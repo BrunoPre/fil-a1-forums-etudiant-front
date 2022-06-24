@@ -49,11 +49,10 @@ export default defineComponent({
         window.alert("Veuillez écrire une réponse avant de l'envoyer");
       } else if (event) {
         // TODO: post message
-        window.alert("Réponse postée !");
         let ans = this.answer;
         ans.user = this.getState.user.username;
         this.$emit("newAnswer", ans);
-        this.answer = null;
+        this.answer = "";
       } else {
         // TODO: exception handling
         window.alert("Erreur : la réponse n'a pas pu être envoyée");

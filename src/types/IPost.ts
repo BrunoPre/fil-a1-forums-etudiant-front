@@ -1,5 +1,5 @@
 export interface IPost {
-  groupId: bigint;
+  groupId: string;
   title: string;
   content: string;
   categoryId: bigint;

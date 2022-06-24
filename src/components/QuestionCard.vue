@@ -25,8 +25,8 @@
         </div>
         <p>
           Question posée par
-          <span class="user-span">{{ question.user }}</span> le
-          <span class="date-span">{{ question.date }}</span>
+          <span class="user-span">{{ question.userName }}</span> le
+          <span class="date-span">{{ question.createdAt }}</span>
         </p>
       </div>
       <div class="question-categories">
@@ -35,12 +35,12 @@
           v-for="categorie in question.categories"
           :key="categorie"
         >
-          {{ categorie }}
+          {{ categorie.libelle }}
         </div>
       </div>
       <div v-if="showQuestion">
         <div class="question-description">
-          <p>{{ question.description }}</p>
+          <p>{{ question.content }}</p>
         </div>
         <h3>Meilleures réponses</h3>
         <div class="best-answer-container" v-if="question.bestAnswer">
@@ -71,7 +71,9 @@
         </div>
         <div class="more">
           <!--TODO Rediriger vers page question-->
-          <a href="http://localhost:8080/question">Montrer + de réponses →</a>
+          <a :href="'http://localhost:8081/question/' + this.question.id"
+            >Montrer + de réponses →</a
+          >
         </div>
       </div>
     </div>
@@ -82,11 +84,19 @@
 export default {
   name: "QuestionCard",
   props: {
-    question: {
+    questionProp: {
+      id: String,
+      groupId: String,
       title: String,
-      user: String,
-      date: String,
-      voteCount: Number,
+      content: String,
+      categoryId: String,
+      userName: String,
+      createdAt: String,
+    },
+  },
+  data() {
+    return {
+      question: this.questionProp,
       bestAnswer: {
         content: String,
         user: String,
@@ -94,10 +104,6 @@ export default {
         voteCount: Number,
       },
       categories: Array,
-    },
-  },
-  data() {
-    return {
       showQuestion: false,
     };
   },
