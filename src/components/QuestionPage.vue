@@ -98,7 +98,7 @@ export default {
       console.log(this.answers);
     },
     async setQuestion(questionId) {
-      PostService.getPostByPostId(questionId)
+      await PostService.getPostByPostId(questionId)
         .then((postFetched) => {
           this.question.id = postFetched.id;
           this.question.date = Utils.convertTimestampToHumanReadable(
@@ -117,10 +117,13 @@ export default {
         });
     },
     async setAnswersByPostId(questionId) {
-      ReplyService.getAnswersByPostId(questionId).then((ans) => {
+      await ReplyService.getAnswersByPostId(questionId).then((anss) => {
         //TODO: translate date & map voteCount
-        //ans = ans.map((a) => Utils.convertTimestampToHumanReadable(a.date));
-        this.answers = ans;
+        anss.forEach(
+          (_ans) =>
+            (_ans.date = Utils.convertTimestampToHumanReadable(_ans.date))
+        );
+        this.answers = anss;
       });
     },
   },

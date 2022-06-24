@@ -52,6 +52,7 @@ import CommentToAnswerInput from "@/components/CommentToAnswerInput";
 import ReplyService from "@/services/reply.service";
 import VoteService from "@/services/vote.service";
 import { mapGetters } from "vuex";
+import Utils from "@/utils/Utils";
 export default {
   name: "AnswerToQuestion",
   components: { CommentToAnswerInput, CommentToAnswer },
@@ -101,7 +102,7 @@ export default {
       );
       this.comments.push({
         content: comment,
-        date: new Date().getDate() + " Juin 2022", // TODO: change it
+        date: new Date().getDate() + " juin 2022", // TODO: change it
         user: this.getState.user.username,
         voteCount: 0,
       });
@@ -125,14 +126,14 @@ export default {
       await ReplyService.deleteReply(this.answer.id);
       this.$emit("deleteAnswer", this.answer);
     },
-    setComments() {
-      ReplyService.getCommentsByReplyId(this.answer.id)
+    async setComments() {
+      await ReplyService.getCommentsByReplyId(this.answer.id)
         .then((coms) => {
           //TODO: translate date & map voteCount
+          coms.forEach(
+            (c) => (c.date = Utils.convertTimestampToHumanReadable(c.date))
+          );
           this.comments = coms;
-          /*this.comments.forEach(
-          (c) => (c.date = Utils.convertTimestampToHumanReadable(c.date))
-        );*/
         })
         .catch((err) => {
           console.log("no comment for reply id ", this.answer.id, err);
