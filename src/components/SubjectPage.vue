@@ -98,7 +98,6 @@
 import QuestionCard from "@/components/QuestionCard";
 import CreateQuestion from "@/components/CreateQuestion";
 import GroupService from "@/services/group.service";
-import { ICategory } from "@/types/ICategory";
 import PostService from "@/services/post.service";
 
 export default {
@@ -150,25 +149,30 @@ export default {
       filteredQuestions: [],
       questions: [
         {
+          id: "0",
+          groupId: "",
+          categoryId: "",
           title: "Vestibulum ac condimentum metus ?",
-          description: ` Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec lacus
+          content: ` Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec lacus
           nulla. Vivamus tempus diam et ligula finibus, vitae feugiat ipsum commodo.
           Suspendisse potenti. Duis ac velit at libero efficitur ullamcorper ac
           efficitur risus. Donec cursus pharetra vulputate. Donec eu imperdiet nibh.
           Aliquam vitae rutrum mi, a fermentum elit.`,
-          user: "User Name",
-          date: "24 Mai 2022",
+          userName: "User Name",
+          createdAt: "24 Mai 2022",
           bestAnswer: null,
           categories: ["Administration", "Législation"],
         },
         {
+          groupId: "",
+          id: "1",
           title: "Vestibulum ac condimentum metus ?",
           description: ` Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec lacus
           nulla. Vivamus tempus diam et ligula finibus, vitae feugiat ipsum commodo.
           Suspendisse potenti. Duis ac velit at libero efficitur ullamcorper ac
           efficitur risus. Donec cursus pharetra vulputate. Donec eu imperdiet nibh.
           Aliquam vitae rutrum mi, a fermentum elit.`,
-          user: "User Name",
+          userName: "User Name",
           date: "24 Mai 2022",
           bestAnswer: {
             content: `

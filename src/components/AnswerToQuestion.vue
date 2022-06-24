@@ -82,7 +82,7 @@ export default {
     setBorderBottom() {
       return this.isLastAnswer ? "" : "border-bottom: #e2e2e2 solid 1px;";
     },
-    newComment(comment) {
+    async newComment(comment) {
       console.log(
         "this.parentPostId,\n" +
           "        this.answer.id,\n" +
@@ -93,7 +93,7 @@ export default {
         this.getState.user.username,
         comment
       );
-      ReplyService.postCommentToAnswer(
+      await ReplyService.postCommentToAnswer(
         this.answer.postId,
         this.answer.id,
         this.getState.user.username,
