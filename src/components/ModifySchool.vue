@@ -27,6 +27,8 @@
 <script>
 import Trumbowyg from "vue-trumbowyg";
 import "trumbowyg/dist/ui/trumbowyg.css";
+import GroupService from "@/services/group.service";
+import SchoolService from "@/services/school.service";
 
 export default {
   name: "ModifySchool",
@@ -35,32 +37,9 @@ export default {
   },
   data() {
     return {
-      title: "IMT Atlantique",
-      description: `
-        <h2>Est dolorem</h2>
-        <p>
-          Ut omnis nostrum sit nihil Quis vel blanditiis dolor rem libero galisum. Aut veniam aliquid aut porro nemo
-          et quibusdam atque? Aut ipsa rerum et adipisci aperiam aut impedit veritatis! Quo molestiae officiis 33 nulla
-          et repellat libero nam accusamus voluptatem aut aspernatur possimus 33 nobis sunt. Est dolorem dolorem et
-          excepturi explicabo Ea animi ut quaerat sapiente.
-        </p>
-        <br>
-        <h2>Quo dolore</h2>
-        <p>
-          Ut omnis nostrum sit nihil Quis vel blanditiis dolor rem libero galisum. Aut veniam aliquid aut porro nemo
-          et quibusdam atque? Aut ipsa rerum et adipisci aperiam aut impedit veritatis! Quo molestiae officiis 33 nulla
-          et repellat libero nam accusamus voluptatem aut aspernatur possimus 33 nobis sunt. Est dolorem dolorem et
-          excepturi explicabo Ea animi ut quaerat sapiente.
-        </p>
-        <br>
-        <h2>Quo molestiae</h2>
-        <p>
-          Ut omnis nostrum sit nihil Quis vel blanditiis dolor rem libero galisum. Aut veniam aliquid aut porro nemo
-          et quibusdam atque? Aut ipsa rerum et adipisci aperiam aut impedit veritatis! Quo molestiae officiis 33 nulla
-          et repellat libero nam accusamus voluptatem aut aspernatur possimus 33 nobis sunt. Est dolorem dolorem et
-          excepturi explicabo Ea animi ut quaerat sapiente.
-        </p>
-      `,
+      title: "",
+      description: "",
+      school_type: "",
       config: {
         autogrow: true,
         removeformatPasted: true,
@@ -77,10 +56,29 @@ export default {
     };
   },
   methods: {
-    save() {
-      console.log(this.description);
+    async save() {
+      console.log("old description = ", this.description);
+
+      await SchoolService.updateSchool(
+        this.$route.params.id,
+        this.title,
+        this.school_type,
+        this.description
+      );
+      console.log("new description = ", this.description);
       window.alert("Ecole mise à jour !");
+      history.back();
     },
+    async setAttrs() {
+      await SchoolService.getSchoolById(this.$route.params.id).then((res) => {
+        this.title = res.libelle;
+        this.description = res.description;
+        this.school_type = res.school_type;
+      });
+    },
+  },
+  async mounted() {
+    await this.setAttrs();
   },
 };
 </script>
