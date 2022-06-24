@@ -36,32 +36,8 @@ export default {
   },
   data() {
     return {
-      title: "Administration",
-      description: `
-        <h2>Est dolorem</h2>
-        <p>
-          Ut omnis nostrum sit nihil Quis vel blanditiis dolor rem libero galisum. Aut veniam aliquid aut porro nemo
-          et quibusdam atque? Aut ipsa rerum et adipisci aperiam aut impedit veritatis! Quo molestiae officiis 33 nulla
-          et repellat libero nam accusamus voluptatem aut aspernatur possimus 33 nobis sunt. Est dolorem dolorem et
-          excepturi explicabo Ea animi ut quaerat sapiente.
-        </p>
-        <br>
-        <h2>Quo dolore</h2>
-        <p>
-          Ut omnis nostrum sit nihil Quis vel blanditiis dolor rem libero galisum. Aut veniam aliquid aut porro nemo
-          et quibusdam atque? Aut ipsa rerum et adipisci aperiam aut impedit veritatis! Quo molestiae officiis 33 nulla
-          et repellat libero nam accusamus voluptatem aut aspernatur possimus 33 nobis sunt. Est dolorem dolorem et
-          excepturi explicabo Ea animi ut quaerat sapiente.
-        </p>
-        <br>
-        <h2>Quo molestiae</h2>
-        <p>
-          Ut omnis nostrum sit nihil Quis vel blanditiis dolor rem libero galisum. Aut veniam aliquid aut porro nemo
-          et quibusdam atque? Aut ipsa rerum et adipisci aperiam aut impedit veritatis! Quo molestiae officiis 33 nulla
-          et repellat libero nam accusamus voluptatem aut aspernatur possimus 33 nobis sunt. Est dolorem dolorem et
-          excepturi explicabo Ea animi ut quaerat sapiente.
-        </p>
-      `,
+      title: "",
+      description: "",
       config: {
         autogrow: true,
         removeformatPasted: true,
@@ -91,6 +67,15 @@ export default {
       window.alert("Sujet mis à jour !");
       history.back();
     },
+    async setAttrs() {
+      await GroupService.getGroupById(this.$route.params.id2).then((res) => {
+        this.title = res.label;
+        this.description = res.description;
+      });
+    },
+  },
+  async mounted() {
+    await this.setAttrs();
   },
 };
 </script>
