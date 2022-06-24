@@ -117,12 +117,12 @@ export default {
       VoteService.postDislike(this.getState.user.username, this.answer.id);
       this.answer.voteCount -= 1;
     },
-    deleteComment(comment) {
-      ReplyService.deleteReply(comment.id);
+    async deleteComment(comment) {
+      await ReplyService.deleteReply(comment.id);
       this.comments = this.comments.filter((c) => c.id !== comment.id);
     },
-    deleteAnswer() {
-      ReplyService.deleteReply(this.answer.id);
+    async deleteAnswer() {
+      await ReplyService.deleteReply(this.answer.id);
       this.$emit("deleteAnswer", this.answer);
     },
     setComments() {
