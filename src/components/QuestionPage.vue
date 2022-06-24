@@ -54,7 +54,6 @@ import ReplyToQuestionInput from "@/components/ReplyToQuestionInput";
 import PostService from "@/services/post.service";
 import Utils from "@/utils/Utils";
 import ReplyService from "@/services/reply.service";
-import { Reply } from "@/types/Reply";
 export default {
   name: "QuestionPage",
   components: { AnswerToQuestion, ReplyToQuestionInput },

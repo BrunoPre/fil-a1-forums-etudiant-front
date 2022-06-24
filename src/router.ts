@@ -44,7 +44,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("./components/QuestionPage.vue"), // TODO: TBD
   },
   {
-    path: "/ecole",
+    path: "/ecole/:id",
     alias: "/ecole",
     name: "ecole",
     component: () => import("./components/SchoolPage.vue"), // TODO: TBD
