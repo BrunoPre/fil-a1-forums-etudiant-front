@@ -27,6 +27,7 @@
 <script>
 import Trumbowyg from "vue-trumbowyg";
 import "trumbowyg/dist/ui/trumbowyg.css";
+import GroupService from "@/services/group.service";
 
 export default {
   name: "ModifySubject",
@@ -77,9 +78,18 @@ export default {
     };
   },
   methods: {
-    save() {
-      console.log(this.description);
+    async save() {
+      console.log("old description = ", this.description);
+
+      await GroupService.updateGroup(
+        this.$route.params.id1,
+        this.$route.params.id2,
+        this.title,
+        this.description
+      );
+      console.log("new description = ", this.description);
       window.alert("Sujet mis à jour !");
+      history.back();
     },
   },
 };

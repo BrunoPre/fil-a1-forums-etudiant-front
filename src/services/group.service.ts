@@ -17,6 +17,20 @@ class GroupService {
       .then((response) => response.data as IGroup);
   }
 
+  updateGroup(
+    groupId: string,
+    schoolId: string,
+    label: string,
+    description: string
+  ) {
+    return axios.put(API_URL, {
+      id: groupId,
+      schoolId: schoolId,
+      label: label,
+      description: description,
+    });
+  }
+
   /*
   {
         "id": "1",

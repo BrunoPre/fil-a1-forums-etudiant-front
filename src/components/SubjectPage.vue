@@ -84,7 +84,15 @@
       <div class="administration-header">
         <h3>Administration</h3>
       </div>
-      <router-link to="/sujet/modifier">
+      <router-link
+        :to="
+          '/ecole/' +
+          this.$route.params.id1 +
+          '/sujet/' +
+          this.$route.params.id2 +
+          '/modifier'
+        "
+      >
         <button class="modify-school">Modifier le sujet</button>
       </router-link>
       <button class="delete-school" @click="deleteSubject">
