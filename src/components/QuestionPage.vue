@@ -60,60 +60,19 @@
 <script>
 import AnswerToQuestion from "@/components/AnswerToQuestion";
 import ReplyToQuestionInput from "@/components/ReplyToQuestionInput";
+import PostService from "@/services/post.service";
+import Utils from "@/utils/Utils";
+import ReplyService from "@/services/reply.service";
 export default {
   name: "QuestionPage",
   components: { AnswerToQuestion, ReplyToQuestionInput },
-  data() {
+  data: function () {
     return {
-      question: {
-        id: 10,
-        title: "Vestibulum ac condimentum metus ?",
-        description: ` Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec lacus
-      nulla. Vivamus tempus diam et ligula finibus, vitae feugiat ipsum commodo.
-      Suspendisse potenti. Duis ac velit at libero efficitur ullamcorper ac
-      efficitur risus. Donec cursus pharetra vulputate. Donec eu imperdiet nibh.
-      Aliquam vitae rutrum mi, a fermentum elit.`,
-        user: "User Name",
-        date: "24 Mai 2022",
-        categories: ["Mathématiques", "Législation"],
-      },
-      answers: [
-        {
-          id: 3,
-          content: `        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec
-        lacus nulla. Vivamus tempus diam et ligula finibus, vitae feugiat ipsum
-        ipsum commodo. Suspendisse potenti. Duis ac velit at libero efficitur
-        ullamcorper ac efficitur risus. Donec cursus pharetra vulputate. Donec
-        eu imperdiet nibh. Aliquam vitae rutrum mi, a fermentum elit.`,
-          user: "Bip Bap",
-          date: "24 Mai 2022",
-          voteCount: 8,
-        },
-        {
-          id: 19329,
-          content: `        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec
-        lacus nulla. Vivamus tempus diam et ligula finibus, vitae feugiat ipsum
-        ipsum commodo. Suspendisse potenti. Duis ac velit at libero efficitur
-        ullamcorper ac efficitur risus. Donec cursus pharetra vulputate. Donec
-        eu imperdiet nibh. Aliquam vitae rutrum mi, a fermentum elit.`,
-          user: "Bip Bap",
-          date: "25 Mai 2022",
-          voteCount: 2,
-        },
-        {
-          id: 20233,
-          content: `        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec
-        lacus nulla. Vivamus tempus diam et ligula finibus, vitae feugiat ipsum
-        ipsum commodo. Suspendisse potenti. Duis ac velit at libero efficitur
-        ullamcorper ac efficitur risus. Donec cursus pharetra vulputate. Donec
-        eu imperdiet nibh. Aliquam vitae rutrum mi, a fermentum elit.`,
-          user: "Bip Bap",
-          date: "26 Mai 2022",
-          voteCount: 1,
-        },
-      ],
+      question: {},
+      answers: [],
     };
   },
+
   methods: {
     isLastAnswer(index, lengthArray) {
       /* Checks if the `index`-th answer
@@ -123,18 +82,48 @@ export default {
       return index === lengthArray - 1;
     },
     deleteAnswer(answer) {
-      // TODO DELETE request
       console.log(answer);
       this.answers = this.answers.filter((a) => a.id !== answer.id);
     },
     deleteQuestion() {
-      // TODO DELETE request
       window.alert("Question supprimée !");
     },
     newAnswer(answer) {
+      ReplyService.postAnswer(this.question.id, answer.user, answer.content);
       this.answers.push(answer);
       console.log(this.answers);
+      window.location.reload();
     },
+    async setQuestion(questionId) {
+      PostService.getPostByPostId(questionId)
+        .then((postFetched) => {
+          this.question.id = postFetched.id;
+          this.question.date = Utils.convertTimestampToHumanReadable(
+            postFetched.createdAt
+          );
+          this.question.user = postFetched.userName;
+          this.question.title = postFetched.title;
+          this.question.description = postFetched.content;
+        })
+        .catch((err) => {
+          console.log(err);
+          window.alert(
+            "Erreur : la question n'a pu être chargée, veuillez réessayer"
+          );
+          history.back();
+        });
+    },
+    async setAnswersByPostId(questionId) {
+      ReplyService.getAnswersByPostId(questionId).then((ans) => {
+        //TODO: translate date & map voteCount
+        //ans = ans.map((a) => Utils.convertTimestampToHumanReadable(a.date));
+        this.answers = ans;
+      });
+    },
+  },
+  async mounted() {
+    await this.setQuestion(this.$route.params.id);
+    await this.setAnswersByPostId(this.$route.params.id);
   },
 };
 </script>

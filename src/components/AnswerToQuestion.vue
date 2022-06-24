@@ -49,12 +49,21 @@
 <script>
 import CommentToAnswer from "@/components/CommentToAnswer";
 import CommentToAnswerInput from "@/components/CommentToAnswerInput";
+import ReplyService from "@/services/reply.service";
+import VoteService from "@/services/vote.service";
+import { mapGetters } from "vuex";
 export default {
   name: "AnswerToQuestion",
   components: { CommentToAnswerInput, CommentToAnswer },
+  computed: {
+    ...mapGetters("auth", {
+      getState: "getState",
+    }),
+  },
   props: {
     answerProp: {
-      id: Number,
+      id: String,
+      postId: String,
       content: String,
       user: String,
       date: String,
@@ -64,36 +73,8 @@ export default {
   },
   data: function () {
     return {
-      answer: {
-        id: this.answerProp.id,
-        content: this.answerProp.content,
-        user: this.answerProp.user,
-        date: this.answerProp.date,
-        voteCount: this.answerProp.voteCount,
-      },
-      comments: [
-        {
-          id: 1,
-          content: "Done cursus pharetra vulputate. Donec eu imperdiet nibh.",
-          date: "24 Mai 2022",
-          user: "Bop Bap",
-          voteCount: 4,
-        },
-        {
-          id: 5,
-          content: "Done cursus pharetra vulputate. Donec eu imperdiet nibh.",
-          date: "24 Mai 2022",
-          user: "Bop Bap",
-          voteCount: 2,
-        },
-        {
-          id: 2,
-          content: "Done cursus pharetra vulputate. Donec eu imperdiet nibh.",
-          date: "24 Mai 2022",
-          user: "Bop Bap",
-          voteCount: 1,
-        },
-      ],
+      answer: this.answerProp,
+      comments: [],
       reply: false,
     };
   },
@@ -102,29 +83,89 @@ export default {
       return this.isLastAnswer ? "" : "border-bottom: #e2e2e2 solid 1px;";
     },
     newComment(comment) {
+      console.log(
+        "this.parentPostId,\n" +
+          "        this.answer.id,\n" +
+          "        this.getState.user.username,\n" +
+          "        comment",
+        this.answer.postId,
+        this.answer.id,
+        this.getState.user.username,
+        comment
+      );
+      ReplyService.postCommentToAnswer(
+        this.answer.postId,
+        this.answer.id,
+        this.getState.user.username,
+        comment
+      );
       this.comments.push({
         content: comment,
-        date: "03 Juin 2022",
-        user: "Test",
+        date: new Date().getDate() + " Juin 2022", // TODO: change it
+        user: this.getState.user.username,
         voteCount: 0,
       });
       console.log(this.comments);
     },
     upvote() {
       if (this.answer.voteCount < 0) return;
+      VoteService.postLike(this.getState.user.username, this.answer.id);
       this.answer.voteCount += 1;
     },
     downvote() {
       if (this.answer.voteCount <= 0) return;
+      VoteService.postDislike(this.getState.user.username, this.answer.id);
       this.answer.voteCount -= 1;
     },
     deleteComment(comment) {
-      // TODO DELETE request
+      ReplyService.deleteReply(comment.id);
       this.comments = this.comments.filter((c) => c.id !== comment.id);
     },
     deleteAnswer() {
+      ReplyService.deleteReply(this.answer.id);
       this.$emit("deleteAnswer", this.answer);
     },
+    setComments() {
+      ReplyService.getCommentsByReplyId(this.answer.id)
+        .then((coms) => {
+          //TODO: translate date & map voteCount
+          this.comments = coms;
+          /*this.comments.forEach(
+          (c) => (c.date = Utils.convertTimestampToHumanReadable(c.date))
+        );*/
+        })
+        .catch((err) => {
+          console.log("no comment for reply id ", this.answer.id);
+          this.comments = []; // just in case
+        });
+    },
+    setVoteCounterAnswer() {
+      console.log(this.answer.id);
+      VoteService.getVoteCounter(this.answer.id).then((val) => {
+        this.answer.voteCount = val;
+      });
+    },
+    setVoteCounterComments() {
+      /*this.comments = this.comments.map((com) =>
+        VoteService.getVoteCounter(com.id).then((val) => {
+          console.log(val);
+          com.voteCount = val;
+        })
+      );*/
+      this.comments.forEach((com) => {
+        console.log(com);
+        VoteService.getVoteCounter(com.id).then((val) => {
+          console.log(val);
+          com.voteCount = val;
+          console.log(com.voteCount);
+        });
+      });
+    },
+  },
+  async mounted() {
+    await this.setVoteCounterAnswer();
+    await this.setComments();
+    await this.setVoteCounterComments();
   },
 };
 </script>

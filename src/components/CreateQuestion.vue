@@ -55,6 +55,8 @@
 
 <script>
 import { defineComponent } from "vue";
+import postService from "@/services/post.service";
+import UserService from "@/services/user.service";
 
 export default defineComponent({
   name: "ReplyToQuestionInput",
@@ -73,6 +75,7 @@ export default defineComponent({
       },
     },
     categories: Array,
+    groupId: Number,
   },
   data() {
     return {
@@ -94,7 +97,7 @@ export default defineComponent({
     };
   },
   methods: {
-    submitQuestion: function (event) {
+    async submitQuestion(event) {
       // Submits a message
       if (event) {
         // TODO: post message
@@ -103,6 +106,7 @@ export default defineComponent({
           return;
         }
         this.question.categories = [...this.selectedCategories];
+        postService.postPost(UserService.getCurrentUser());
         this.$emit("newQuestion", this.question);
         this.question = "";
         this.selectedCategories = [];

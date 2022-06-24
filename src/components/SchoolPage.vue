@@ -23,73 +23,10 @@
             <div v-for="groupe in groupes" :key="groupe" class="group">
               <router-link to="/sujet">
                 <div class="group-link-container">
-                  <h3>{{ groupe.name }}</h3>
+                  <h3>{{ groupe.label }}</h3>
                 </div>
               </router-link>
             </div>
-          </div>
-        </div>
-        <div class="question-header">
-          <h2>Questions les plus pertinentes</h2>
-          <div
-            v-if="!isAddQuestionButtonClicked"
-            @click="clickAddQuestion"
-            class="ask-question"
-          >
-            <a>Poser une question</a>
-            <img src="../assets/new-question.svg" alt="" />
-          </div>
-          <div v-else @click="clickAddQuestion" class="ask-question">
-            <a>Annuler</a>
-            <img src="../assets/new-question-cancel.svg" alt="" />
-          </div>
-        </div>
-        <CreateQuestion
-          v-if="isAddQuestionButtonClicked"
-          @new-question="newQuestion"
-          :categories="categories"
-        ></CreateQuestion>
-        <div class="categories" v-if="!isAddQuestionButtonClicked">
-          <div class="categories-container" v-if="!moreCategories">
-            <button
-              v-for="categorie in categories.slice(0, 4)"
-              :key="categorie"
-              @click="updateCategorie(categorie)"
-              :class="
-                selectedCategorie === categorie
-                  ? 'selected-categorie'
-                  : 'categorie-button'
-              "
-            >
-              {{ categorie }}
-            </button>
-          </div>
-          <div class="categories-container" v-else>
-            <button
-              v-for="categorie in categories"
-              :key="categorie"
-              @click="updateCategorie(categorie)"
-              :class="
-                selectedCategorie === categorie
-                  ? 'selected-categorie'
-                  : 'categorie-button'
-              "
-            >
-              {{ categorie }}
-            </button>
-          </div>
-          <div class="more-categories">
-            <p v-if="moreCategories === false" @click="moreCategories = true">
-              Montrer + de catégories ↓
-            </p>
-            <p v-else @click="moreCategories = false">
-              Montrer - de catégories ↑
-            </p>
-          </div>
-        </div>
-        <div class="questions">
-          <div v-for="question in filteredQuestions" :key="question">
-            <QuestionCard :question="question"></QuestionCard>
           </div>
         </div>
       </div>
@@ -107,30 +44,16 @@
 </template>
 
 <script>
-import QuestionCard from "@/components/QuestionCard";
-import CreateQuestion from "@/components/CreateQuestion";
+import SchoolService from "@/services/school.service";
+import GroupService from "@/services/group.service";
 
 export default {
   name: "SchoolPage",
-  components: { QuestionCard, CreateQuestion },
 
   data() {
     return {
-      ecole: "IMT Atlantique",
-      groupes: [
-        {
-          name: "Formations",
-          link: "lien/vers/groupe", // ?????
-        },
-        {
-          name: "Sports",
-          link: "lien/vers/groupe", // ?????
-        },
-        {
-          name: "Administration",
-          link: "lien/vers/groupe", // ?????
-        },
-      ],
+      ecole: "",
+      groupes: [],
       isAddQuestionButtonClicked: false,
       categories: [
         "Administration",
@@ -144,31 +67,7 @@ export default {
       ],
       selectedCategorie: null,
       moreCategories: false,
-      description: `
-        <h2>Est dolorem</h2>
-        <p>
-          Ut omnis nostrum sit nihil Quis vel blanditiis dolor rem libero galisum. Aut veniam aliquid aut porro nemo
-          et quibusdam atque? Aut ipsa rerum et adipisci aperiam aut impedit veritatis! Quo molestiae officiis 33 nulla
-          et repellat libero nam accusamus voluptatem aut aspernatur possimus 33 nobis sunt. Est dolorem dolorem et
-          excepturi explicabo Ea animi ut quaerat sapiente.
-        </p>
-        <br>
-        <h2>Quo dolore</h2>
-        <p>
-          Ut omnis nostrum sit nihil Quis vel blanditiis dolor rem libero galisum. Aut veniam aliquid aut porro nemo
-          et quibusdam atque? Aut ipsa rerum et adipisci aperiam aut impedit veritatis! Quo molestiae officiis 33 nulla
-          et repellat libero nam accusamus voluptatem aut aspernatur possimus 33 nobis sunt. Est dolorem dolorem et
-          excepturi explicabo Ea animi ut quaerat sapiente.
-        </p>
-        <br>
-        <h2>Quo molestiae</h2>
-        <p>
-          Ut omnis nostrum sit nihil Quis vel blanditiis dolor rem libero galisum. Aut veniam aliquid aut porro nemo
-          et quibusdam atque? Aut ipsa rerum et adipisci aperiam aut impedit veritatis! Quo molestiae officiis 33 nulla
-          et repellat libero nam accusamus voluptatem aut aspernatur possimus 33 nobis sunt. Est dolorem dolorem et
-          excepturi explicabo Ea animi ut quaerat sapiente.
-        </p>
-      `,
+      description: "",
       filteredQuestions: [],
       questions: [
         {
@@ -254,8 +153,22 @@ export default {
       // TODO DELETE request
       window.alert("Ecole supprimée !");
     },
+    setSchool(schoolId) {
+      SchoolService.getSchoolById(schoolId).then((res) => {
+        this.ecole = res.libelle;
+        this.description = res.description;
+      });
+    },
+    setGroups(schoolId) {
+      GroupService.getGroupsBySchoolId(schoolId).then((res) => {
+        res.forEach((group) => (this.groupes = group));
+      });
+    },
   },
   async mounted() {
+    this.setSchool(this.$route.params.id);
+    this.setGroups(this.$route.params.id);
+    console.log(this.groupes);
     this.filteredQuestions = [...this.questions];
   },
 };

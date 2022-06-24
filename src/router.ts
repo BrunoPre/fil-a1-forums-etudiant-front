@@ -38,13 +38,13 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("./components/ReplyToQuestionInput.vue"), // TODO: TBD
   },
   {
-    path: "/question",
+    path: "/question/:id",
     alias: "/question",
     name: "question",
     component: () => import("./components/QuestionPage.vue"), // TODO: TBD
   },
   {
-    path: "/ecole",
+    path: "/ecole/:id",
     alias: "/ecole",
     name: "ecole",
     component: () => import("./components/SchoolPage.vue"), // TODO: TBD
@@ -62,7 +62,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("./components/ModifySchool.vue"), // TODO: TBD
   },
   {
-    path: "/sujet",
+    path: "/sujet/:id",
     alias: "/sujet",
     name: "sujet",
     component: () => import("./components/SubjectPage.vue"), // TODO: TBD
