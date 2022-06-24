@@ -35,7 +35,7 @@
           v-for="categorie in question.categories"
           :key="categorie"
         >
-          {{ categorie.libelle }}
+          {{ categorie }}
         </div>
       </div>
       <div v-if="showQuestion">
@@ -81,6 +81,8 @@
 </template>
 
 <script>
+import Utils from "@/utils/Utils";
+
 export default {
   name: "QuestionCard",
   props: {
@@ -93,6 +95,7 @@ export default {
       userName: String,
       createdAt: String,
     },
+    categoryName: String,
   },
   data() {
     return {
@@ -106,6 +109,15 @@ export default {
       categories: Array,
       showQuestion: false,
     };
+  },
+  mounted() {
+    this.question.createdAt = Utils.convertTimestampToHumanReadable(
+      this.question.createdAt
+    );
+    //real case (mocks have multiple cats)
+    if (this.categories.length === 1) {
+      this.categories[0] = this.categoryName;
+    }
   },
 };
 </script>

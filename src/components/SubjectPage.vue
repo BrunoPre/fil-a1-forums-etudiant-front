@@ -72,7 +72,10 @@
         </div>
         <div class="questions">
           <div v-for="question in filteredQuestions" :key="question">
-            <QuestionCard :question-prop="question"></QuestionCard>
+            <QuestionCard
+              :question-prop="question"
+              :category-name="selectedCategorie.libelle"
+            ></QuestionCard>
           </div>
         </div>
       </div>
