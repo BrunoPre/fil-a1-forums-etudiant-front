@@ -13,9 +13,13 @@ class VoteService {
   }
 
   async postLike(userId: string, replyId: string) {
-    return axios.post(API_URL, {
-      params: { userId: userId, contentId: replyId },
-    });
+    return axios.post(
+      API_URL,
+      {},
+      {
+        params: { userId: userId, contentId: replyId },
+      }
+    );
     // TODO: return response
   }
 

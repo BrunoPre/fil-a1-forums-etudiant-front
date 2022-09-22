@@ -102,7 +102,7 @@ export default {
       );
       this.comments.push({
         content: comment,
-        date: new Date().getDate() + " juin 2022", // TODO: change it
+        date: Utils.convertTimestampToHumanReadable(new Date().getDate()), // TODO: change it
         user: this.getState.user.username,
         voteCount: 0,
       });
@@ -110,16 +110,15 @@ export default {
     },
     async upvote() {
       if (this.answer.voteCount < 0) return;
-      await VoteService.postLike(this.getState.user.username, this.answer.id);
-      this.answer.voteCount += 1;
+      await VoteService.postLike(this.getState.user.username, this.answer.id)
+        .then((res) => (this.answer.voteCount += 1))
+        .catch((err) => console.log("Upvote already sent"));
     },
     async downvote() {
       if (this.answer.voteCount <= 0) return;
-      await VoteService.postDislike(
-        this.getState.user.username,
-        this.answer.id
-      );
-      this.answer.voteCount -= 1;
+      await VoteService.postDislike(this.getState.user.username, this.answer.id)
+        .then((res) => (this.answer.voteCount -= 1))
+        .catch((err) => console.log("Downvote already sent"));
     },
     async deleteComment(comment) {
       await ReplyService.deleteReply(comment.id);
@@ -144,24 +143,14 @@ export default {
         });
     },
     async setVoteCounterAnswer() {
-      console.log(this.answer.id);
       await VoteService.getVoteCounter(this.answer.id).then((val) => {
         this.answer.voteCount = val;
       });
     },
     async setVoteCounterComments() {
-      /*this.comments = this.comments.map((com) =>
-        VoteService.getVoteCounter(com.id).then((val) => {
-          console.log(val);
-          com.voteCount = val;
-        })
-      );*/
       for (const com of this.comments) {
-        console.log(com);
         await VoteService.getVoteCounter(com.id).then((val) => {
-          console.log(val);
           com.voteCount = val;
-          console.log(com.voteCount);
         });
       }
     },
