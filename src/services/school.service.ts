@@ -5,13 +5,17 @@ import { RouteParamValue } from "vue-router";
 const API_URL = "http://localhost:8080/api/schools";
 
 class SchoolService {
-  getSchoolById(schoolId: string | RouteParamValue[]): Promise<ISchool> {
+  async getSchoolById(schoolId: string | RouteParamValue[]): Promise<ISchool> {
     return axios
       .get(API_URL + "/" + schoolId)
-      .then((response) => response.data as ISchool);
+      .then((response) => Promise.resolve(response.data as ISchool))
+      .catch((err) => {
+        console.log(err);
+        return Promise.reject(err);
+      });
   }
 
-  updateSchool(
+  async updateSchool(
     schoolId: string,
     libelle: string,
     school_type: string,

@@ -56,7 +56,6 @@
 <script>
 import { defineComponent } from "vue";
 import postService from "@/services/post.service";
-import UserService from "@/services/user.service";
 import { mapGetters } from "vuex";
 
 export default defineComponent({

@@ -157,21 +157,21 @@ export default {
       // TODO DELETE request
       window.alert("Ecole supprimée !");
     },
-    setSchool(schoolId) {
-      SchoolService.getSchoolById(schoolId).then((res) => {
+    async setSchool(schoolId) {
+      await SchoolService.getSchoolById(schoolId).then((res) => {
         this.ecole = res.libelle;
         this.description = res.description;
       });
     },
-    setGroups(schoolId) {
-      GroupService.getGroupsBySchoolId(schoolId).then(
+    async setGroups(schoolId) {
+      await GroupService.getGroupsBySchoolId(schoolId).then(
         (res) => (this.groupes = res)
       );
     },
   },
   async mounted() {
-    this.setSchool(this.$route.params.id);
-    this.setGroups(this.$route.params.id);
+    await this.setSchool(this.$route.params.id);
+    await this.setGroups(this.$route.params.id);
     console.log(this.groupes);
     this.filteredQuestions = [...this.questions];
   },

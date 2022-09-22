@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="path">
-      <p>Ecoles / IMT Atlantique / Formations</p>
+      <p>Ecoles / {{ school.label }} / {{ category.label }}</p>
     </div>
     <div class="question-title">
       <h1>{{ question.title }}</h1>
@@ -63,16 +63,29 @@ import ReplyToQuestionInput from "@/components/ReplyToQuestionInput";
 import PostService from "@/services/post.service";
 import Utils from "@/utils/Utils";
 import ReplyService from "@/services/reply.service";
+import GroupService from "@/services/group.service";
+import SchoolService from "@/services/school.service";
 export default {
   name: "QuestionPage",
   components: { AnswerToQuestion, ReplyToQuestionInput },
   data: function () {
     return {
+      school: {
+        id: "",
+        label: "",
+      },
+      group: {
+        id: "",
+        label: "",
+      },
+      category: {
+        id: "",
+        label: "",
+      },
       question: {},
       answers: [],
     };
   },
-
   methods: {
     isLastAnswer(index, lengthArray) {
       /* Checks if the `index`-th answer
@@ -85,14 +98,13 @@ export default {
       console.log(answer);
       this.answers = this.answers.filter((a) => a.id !== answer.id);
     },
-    deleteQuestion() {
-      PostService.deletePost(this.$route.params.id);
-      console.log();
+    async deleteQuestion() {
+      await PostService.deletePost(this.$route.params.id);
       window.alert("Question supprimée !");
       history.back();
     },
-    newAnswer(answer) {
-      let answerId = ReplyService.postAnswer(
+    async newAnswer(answer) {
+      await ReplyService.postAnswer(
         this.question.id,
         answer.user,
         answer.content
@@ -110,6 +122,8 @@ export default {
           this.question.user = postFetched.userName;
           this.question.title = postFetched.title;
           this.question.description = postFetched.content;
+          this.group.id = postFetched.groupId;
+          this.category.id = postFetched.categoryId;
         })
         .catch((err) => {
           console.log(err);
@@ -120,19 +134,41 @@ export default {
         });
     },
     async setAnswersByPostId(questionId) {
-      await ReplyService.getAnswersByPostId(questionId).then((anss) => {
-        //TODO: translate date & map voteCount
-        anss.forEach(
-          (_ans) =>
-            (_ans.date = Utils.convertTimestampToHumanReadable(_ans.date))
-        );
-        this.answers = anss;
-      });
+      await ReplyService.getAnswersByPostId(questionId)
+        .then((_answers) => {
+          //TODO: translate date & map voteCount
+          _answers.forEach(
+            (_ans) =>
+              (_ans.date = Utils.convertTimestampToHumanReadable(_ans.date))
+          );
+          this.answers = _answers;
+        })
+        .catch((err) => console.log("No answer found"));
+    },
+    async setHeaderAttrs() {
+      await GroupService.getGroupById(this.group.id)
+        .then((group) => {
+          this.school.id = group.schoolId;
+          this.group.label = group.label;
+          let _cat = group.categories.find(
+            (cat) => cat.id === this.category.id
+          );
+          _cat = {
+            id: _cat.id,
+            label: _cat.libelle,
+          };
+          this.category = _cat;
+        })
+        .catch((err) => console.log("No group found"));
+      await SchoolService.getSchoolById(this.school.id)
+        .then((school) => (this.school.label = school.libelle))
+        .catch((err) => console.log("No school found"));
     },
   },
   async mounted() {
     await this.setQuestion(this.$route.params.id);
     await this.setAnswersByPostId(this.$route.params.id);
+    await this.setHeaderAttrs();
   },
 };
 </script>

@@ -5,19 +5,19 @@ import { RouteParamValue } from "vue-router";
 const API_URL = "http://localhost:8080/api/groups";
 
 class GroupService {
-  getGroupsBySchoolId(schoolId: string): Promise<IGroup[]> {
+  async getGroupsBySchoolId(schoolId: string): Promise<IGroup[]> {
     return axios
       .get(API_URL, { params: { schoolId: schoolId } })
       .then((response) => response.data as IGroup[]);
   }
 
-  getGroupById(groupId: string | RouteParamValue[]): Promise<IGroup> {
+  async getGroupById(groupId: string | RouteParamValue[]): Promise<IGroup> {
     return axios
       .get(API_URL + "/" + groupId)
       .then((response) => response.data as IGroup);
   }
 
-  updateGroup(
+  async updateGroup(
     groupId: string,
     schoolId: string,
     label: string,

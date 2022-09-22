@@ -108,14 +108,17 @@ export default {
       });
       console.log(this.comments);
     },
-    upvote() {
+    async upvote() {
       if (this.answer.voteCount < 0) return;
-      VoteService.postLike(this.getState.user.username, this.answer.id);
+      await VoteService.postLike(this.getState.user.username, this.answer.id);
       this.answer.voteCount += 1;
     },
-    downvote() {
+    async downvote() {
       if (this.answer.voteCount <= 0) return;
-      VoteService.postDislike(this.getState.user.username, this.answer.id);
+      await VoteService.postDislike(
+        this.getState.user.username,
+        this.answer.id
+      );
       this.answer.voteCount -= 1;
     },
     async deleteComment(comment) {
@@ -140,27 +143,27 @@ export default {
           this.comments = []; // just in case
         });
     },
-    setVoteCounterAnswer() {
+    async setVoteCounterAnswer() {
       console.log(this.answer.id);
-      VoteService.getVoteCounter(this.answer.id).then((val) => {
+      await VoteService.getVoteCounter(this.answer.id).then((val) => {
         this.answer.voteCount = val;
       });
     },
-    setVoteCounterComments() {
+    async setVoteCounterComments() {
       /*this.comments = this.comments.map((com) =>
         VoteService.getVoteCounter(com.id).then((val) => {
           console.log(val);
           com.voteCount = val;
         })
       );*/
-      this.comments.forEach((com) => {
+      for (const com of this.comments) {
         console.log(com);
-        VoteService.getVoteCounter(com.id).then((val) => {
+        await VoteService.getVoteCounter(com.id).then((val) => {
           console.log(val);
           com.voteCount = val;
           console.log(com.voteCount);
         });
-      });
+      }
     },
   },
   async mounted() {

@@ -8,54 +8,67 @@ import { RouteParamValue } from "vue-router";
 const API_URL = "http://localhost:8080/api/posts/";
 
 class PostService {
-  getPostByPostId(postId: string) {
+  async getPostByPostId(postId: string): Promise<PostFetched> {
     return axios
       .get(API_URL + postId)
       .then((response) =>
         Promise.resolve(new PostFetched(response.data as IPostFetched))
-      );
+      )
+      .catch((err) => {
+        console.log(err);
+        return Promise.reject(err);
+      });
   }
 
-  getPostByGrpId(groupId: bigint) {
+  async getPostByGrpId(groupId: bigint): Promise<PostFetched> {
     return axios
       .get(API_URL, { params: { groupId: groupId } })
       .then((response) => {
         return Promise.resolve(new PostFetched(response.data as IPostFetched));
       })
       .catch((err) => {
+        console.log(err);
         return Promise.reject(err);
       });
   }
 
-  getPostByUserId(userId: string) {
+  async getPostByUserId(userId: string): Promise<PostFetched> {
     return axios
       .get(API_URL + userId)
       .then((response) => {
         return Promise.resolve(new PostFetched(response.data as IPostFetched));
       })
       .catch((err) => {
+        console.log(err);
         return Promise.reject(err);
       });
   }
 
-  postPost(post: IPost) {
+  async postPost(post: IPost): Promise<PostFetched> {
     return axios
       .post("http://localhost:8080/api/posts", post)
       .then((res) => Promise.resolve(new PostFetched(res.data as IPostFetched)))
-      .catch((err) => Promise.reject(err)); // 500 internal server error
+      .catch((err) => {
+        console.log(err);
+        return Promise.reject(err);
+      });
   }
 
-  deletePost(postId: string | RouteParamValue[]) {
+  async deletePost(postId: string | RouteParamValue[]) {
     return axios.delete(API_URL + postId);
   }
 
-  getQuestionsByCategoryId(
+  async getQuestionsByCategoryId(
     groupId: string | RouteParamValue[],
     categoryId: string
   ) {
     return axios
       .get(API_URL + groupId, { params: { categoryId: categoryId } })
-      .then((res) => res.data as IPostFetched[]);
+      .then((res) => Promise.resolve(res.data as IPostFetched[]))
+      .catch((err) => {
+        console.log(err);
+        return Promise.reject(err);
+      });
   }
 }
 

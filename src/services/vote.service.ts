@@ -2,20 +2,24 @@ import axios from "axios";
 const API_URL = "http://localhost:8080/api/likes/reply";
 
 class VoteService {
-  getVoteCounter(replyId: string) {
+  async getVoteCounter(replyId: string): Promise<number> {
     return axios
       .get(API_URL + "/amount", { params: { contentId: replyId } })
-      .then((response) => Promise.resolve(response.data as number));
+      .then((response) => Promise.resolve(response.data as number))
+      .catch((err) => {
+        console.log(err);
+        return Promise.reject(err);
+      });
   }
 
-  postLike(userId: string, replyId: string) {
+  async postLike(userId: string, replyId: string) {
     return axios.post(API_URL, {
       params: { userId: userId, contentId: replyId },
     });
     // TODO: return response
   }
 
-  postDislike(userId: string, replyId: string) {
+  async postDislike(userId: string, replyId: string) {
     return axios.delete(API_URL, {
       params: { userId: userId, contentId: replyId },
     });

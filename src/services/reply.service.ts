@@ -1,12 +1,11 @@
 import axios from "axios";
 import { Reply } from "@/types/Reply";
 import { IReply } from "@/types/IReply";
-import { IPostFetched } from "@/types/IPostFetched";
 
 const API_URL = "http://localhost:8080/api/replies";
 
 class ReplyService {
-  getAnswersByPostId(postId: string) {
+  async getAnswersByPostId(postId: string): Promise<Reply[]> {
     return axios
       .get(API_URL, { params: { postId: postId } })
       .then((response) => {
@@ -15,20 +14,34 @@ class ReplyService {
           listReplies.push(new Reply(reply));
         });
         return Promise.resolve(listReplies);
+      })
+      .catch((err) => {
+        console.log(err);
+        return Promise.reject(err);
       });
   }
 
-  getCommentsByReplyId(replyId: string) {
-    return axios.get(API_URL + "/" + replyId + "/comments").then((response) => {
-      const listComments: Reply[] = [];
-      response.data.forEach(function (reply: IReply) {
-        listComments.push(new Reply(reply));
+  async getCommentsByReplyId(replyId: string): Promise<Reply[]> {
+    return axios
+      .get(API_URL + "/" + replyId + "/comments")
+      .then((response) => {
+        const listComments: Reply[] = [];
+        response.data.forEach(function (reply: IReply) {
+          listComments.push(new Reply(reply));
+        });
+        return Promise.resolve(listComments);
+      })
+      .catch((err) => {
+        console.log(err);
+        return Promise.reject(err);
       });
-      return Promise.resolve(listComments);
-    });
   }
 
-  postAnswer(postId: string, userName: string, payload: string) {
+  async postAnswer(
+    postId: string,
+    userName: string,
+    payload: string
+  ): Promise<string> {
     return axios
       .post(API_URL, {
         postId: postId,
@@ -37,11 +50,11 @@ class ReplyService {
         content: payload,
       })
       .then((res) => {
-        return res.data.id;
-      }); // TODO: get response
+        return Promise.resolve(res.data.id); // TODO: get response
+      });
   }
 
-  postCommentToAnswer(
+  async postCommentToAnswer(
     postId: string,
     replyId: string,
     userName: string,
@@ -55,7 +68,7 @@ class ReplyService {
     }); // TODO: get response
   }
 
-  deleteReply(replyId: string) {
+  async deleteReply(replyId: string) {
     return axios.delete(API_URL + "/" + replyId); // TODO: get response
   }
 }
