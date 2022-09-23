@@ -9,75 +9,59 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/parcourir",
-    alias: "/parcourir",
     name: "parcourir",
     component: () => import("./components/EmptyComponent.vue"), // TODO: TBD
   },
   {
     path: "/mes-questions",
-    alias: "/mes-questions",
     name: "mes-questions",
     component: () => import("./components/EmptyComponent.vue"), // TODO: TBD
   },
   {
     path: "/mes-reponses",
-    alias: "/mes-reponses",
     name: "mes-reponses",
     component: () => import("./components/EmptyComponent.vue"), // TODO: TBD
   },
   {
     path: "/suivis",
-    alias: "/suivis",
     name: "suivis",
     component: () => import("./components/EmptyComponent.vue"), // TODO: TBD
   },
   {
-    path: "/reponse-msg",
-    alias: "/reponse-msg",
-    name: "reponse-msg",
-    component: () => import("./components/ReplyToQuestionInput.vue"), // TODO: TBD
-  },
-  {
     path: "/question/:id",
-    alias: "/question",
     name: "question",
-    component: () => import("./components/QuestionPage.vue"), // TODO: TBD
+    component: () => import("./components/QuestionPage.vue"),
   },
   {
     path: "/ecole/:id",
-    alias: "/ecole",
     name: "ecole",
-    component: () => import("./components/SchoolPage.vue"), // TODO: TBD
+    component: () => import("./components/SchoolPage.vue"),
   },
   {
     path: "/ecole/creer",
-    alias: "/ecole/creer",
     name: "Créer une école",
-    component: () => import("./components/CreateSchool.vue"), // TODO: TBD
+    component: () => import("./components/CreateSchool.vue"),
   },
   {
     path: "/ecole/:id/modifier",
-    alias: "/ecole/modifier",
     name: "Modifier une école",
-    component: () => import("./components/ModifySchool.vue"), // TODO: TBD
+    component: () => import("./components/ModifySchool.vue"),
   },
   {
     path: "/ecole/:id1/sujet/:id2",
-    alias: "/sujet",
     name: "sujet",
-    component: () => import("./components/SubjectPage.vue"), // TODO: TBD
+    component: () => import("./components/SubjectPage.vue"),
   },
   {
     path: "/sujet/creer",
     alias: "/sujet/creer",
     name: "Créer sujet",
-    component: () => import("./components/CreateSubject.vue"), // TODO: TBD
+    component: () => import("./components/CreateSubject.vue"),
   },
   {
     path: "/ecole/:id1/sujet/:id2/modifier",
-    alias: "/sujet/modifier",
     name: "Modifier sujet",
-    component: () => import("./components/ModifySubject.vue"), // TODO: TBD
+    component: () => import("./components/ModifySubject.vue"),
   },
   {
     path: "/connexion",
@@ -99,6 +83,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "login-success",
     component: () => import("./components/LoginSuccess.vue"),
     meta: { requiredAuth: true },
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    alias: "/error",
+    component: () => import("./components/ErrorPage.vue"),
   },
 ];
 

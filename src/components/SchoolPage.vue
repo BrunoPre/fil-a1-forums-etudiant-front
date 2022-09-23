@@ -170,10 +170,13 @@ export default {
     },
   },
   async mounted() {
-    await this.setSchool(this.$route.params.id);
-    await this.setGroups(this.$route.params.id);
-    console.log(this.groupes);
-    this.filteredQuestions = [...this.questions];
+    try {
+      await this.setSchool(this.$route.params.id);
+      await this.setGroups(this.$route.params.id);
+      this.filteredQuestions = [...this.questions];
+    } catch {
+      await this.$router.push(this.$route.fullPath.split("/")[0] + "/error");
+    }
   },
 };
 </script>

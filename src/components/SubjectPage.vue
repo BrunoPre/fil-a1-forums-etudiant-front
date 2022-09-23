@@ -251,9 +251,13 @@ export default {
     },
   },
   async mounted() {
-    await this.setGroup();
-    this.initSelectedCategorie();
-    await this.filterByCategorie();
+    try {
+      await this.setGroup();
+      this.initSelectedCategorie();
+      await this.filterByCategorie();
+    } catch {
+      await this.$router.push(this.$route.fullPath.split("/")[0] + "/error");
+    }
   },
 };
 </script>

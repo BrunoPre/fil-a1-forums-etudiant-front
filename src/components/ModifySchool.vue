@@ -78,7 +78,11 @@ export default {
     },
   },
   async mounted() {
-    await this.setAttrs();
+    try {
+      await this.setAttrs();
+    } catch {
+      await this.$router.push(this.$route.fullPath.split("/")[0] + "/error");
+    }
   },
 };
 </script>

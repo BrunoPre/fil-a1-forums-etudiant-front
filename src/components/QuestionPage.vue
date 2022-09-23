@@ -166,9 +166,13 @@ export default {
     },
   },
   async mounted() {
-    await this.setQuestion(this.$route.params.id);
-    await this.setAnswersByPostId(this.$route.params.id);
-    await this.setHeaderAttrs();
+    try {
+      await this.setQuestion(this.$route.params.id);
+      await this.setAnswersByPostId(this.$route.params.id);
+      await this.setHeaderAttrs();
+    } catch {
+      await this.$router.push(this.$route.fullPath.split("/")[0] + "/error");
+    }
   },
 };
 </script>

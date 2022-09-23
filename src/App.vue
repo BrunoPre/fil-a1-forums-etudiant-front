@@ -20,7 +20,6 @@
 <script>
 import { defineComponent } from "vue";
 import Sidebar from "@/components/Sidebar.vue";
-import store from "@/store";
 import { mapGetters } from "vuex";
 
 export default defineComponent({
@@ -34,9 +33,6 @@ export default defineComponent({
       return this.$store.state.auth.user;
     },
   },
-  //data() {},
-  methods: {},
-  //mounted() {this.userName =  Object(this.getUserProfile).userName},
 });
 </script>
 
