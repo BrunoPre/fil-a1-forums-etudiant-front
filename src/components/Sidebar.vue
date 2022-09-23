@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar">
-    <router-link v-if="currentUser" :to="logInRoute" class="profile">
+    <div v-if="currentUser" class="profile">
       <div class="profile-picture">
         <img v-if="profilePicPath" :src="profilePicPath" alt="profilePic" />
         <i v-else class="bx bxs-user-circle" />
@@ -12,7 +12,7 @@
         </div>
         <div class="profile-attributes-school">{{ userSchool }}</div>
       </div>
-    </router-link>
+    </div>
     <router-link v-else :to="logInRoute" class="login">
       <div>Se connecter</div>
     </router-link>
