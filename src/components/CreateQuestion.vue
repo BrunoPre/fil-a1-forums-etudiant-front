@@ -57,6 +57,7 @@
 import { defineComponent } from "vue";
 import postService from "@/services/post.service";
 import { mapGetters } from "vuex";
+import Utils from "@/utils/Utils";
 
 export default defineComponent({
   name: "ReplyToQuestionInput",
@@ -75,6 +76,7 @@ export default defineComponent({
       },
     },
     categories: Array,
+    initSelectedCategorie: Object, // ICategory
     groupId: String,
   },
   computed: {
@@ -88,7 +90,7 @@ export default defineComponent({
         title: "",
         description: "",
         user: "User Name",
-        date: new Date().getDate() + " Juin 2022",
+        date: Utils.convertTimestampToHumanReadable(new Date().getDate()),
         voteCount: 0,
         bestAnswer: null,
         categories: [],
@@ -140,7 +142,9 @@ export default defineComponent({
       console.log(this.selectedCategories);
     },
   },
-  //mounted() {},
+  mounted() {
+    this.selectedCategories = [this.initSelectedCategorie];
+  },
 });
 </script>
 

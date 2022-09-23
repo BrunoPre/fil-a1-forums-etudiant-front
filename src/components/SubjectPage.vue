@@ -30,6 +30,7 @@
           v-if="isAddQuestionButtonClicked"
           @new-question="newQuestion"
           :categories="groupe.categories"
+          :init-selected-categorie="selectedCategorie"
         ></CreateQuestion>
         <div class="categories" v-if="!isAddQuestionButtonClicked">
           <div class="categories-container" v-if="!moreCategories">
@@ -200,9 +201,6 @@ export default {
   methods: {
     clickAddQuestion() {
       this.isAddQuestionButtonClicked = !this.isAddQuestionButtonClicked;
-      console.log(
-        "isAddQuestionButtonClicked = " + this.isAddQuestionButtonClicked
-      );
     },
     newQuestion(question) {
       this.questions.push(question);
@@ -230,18 +228,6 @@ export default {
         groupId,
         this.selectedCategorie.id
       ).then((questions) => (this.filteredQuestions = questions));
-      /*this.filteredQuestions = [];
-      this.questions.forEach((q) => {
-        q.categories.forEach((c) => {
-          if (
-            c === this.selectedCategorie &&
-            !this.filteredQuestions.includes(q)
-          ) {
-            this.filteredQuestions.push(q);
-          }
-        });
-      });*/
-      console.log(this.filteredQuestions);
     },
     isCategorieSelected(categorie) {
       return this.selectedCategorie === categorie;
@@ -251,17 +237,23 @@ export default {
       window.alert("Sujet supprimée !");
     },
     async setGroup() {
-      console.log(this.$route.params);
       let params = this.$route.params;
       let groupId = params.id2;
       await GroupService.getGroupById(groupId).then((group) => {
         this.groupe = group;
       });
     },
+    initSelectedCategorie() {
+      if (this.groupe.length === 0) {
+        return;
+      }
+      this.selectedCategorie = this.groupe.categories[0];
+    },
   },
   async mounted() {
     await this.setGroup();
-    this.filteredQuestions = [...this.questions];
+    this.initSelectedCategorie();
+    await this.filterByCategorie();
   },
 };
 </script>
