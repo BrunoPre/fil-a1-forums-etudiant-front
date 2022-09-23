@@ -15,6 +15,16 @@ class SchoolService {
       });
   }
 
+  async getAllSchools(): Promise<ISchool[]> {
+    return axios
+      .get(API_URL)
+      .then((res) => Promise.resolve(res.data as ISchool[]))
+      .catch((err) => {
+        console.log(err);
+        return Promise.reject(err);
+      });
+  }
+
   async updateSchool(
     schoolId: string,
     libelle: string,

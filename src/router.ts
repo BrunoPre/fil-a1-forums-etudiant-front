@@ -3,9 +3,9 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/accueil",
-    alias: "/accueil",
+    alias: "/",
     name: "accueil",
-    component: () => import("./components/EmptyComponent.vue"), // TODO: TBD
+    component: () => import("./components/HomePage.vue"),
   },
   {
     path: "/parcourir",
