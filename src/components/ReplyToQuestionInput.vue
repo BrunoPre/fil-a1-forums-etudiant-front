@@ -20,6 +20,7 @@
 <script>
 import { defineComponent } from "vue";
 import { mapGetters } from "vuex";
+import Utils from "@/utils/Utils";
 
 export default defineComponent({
   name: "ReplyToQuestionInput",
@@ -34,7 +35,7 @@ export default defineComponent({
         id: Math.floor(Math.random() * 10000), // TODO: remove it
         content: "",
         user: "",
-        date: new Date().getDate() + " Juin 2022", // TODO: change it
+        date: Utils.convertTimestampToHumanReadable(new Date().getDate()),
         voteCount: 0,
       },
       placeholder_ecrire_msg_ici: "Ecrivez votre réponse ici...",
