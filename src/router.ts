@@ -2,29 +2,29 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: "/accueil",
+    path: "/home",
     alias: "/",
-    name: "accueil",
+    name: "home",
     component: () => import("./components/HomePage.vue"),
   },
   {
-    path: "/parcourir",
-    name: "parcourir",
+    path: "/explore",
+    name: "explore",
     component: () => import("./components/EmptyComponent.vue"), // TODO: TBD
   },
   {
-    path: "/mes-questions",
-    name: "mes-questions",
+    path: "/my-questions",
+    name: "my-questions",
     component: () => import("./components/EmptyComponent.vue"), // TODO: TBD
   },
   {
-    path: "/mes-reponses",
-    name: "mes-reponses",
+    path: "/my-answers",
+    name: "my-answers",
     component: () => import("./components/EmptyComponent.vue"), // TODO: TBD
   },
   {
-    path: "/suivis",
-    name: "suivis",
+    path: "/bookmarks",
+    name: "bookmarks",
     component: () => import("./components/EmptyComponent.vue"), // TODO: TBD
   },
   {
@@ -33,34 +33,34 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("./components/QuestionPage.vue"),
   },
   {
-    path: "/ecole/:id",
-    name: "ecole",
+    path: "/school/:id",
+    name: "school",
     component: () => import("./components/SchoolPage.vue"),
   },
   {
-    path: "/ecole/creer",
-    name: "Créer une école",
+    path: "/school/create",
+    name: "Create a school",
     component: () => import("./components/CreateSchool.vue"),
   },
   {
-    path: "/ecole/:id/modifier",
-    name: "Modifier une école",
+    path: "/school/:id/edit",
+    name: "Edit a school",
     component: () => import("./components/ModifySchool.vue"),
   },
   {
-    path: "/ecole/:id1/sujet/:id2",
-    name: "sujet",
+    path: "/school/:id1/subject/:id2",
+    name: "subject",
     component: () => import("./components/SubjectPage.vue"),
   },
   {
-    path: "/sujet/creer",
-    alias: "/sujet/creer",
-    name: "Créer sujet",
+    path: "/subject/create",
+    alias: "/subject/create",
+    name: "Create a subject",
     component: () => import("./components/CreateSubject.vue"),
   },
   {
-    path: "/ecole/:id1/sujet/:id2/modifier",
-    name: "Modifier sujet",
+    path: "/school/:id1/subject/:id2/edit",
+    name: "Ddit subject",
     component: () => import("./components/ModifySubject.vue"),
   },
   {
@@ -73,7 +73,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/register",
     alias: "/signup",
-    name: "inscription",
+    name: "Sign up",
     component: () => import("./components/CreateAccountPage.vue"),
     //meta: { requiredAuth: false },
   },

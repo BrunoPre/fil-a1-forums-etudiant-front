@@ -3,7 +3,7 @@
     <input
       type="text"
       class="add-comment"
-      placeholder="Ajouter un commentaire ..."
+      placeholder="Write a comment"
       v-model="comment"
     />
     <div class="submit-comment" v-on:click="postComment">Envoyer</div>
@@ -21,7 +21,6 @@ export default {
 
   methods: {
     postComment: function () {
-      // TODO POST request
       if (!this.comment) return;
       this.$emit("newComment", this.comment);
       this.comment = null;

@@ -1,10 +1,10 @@
 <template>
-  <h3 class="title-repondre">Votre réponse</h3>
+  <h3 class="title-repondre">Your answer</h3>
 
   <div class="answer-div">
     <textarea
       v-model="answer.content"
-      :placeholder="placeholder_ecrire_msg_ici"
+      :placeholder="placeholder_write_msg"
       class="answer-box"
       required
     ></textarea>
@@ -38,7 +38,7 @@ export default defineComponent({
         date: Utils.convertTimestampToHumanReadable(new Date().getDate()),
         voteCount: 0,
       },
-      placeholder_ecrire_msg_ici: "Ecrivez votre réponse ici...",
+      placeholder_write_msg: "Write your message",
       reply_label: "Répondre",
     };
   },
@@ -47,7 +47,7 @@ export default defineComponent({
       // Submits a message
       if (event && !message) {
         // TODO: add more UI elements
-        window.alert("Veuillez écrire une réponse avant de l'envoyer");
+        window.alert("Please write a message before sending it");
       } else if (event) {
         // TODO: post message
         let ans = this.answer;
@@ -56,11 +56,10 @@ export default defineComponent({
         this.answer = "";
       } else {
         // TODO: exception handling
-        window.alert("Erreur : la réponse n'a pas pu être envoyée");
+        window.alert("ERROR: message couldn't be posted");
       }
     },
   },
-  //mounted() {},
 });
 </script>
 

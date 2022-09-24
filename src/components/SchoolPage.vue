@@ -1,31 +1,33 @@
 <template>
   <div>
     <div class="path">
-      <p>Ecoles</p>
+      <p>Schools</p>
     </div>
     <div class="container">
       <div class="description-container">
         <div class="question-title">
-          <h1>{{ ecole }}</h1>
+          <h1>{{ school }}</h1>
         </div>
         <div class="description" v-html="description"></div>
       </div>
       <div class="group-questions-container">
         <div class="group-container">
           <div class="group-header">
-            <h2>Groupes</h2>
+            <h2>Groups</h2>
             <div class="ask-question">
-              <a>Créer un nouveau groupe</a>
+              <a>Add a new group</a>
               <img src="../assets/new-question.svg" alt="" />
             </div>
           </div>
           <div class="group-list-container">
-            <div v-for="groupe in groupes" :key="groupe" class="group">
+            <div v-for="group in groups" :key="group" class="group">
               <router-link
-                :to="'/ecole/' + this.$route.params.id + '/sujet/' + groupe.id"
+                :to="
+                  '/school/' + this.$route.params.id + '/subject/' + group.id
+                "
               >
                 <div class="group-link-container">
-                  <h3>{{ groupe.label }}</h3>
+                  <h3>{{ group.label }}</h3>
                 </div>
               </router-link>
             </div>
@@ -37,11 +39,11 @@
       <div class="administration-header">
         <h3>Administration</h3>
       </div>
-      <router-link :to="'/ecole/' + this.$route.params.id + '/modifier'">
-        <button class="modify-school">Modifier le sujet</button>
+      <router-link :to="'/school/' + this.$route.params.id + '/edit'">
+        <button class="modify-school">Edit the subject</button>
       </router-link>
       <button class="delete-school" @click="deleteSchool">
-        Supprimer l'école
+        Remove the school
       </button>
     </div>
   </div>
@@ -56,8 +58,8 @@ export default {
 
   data() {
     return {
-      ecole: "",
-      groupes: [],
+      school: "",
+      groups: [],
       isAddQuestionButtonClicked: false,
       categories: [
         "Administration",
@@ -69,7 +71,7 @@ export default {
         "Projet Agile",
         "Bipbapbop",
       ],
-      selectedCategorie: null,
+      selectedCategory: null,
       moreCategories: false,
       description: "",
       filteredQuestions: [],
@@ -113,27 +115,24 @@ export default {
   methods: {
     clickAddQuestion() {
       this.isAddQuestionButtonClicked = !this.isAddQuestionButtonClicked;
-      console.log(
-        "isAddQuestionButtonClicked = " + this.isAddQuestionButtonClicked
-      );
     },
     newQuestion(question) {
       this.questions.push(question);
       console.log(this.questions);
       this.isAddQuestionButtonClicked = false;
-      this.filterByCategorie();
+      this.filterByCategory();
     },
-    updateCategorie(categorie) {
-      if (this.isCategorieSelected(categorie)) {
-        this.selectedCategorie = null;
+    updateCategory(category) {
+      if (this.isCategorySelected(category)) {
+        this.selectedCategory = null;
       } else {
-        this.selectedCategorie = categorie;
+        this.selectedCategory = category;
       }
-      console.log("Cat updated to : " + this.selectedCategorie);
-      this.filterByCategorie();
+      console.log("Cat updated to : " + this.selectedCategory);
+      this.filterByCategory();
     },
-    filterByCategorie() {
-      if (this.selectedCategorie === null) {
+    filterByCategory() {
+      if (this.selectedCategory === null) {
         this.filteredQuestions = [...this.questions];
         return;
       }
@@ -141,7 +140,7 @@ export default {
       this.questions.forEach((q) => {
         q.categories.forEach((c) => {
           if (
-            c === this.selectedCategorie &&
+            c === this.selectedCategory &&
             !this.filteredQuestions.includes(q)
           ) {
             this.filteredQuestions.push(q);
@@ -150,22 +149,22 @@ export default {
       });
       console.log(this.filteredQuestions);
     },
-    isCategorieSelected(categorie) {
-      return this.selectedCategorie === categorie;
+    isCategorySelected(category) {
+      return this.selectedCategory === category;
     },
     deleteSchool() {
       // TODO DELETE request
-      window.alert("Ecole supprimée !");
+      window.alert("School deleted");
     },
     async setSchool(schoolId) {
       await SchoolService.getSchoolById(schoolId).then((res) => {
-        this.ecole = res.libelle;
+        this.school = res.libelle;
         this.description = res.description;
       });
     },
     async setGroups(schoolId) {
       await GroupService.getGroupsBySchoolId(schoolId).then(
-        (res) => (this.groupes = res)
+        (res) => (this.groups = res)
       );
     },
   },
@@ -258,12 +257,12 @@ h1 {
   row-gap: 0.5vw;
 }
 
-.categorie-button {
+.category-button {
   background-color: #f8f9ff;
   color: #6a8bff;
 }
 
-.categorie-button:hover {
+.category-button:hover {
   background-color: #c9d1ff;
 }
 
@@ -272,13 +271,13 @@ h1 {
   font-weight: 500;
 }
 
-.selected-categorie {
+.selected-category {
   background-color: #6a8bff;
   color: white;
 }
 
-.categorie-button,
-.selected-categorie {
+.category-button,
+.selected-category {
   border: none;
   font-size: 100%;
   font-weight: 500;

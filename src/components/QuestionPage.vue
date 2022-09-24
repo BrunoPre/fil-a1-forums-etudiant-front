@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="path">
-      <p>Ecoles / {{ school.label }} / {{ category.label }}</p>
+      <p>Schools / {{ school.label }} / {{ category.label }}</p>
     </div>
     <div class="question-title">
       <h1>{{ question.title }}</h1>
@@ -11,28 +11,28 @@
         <img src="../assets/user_image_placeholder.png" alt="Profile picture" />
       </div>
       <p>
-        Question posée par
-        <span class="user-span">{{ question.user }}</span> le
+        Question asked by
+        <span class="user-span">{{ question.user }}</span> on
         <span class="date-span">{{ question.date }}</span>
       </p>
     </div>
     <div class="question-description">{{ question.description }}</div>
     <div class="question-categories">
       <div
-        class="categorie"
-        v-for="categorie in question.categories"
-        :key="categorie"
+        class="category"
+        v-for="category in question.categories"
+        :key="category"
       >
-        {{ categorie }}
+        {{ category }}
       </div>
     </div>
     <div class="answers-container">
       <div class="answer-number">
-        <h3>{{ Object.keys(answers).length }} réponses</h3>
+        <h3>{{ Object.keys(answers).length }} answers</h3>
       </div>
       <div class="answers">
         <div v-if="answers.length === 0">
-          <p class="no-answer">Aucune réponse pour l'instant ...</p>
+          <p class="no-answer">No answer to this question</p>
         </div>
         <div v-for="(answer, index) in answers" :key="answer">
           <AnswerToQuestion
@@ -51,7 +51,7 @@
         <h3>Administration</h3>
       </div>
       <button class="delete-question" @click="deleteQuestion">
-        Supprimer la question
+        Delete the question
       </button>
     </div>
   </div>
@@ -127,9 +127,7 @@ export default {
         })
         .catch((err) => {
           console.log(err);
-          window.alert(
-            "Erreur : la question n'a pu être chargée, veuillez réessayer"
-          );
+          window.alert("ERROR: question couldn't be loaded, please try again");
           history.back();
         });
     },
@@ -267,7 +265,7 @@ h3 {
   margin-top: 3vh;
 }
 
-.categorie {
+.category {
   display: inline-block;
   border: none;
   font-size: 0.9rem;

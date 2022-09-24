@@ -1,15 +1,15 @@
 <template>
   <div class="path">
-    <p>Ecoles</p>
+    <p>Schools</p>
   </div>
-  <h1>Modifier une école</h1>
+  <h1>Edit school information</h1>
   <div class="modify-school-container">
     <div class="title">
-      <label for="school-title">Nom de l'école</label>
+      <label for="school-title">School name</label>
       <input id="school-title" type="text" v-model="title" />
     </div>
     <div class="description">
-      <label for="school-title">Description de l'école</label>
+      <label for="school-title">Description</label>
       <trumbowyg
         v-model="description"
         :config="config"
@@ -18,8 +18,8 @@
       ></trumbowyg>
     </div>
     <div class="buttons">
-      <button class="save-modifications" @click="save">Enregistrer</button>
-      <button class="cancel-modifications">Annuler</button>
+      <button class="save-modifications" @click="save">Update</button>
+      <button class="cancel-modifications">Cancel</button>
     </div>
   </div>
 </template>
@@ -27,7 +27,6 @@
 <script>
 import Trumbowyg from "vue-trumbowyg";
 import "trumbowyg/dist/ui/trumbowyg.css";
-import GroupService from "@/services/group.service";
 import SchoolService from "@/services/school.service";
 
 export default {
@@ -57,16 +56,13 @@ export default {
   },
   methods: {
     async save() {
-      console.log("old description = ", this.description);
-
       await SchoolService.updateSchool(
         this.$route.params.id,
         this.title,
         this.school_type,
         this.description
       );
-      console.log("new description = ", this.description);
-      window.alert("Ecole mise à jour !");
+      window.alert("School successfully updated!");
       history.back();
     },
     async setAttrs() {

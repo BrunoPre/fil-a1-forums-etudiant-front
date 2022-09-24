@@ -1,15 +1,16 @@
+<!-- mock page -->
 <template>
   <div class="path">
-    <p>Ecoles / IMT Atlantique</p>
+    <p>Schools / IMT Atlantique</p>
   </div>
-  <h1>Créer un sujet</h1>
+  <h1>Create a subject</h1>
   <div class="create-subject-container">
     <div class="title">
-      <label for="subject-title">Titre du sujet</label>
+      <label for="subject-title">Topic title</label>
       <input id="subject-title" type="text" v-model="title" />
     </div>
     <div class="description">
-      <label for="subject-title">Description du sujet</label>
+      <label for="subject-title">Description</label>
       <trumbowyg
         v-model="description"
         :config="config"
@@ -18,11 +19,9 @@
       ></trumbowyg>
     </div>
     <div class="buttons">
-      <button class="save-modifications" @click="save">Créer le sujet</button>
-      <button class="cancel-modifications">Annuler</button>
-      <p>
-        * la création d'un sujet est soumise à l'approbation d'un administrateur
-      </p>
+      <button class="save-modifications" @click="save">Create</button>
+      <button class="cancel-modifications">Cancel</button>
+      <p>* topic creation is subject to approval by the administrator</p>
     </div>
   </div>
 </template>
@@ -59,7 +58,7 @@ export default {
     save() {
       console.log(this.title);
       console.log(this.description);
-      window.alert("Sujet mis à jour !");
+      window.alert("Subject successfully updated");
     },
   },
 };

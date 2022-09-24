@@ -8,18 +8,18 @@
       </div>
       <div class="profile-attributes">
         <div class="profile-attributes-username">
-          {{ currentUser || "Se connecter" }}
+          {{ currentUser || "Login" }}
         </div>
         <div class="profile-attributes-school">{{ userSchool }}</div>
       </div>
     </div>
     <router-link v-else :to="logInRoute" class="login">
-      <div>Se connecter</div>
+      <div>Login</div>
     </router-link>
     <div class="grid-buttons">
       <div
-        v-for="[index, button] in buttons"
-        :key="index"
+        v-for="button in buttons"
+        :key="button.buttonName"
         class="grid-one-button"
       >
         <router-link :to="button.route" class="button-icon">
@@ -39,7 +39,7 @@
       <div class="grid-buttons">
         <div class="grid-one-button" v-if="currentUser" v-on:click="logOut">
           <img src="../assets/logout.svg" alt="logout" />
-          <p class="button-link">Déconnexion</p>
+          <p class="button-link">Logout</p>
         </div>
       </div>
     </div>
@@ -49,7 +49,7 @@
 <script lang="ts">
 import { ButtonSidebar } from "@/types/ButtonSidebar";
 import { defineComponent } from "vue";
-import buttonsJson from "./../assets/buttonsSidebar.json";
+import buttonsJsonArray from "./../assets/buttonsSidebar.json";
 import { mapGetters } from "vuex";
 import { State } from "@/store/modules/auth.module";
 import store from "@/store";
@@ -66,30 +66,18 @@ export default defineComponent({
       console.log("username", s.user.username);
       return s.user.username;
     },
-    checkIsLoggedIn() {
-      const s: State = (this as any).getState;
-      if (s.status.loggedIn && localStorage.getItem("user") === null) {
-        console.log("initial state");
-        return false;
-      }
-      console.log(s.status.loggedIn);
-      return s.status.loggedIn;
-    },
   },
   data() {
     return {
-      buttons: new Map<number, ButtonSidebar>(),
+      buttons: new Array<ButtonSidebar>(),
       profilePicPath: "",
       userSchool: "",
       logInRoute: "/connexion",
     };
   },
   methods: {
-    setButtons() {
-      for (const b_json_index in buttonsJson) {
-        let button: ButtonSidebar = buttonsJson[b_json_index];
-        this.buttons.set(button.index, button);
-      }
+    buttonsArray() {
+      this.buttons = buttonsJsonArray as Array<ButtonSidebar>;
     },
     setProfile() {
       this.profilePicPath = require("./../assets/profilePic.png");
@@ -98,11 +86,10 @@ export default defineComponent({
     logOut() {
       store.dispatch("auth/logout");
       this.$router.push("/login");
-      //window.location.reload();
     },
   },
   mounted() {
-    this.setButtons();
+    this.buttonsArray();
     this.setProfile();
   },
 });

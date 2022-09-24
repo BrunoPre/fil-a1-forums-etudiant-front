@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="path">
-      <p>Ecoles / IMT Atlantique</p>
+      <p>Schools / IMT Atlantique</p>
     </div>
     <div class="container">
       <div class="description-container">
@@ -12,17 +12,17 @@
       </div>
       <div class="questions-container">
         <div class="question-header">
-          <h2>Questions les plus pertinentes</h2>
+          <h2>Most relevant questions</h2>
           <div
             v-if="!isAddQuestionButtonClicked"
             @click="clickAddQuestion"
             class="ask-question"
           >
-            <a>Poser une question</a>
+            <a>Ask a question</a>
             <img src="../assets/new-question.svg" alt="" />
           </div>
           <div v-else @click="clickAddQuestion" class="ask-question">
-            <a>Annuler</a>
+            <a>Cancel</a>
             <img src="../assets/new-question-cancel.svg" alt="" />
           </div>
         </div>
@@ -30,52 +30,50 @@
           v-if="isAddQuestionButtonClicked"
           @new-question="newQuestion"
           :categories="groupe.categories"
-          :init-selected-categorie="selectedCategorie"
+          :init-selected-category="selectedCategory"
         ></CreateQuestion>
         <div class="categories" v-if="!isAddQuestionButtonClicked">
           <div class="categories-container" v-if="!moreCategories">
             <!-- TODO: add slice(0,4) -->
             <button
-              v-for="categorie in groupe.categories"
-              :key="categorie"
-              @click="updateCategorie(categorie)"
+              v-for="category in groupe.categories"
+              :key="category"
+              @click="updateCategory(category)"
               :class="
-                selectedCategorie === categorie
-                  ? 'selected-categorie'
-                  : 'categorie-button'
+                selectedCategory === category
+                  ? 'selected-category'
+                  : 'category-button'
               "
             >
-              {{ categorie.libelle }}
+              {{ category.libelle }}
             </button>
           </div>
           <div class="categories-container" v-else>
             <button
-              v-for="categorie in groupe.categories"
-              :key="categorie"
-              @click="updateCategorie(categorie)"
+              v-for="category in groupe.categories"
+              :key="category"
+              @click="updateCategory(category)"
               :class="
-                selectedCategorie === categorie
-                  ? 'selected-categorie'
-                  : 'categorie-button'
+                selectedCategory === category
+                  ? 'selected-category'
+                  : 'category-button'
               "
             >
-              {{ categorie.libelle }}
+              {{ category.libelle }}
             </button>
           </div>
           <div class="more-categories">
             <p v-if="moreCategories === false" @click="moreCategories = true">
-              Montrer + de catégories ↓
+              Show more categories ↓
             </p>
-            <p v-else @click="moreCategories = false">
-              Montrer - de catégories ↑
-            </p>
+            <p v-else @click="moreCategories = false">Show less categories ↑</p>
           </div>
         </div>
         <div class="questions">
           <div v-for="question in filteredQuestions" :key="question">
             <QuestionCard
               :question-prop="question"
-              :category-name="selectedCategorie.libelle"
+              :category-name="selectedCategory.libelle"
             ></QuestionCard>
           </div>
         </div>
@@ -87,17 +85,17 @@
       </div>
       <router-link
         :to="
-          '/ecole/' +
+          '/school/' +
           this.$route.params.id1 +
-          '/sujet/' +
+          '/subject/' +
           this.$route.params.id2 +
-          '/modifier'
+          '/edit'
         "
       >
-        <button class="modify-school">Modifier le sujet</button>
+        <button class="modify-school">Edit the subject</button>
       </router-link>
       <button class="delete-school" @click="deleteSubject">
-        Supprimer le sujet
+        Remove the subject
       </button>
     </div>
   </div>
@@ -116,7 +114,7 @@ export default {
   data() {
     return {
       groupe: [],
-      sujet: "Formations",
+      subject: "Formations",
       isAddQuestionButtonClicked: false,
       categories: [
         "Administration",
@@ -128,7 +126,7 @@ export default {
         "Projet Agile",
         "Bipbapbop",
       ],
-      selectedCategorie: null,
+      selectedCategory: null,
       moreCategories: false,
       description: `
         <h2>Est dolorem</h2>
@@ -206,35 +204,35 @@ export default {
       this.questions.push(question);
       console.log(this.questions);
       this.isAddQuestionButtonClicked = false;
-      this.filterByCategorie();
+      this.filterByCategory();
     },
-    updateCategorie(categorie) {
-      if (this.isCategorieSelected(categorie)) {
-        this.selectedCategorie = null;
+    updateCategory(category) {
+      if (this.isCategorySelected(category)) {
+        this.selectedCategory = null;
       } else {
-        this.selectedCategorie = categorie;
+        this.selectedCategory = category;
       }
-      console.log("Cat updated to : " + this.selectedCategorie);
-      this.filterByCategorie();
+      console.log("Cat updated to : " + this.selectedCategory);
+      this.filterByCategory();
     },
-    async filterByCategorie() {
-      if (this.selectedCategorie === null) {
+    async filterByCategory() {
+      if (this.selectedCategory === null) {
         this.filteredQuestions = [...this.questions];
         return;
       }
       let groupId = this.$route.params.id2;
-      console.log("groupeid=", groupId, " catId=", this.selectedCategorie.id);
+      console.log("groupeid=", groupId, " catId=", this.selectedCategory.id);
       await PostService.getQuestionsByCategoryId(
         groupId,
-        this.selectedCategorie.id
+        this.selectedCategory.id
       ).then((questions) => (this.filteredQuestions = questions));
     },
-    isCategorieSelected(categorie) {
-      return this.selectedCategorie === categorie;
+    isCategorySelected(category) {
+      return this.selectedCategory === category;
     },
     deleteSubject() {
       // TODO DELETE request
-      window.alert("Sujet supprimée !");
+      window.alert("Subject successfully deleted");
     },
     async setGroup() {
       let params = this.$route.params;
@@ -243,18 +241,18 @@ export default {
         this.groupe = group;
       });
     },
-    initSelectedCategorie() {
+    initSelectedCategory() {
       if (this.groupe.length === 0) {
         return;
       }
-      this.selectedCategorie = this.groupe.categories[0];
+      this.selectedCategory = this.groupe.categories[0];
     },
   },
   async mounted() {
     try {
       await this.setGroup();
-      this.initSelectedCategorie();
-      await this.filterByCategorie();
+      this.initSelectedCategory();
+      await this.filterByCategory();
     } catch {
       await this.$router.push(this.$route.fullPath.split("/")[0] + "/error");
     }
@@ -352,12 +350,12 @@ h1 {
   row-gap: 0.5vw;
 }
 
-.categorie-button {
+.category-button {
   background-color: #f8f9ff;
   color: #6a8bff;
 }
 
-.categorie-button:hover {
+.category-button:hover {
   background-color: #c9d1ff;
 }
 
@@ -366,13 +364,13 @@ h1 {
   font-weight: 500;
 }
 
-.selected-categorie {
+.selected-category {
   background-color: #6a8bff;
   color: white;
 }
 
-.categorie-button,
-.selected-categorie {
+.category-button,
+.selected-category {
   border: none;
   font-size: 100%;
   font-weight: 500;

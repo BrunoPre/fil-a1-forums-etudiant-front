@@ -18,8 +18,8 @@
           />
         </div>
         <p>
-          Question posée par
-          <span class="user-span">{{ answer.user }}</span> le
+          Question asked by
+          <span class="user-span">{{ answer.user }}</span> on
           <span class="date-span">{{ answer.date }}</span>
         </p>
       </div>
@@ -27,11 +27,11 @@
     </div>
     <div class="actions" v-on:click="reply = true">
       <div class="reply">
-        <p>Répondre</p>
+        <p>Answer</p>
         <img src="../assets/reply.svg" alt="Reply" />
       </div>
       <div class="delete-answer" @click="deleteAnswer">
-        <p>Supprimer</p>
+        <p>Delete</p>
       </div>
     </div>
     <div class="comments-container" v-if="reply || comments.length !== 0">
@@ -102,7 +102,7 @@ export default {
       );
       this.comments.push({
         content: comment,
-        date: Utils.convertTimestampToHumanReadable(new Date().getDate()), // TODO: change it
+        date: Utils.convertTimestampToHumanReadable(new Date().getDate()),
         user: this.getState.user.username,
         voteCount: 0,
       });

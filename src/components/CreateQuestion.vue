@@ -2,53 +2,53 @@
   <div class="create-question">
     <textarea
       v-model="question.title"
-      :placeholder="placeholder_ecrire_msg_ici"
+      :placeholder="placeholder_write_msg_here"
       class="question-box"
       required
     ></textarea>
     <textarea
       v-model="question.description"
-      :placeholder="placeholder_ecrire_description_ici"
+      :placeholder="placeholder_write_description"
       class="description-box"
     ></textarea>
     <div class="categories">
       <div class="categories-container" v-if="!moreCategories">
         <button
-          v-for="categorie in categories.slice(0, 4)"
-          :key="categorie"
-          @click="updateSelectedCategories(categorie)"
+          v-for="category in categories.slice(0, 4)"
+          :key="category"
+          @click="updateSelectedCategories(category)"
           :class="
-            selectedCategories.includes(categorie)
-              ? 'selected-categorie'
-              : 'categorie-button'
+            selectedCategories.includes(category)
+              ? 'selected-category'
+              : 'category-button'
           "
         >
-          {{ categorie.libelle }}
+          {{ category.libelle }}
         </button>
       </div>
       <div class="categories-container" v-else>
         <button
-          v-for="categorie in categories"
-          :key="categorie"
-          @click="updateSelectedCategories(categorie)"
+          v-for="category in categories"
+          :key="category"
+          @click="updateSelectedCategories(category)"
           :class="
-            selectedCategories.includes(categorie)
-              ? 'selected-categorie'
-              : 'categorie-button'
+            selectedCategories.includes(category)
+              ? 'selected-category'
+              : 'category-button'
           "
         >
-          {{ categorie.libelle }}
+          {{ category.libelle }}
         </button>
       </div>
       <div class="more-categories">
         <p v-if="moreCategories === false" @click="moreCategories = true">
-          Montrer + de catégories ↓
+          Show more categories ↓
         </p>
         <p v-else @click="moreCategories = false">Montrer - de catégories ↑</p>
       </div>
     </div>
     <button @click="(event) => submitQuestion(event)" class="button-submit">
-      {{ reply_label }}
+      {{ submit_label }}
     </button>
   </div>
 </template>
@@ -76,7 +76,7 @@ export default defineComponent({
       },
     },
     categories: Array,
-    initSelectedCategorie: Object, // ICategory
+    initSelectedCategory: Object, // ICategory
     groupId: String,
   },
   computed: {
@@ -95,10 +95,9 @@ export default defineComponent({
         bestAnswer: null,
         categories: [],
       },
-      placeholder_ecrire_msg_ici: "Ecrivez votre question ici...",
-      placeholder_ecrire_description_ici:
-        "Ecrivez la description de votre question (facultative)",
-      reply_label: "Poster",
+      placeholder_write_msg_here: "Write your question here",
+      placeholder_write_description: "Write a description (optional)",
+      submit_label: "Submit",
       selectedCategories: [],
       moreCategories: false,
     };
@@ -128,22 +127,22 @@ export default defineComponent({
         this.moreCategories = false;
       } else {
         // TODO: exception handling
-        window.alert("Erreur : le message n'a pas pu être envoyé");
+        window.alert("ERROR: message couldn't be posted");
       }
     },
-    updateSelectedCategories(categorie) {
-      if (this.selectedCategories.includes(categorie)) {
+    updateSelectedCategories(category) {
+      if (this.selectedCategories.includes(category)) {
         this.selectedCategories = this.selectedCategories.filter(
-          (c) => c !== categorie
+          (c) => c !== category
         );
       } else {
-        this.selectedCategories.push(categorie);
+        this.selectedCategories.push(category);
       }
       console.log(this.selectedCategories);
     },
   },
   mounted() {
-    this.selectedCategories = [this.initSelectedCategorie];
+    this.selectedCategories = [this.initSelectedCategory];
   },
 });
 </script>
@@ -219,12 +218,12 @@ textarea:focus {
   row-gap: 0.5vw;
 }
 
-.categorie-button {
+.category-button {
   background-color: #f8f9ff;
   color: #6a8bff;
 }
 
-.categorie-button:hover {
+.category-button:hover {
   background-color: #c9d1ff;
 }
 
@@ -233,13 +232,13 @@ textarea:focus {
   font-weight: 500;
 }
 
-.selected-categorie {
+.selected-category {
   background-color: #6a8bff;
   color: white;
 }
 
-.categorie-button,
-.selected-categorie {
+.category-button,
+.selected-category {
   border: none;
   font-size: 100%;
   font-weight: 500;

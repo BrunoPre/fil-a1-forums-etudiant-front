@@ -2,12 +2,10 @@
   <div class="container">
     <div class="navbar">
       <div class="home-btn">
-        <router-link to="/accueil" class="navbar-links">Accueil</router-link>
+        <router-link to="/home" class="navbar-links">Home</router-link>
       </div>
       <div class="navigate-btn">
-        <router-link to="/parcourir" class="navbar-links"
-          >Parcourir</router-link
-        >
+        <router-link to="/explore" class="navbar-links">Explore</router-link>
       </div>
     </div>
     <sidebar></sidebar>

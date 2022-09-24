@@ -1,15 +1,15 @@
 <template>
   <div class="login-parent-container">
     <div class="login-child-container">
-      <h1>Bienvenue !</h1>
-      <h2>Créer un compte</h2>
+      <h1>Welcome!</h1>
+      <h2>Create an account</h2>
       <div class="form-container">
         <div class="icon">
           <img :src="logInIconPath" />
         </div>
         <input
           type="text"
-          placeholder="Nom d'utilisateur"
+          placeholder="Username"
           v-model="user.username"
           required
         />
@@ -22,7 +22,7 @@
           type="text"
           list="school-list"
           v-model="selectedSchool"
-          placeholder="Votre école (optionnel)"
+          placeholder="Your school (optional)"
         />
         <datalist id="school-list">
           <option v-for="school in schools" :key="school" :value="school.name">
@@ -37,7 +37,7 @@
         </div>
         <input
           type="password"
-          placeholder="Mot de passe"
+          placeholder="Password"
           v-model="user.password"
           autocomplete="current-password"
           id="password-input-0"
@@ -63,7 +63,7 @@
         </div>
         <input
           type="password"
-          placeholder="Confirmez votre mot de passe"
+          placeholder="Confirm your password"
           v-model="confirmPassword"
           autocomplete="current-password"
           id="password-input-1"
@@ -84,7 +84,7 @@
         </div>
       </div>
       <router-link :to="loginRoute" class="register"
-        >Déjà un compte ? Connectez-vous</router-link
+        >Have an account? Login</router-link
       >
       <div style="padding-top: 5vh"></div>
       <div class="login-button" v-on:click="postSignUp">S'inscrire</div>
@@ -144,19 +144,17 @@ export default {
       let school = this.schools.find((e) => e.name === this.selectedSchool);
       console.log(school);
       if (school === null) {
-        window.alert("Veuillez renseigner une école");
+        window.alert("Please give a school before continuing");
         return;
       }
       if (this.user.password !== this.confirmPassword) {
-        window.alert(
-          "Les mots de passe sont différents, veuillez révérifier leur saisie"
-        );
+        window.alert("Passwords mismatch, please check them before continuing");
         return;
       }
       this.$store.dispatch("auth/register", this.user).then(
         (data) => {
           window.alert(
-            "Compte créé ! Connectez-vous à présent avec les identifiants créés."
+            "Account created! Please go ahead and login with your new credentials"
           );
           this.message = data.message;
           this.successful = true;
@@ -167,17 +165,14 @@ export default {
           this.errorMessage = error.response.data.message || error.toString();
           this.statusCode = error.response.status || 400;
           if (this.statusCode === 400) {
-            window.alert(
-              "Nom d'utilisateur déjà utilisé ! Merci de réessayer avec un autre pseudo."
-            );
+            window.alert("Username already taken! Please choose another one.");
           } else {
-            window.alert("Erreur interne, merci de réessayer.");
+            window.alert("Internal issue, please try again.");
           }
           this.successful = false;
           this.loading = false;
         }
       );
-      //TODO: authentication
     },
   },
 };

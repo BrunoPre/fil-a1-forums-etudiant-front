@@ -1,15 +1,15 @@
 <template>
   <div class="login-parent-container">
     <div class="login-child-container">
-      <h1>Bienvenue !</h1>
-      <h2>Renseignez vos identifiants</h2>
+      <h1>Welcome!</h1>
+      <h2>Enter your credentials</h2>
       <div class="form-container">
         <div class="icon">
           <img :src="logInIconPath" />
         </div>
         <input
           type="text"
-          placeholder="Nom d'utilisateur"
+          placeholder="Username"
           v-model="user.username"
           required
         />
@@ -20,7 +20,7 @@
         </div>
         <input
           type="password"
-          placeholder="Mot de passe"
+          placeholder="Password"
           v-model="user.password"
           autocomplete="current-password"
           id="password-input"
@@ -40,11 +40,9 @@
           />
         </div>
       </div>
-      <router-link :to="registerRoute" class="register"
-        >Créer un compte</router-link
-      >
+      <router-link :to="registerRoute" class="register">Sign up</router-link>
       <div style="padding-top: 5vh"></div>
-      <div class="login-button" v-on:click="handleLogin">Se connecter</div>
+      <div class="login-button" v-on:click="handleLogin">Log in</div>
     </div>
   </div>
 </template>
@@ -86,9 +84,9 @@ export default {
           this.loading = false;
           this.errorMessage = error.response.data.message || error.toString();
           if (this.errorMessage === "Invalid credentials") {
-            window.alert("Mot de passe incorrect !");
+            window.alert("Invalid password");
           } else {
-            window.alert("Utilisateur inconnu !");
+            window.alert("Unknown username");
           }
         }
       );

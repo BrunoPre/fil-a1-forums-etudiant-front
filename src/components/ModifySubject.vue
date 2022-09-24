@@ -1,15 +1,16 @@
+<!-- mock page -->
 <template>
   <div class="path">
-    <p>Ecoles / IMT Atlantique</p>
+    <p>Schools / IMT Atlantique</p>
   </div>
-  <h1>Modifier un sujet</h1>
+  <h1>Edit a topic</h1>
   <div class="modify-subject-container">
     <div class="title">
-      <label for="subject-title">Titre du sujet</label>
+      <label for="subject-title">Subject title</label>
       <input id="subject-title" type="text" v-model="title" />
     </div>
     <div class="description">
-      <label for="subject-title">Description du sujet</label>
+      <label for="subject-title">Description</label>
       <trumbowyg
         v-model="description"
         :config="config"
@@ -18,8 +19,8 @@
       ></trumbowyg>
     </div>
     <div class="buttons">
-      <button class="save-modifications" @click="save">Enregistrer</button>
-      <button class="cancel-modifications">Annuler</button>
+      <button class="save-modifications" @click="save">Update</button>
+      <button class="cancel-modifications">Cancel</button>
     </div>
   </div>
 </template>
@@ -55,16 +56,13 @@ export default {
   },
   methods: {
     async save() {
-      console.log("old description = ", this.description);
-
       await GroupService.updateGroup(
         this.$route.params.id1,
         this.$route.params.id2,
         this.title,
         this.description
       );
-      console.log("new description = ", this.description);
-      window.alert("Sujet mis à jour !");
+      window.alert("Subject updated!");
       history.back();
     },
     async setAttrs() {

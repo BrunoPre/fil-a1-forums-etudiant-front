@@ -1,26 +1,23 @@
 [
   {
-    "index" : 0,
     "buttonName": "question",
-    "label" : "Mes questions",
+    "label" : "My questions",
     "iconPath" : "questionMarkIcon.svg",
     "iconBoxIcon" : "bx-question-mark",
-    "route" : "/mes-questions"
+    "route" : "/my-questions"
   },
   {
-    "index" : 1,
     "buttonName": "reply",
-    "label" : "Mes réponses",
+    "label" : "My answers",
     "iconPath" : "replyIcon.svg",
     "iconBoxIcon" : "bx-reply",
-    "route" : "/mes-reponses"
+    "route" : "/my-answers"
   },
   {
-    "index" : 2,
     "buttonName": "bookmarks",
-    "label" : "Suivis",
+    "label" : "Bookmarks",
     "iconPath" : "bookmarkIcon.svg",
     "iconBoxIcon" : "bx-bookmarks",
-    "route" : "/suivis"
+    "route" : "/bookmarks"
   }
 ]

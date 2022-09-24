@@ -1,15 +1,15 @@
 <template>
   <div class="path">
-    <p>Ecoles</p>
+    <p>Schools</p>
   </div>
-  <h1>Créer une école</h1>
+  <h1>Add a school</h1>
   <div class="create-school-container">
     <div class="title">
-      <label for="school-title">Nom de l'école</label>
+      <label for="school-title">School name</label>
       <input id="school-title" type="text" v-model="title" />
     </div>
     <div class="description">
-      <label for="school-title">Description de l'école</label>
+      <label for="school-title">School description</label>
       <trumbowyg
         v-model="description"
         :config="config"
@@ -18,8 +18,8 @@
       ></trumbowyg>
     </div>
     <div class="buttons">
-      <button class="save-modifications" @click="save">Enregistrer</button>
-      <button class="cancel-modifications">Annuler</button>
+      <button class="save-modifications" @click="save">Save</button>
+      <button class="cancel-modifications">Cancel</button>
     </div>
   </div>
 </template>
@@ -55,7 +55,7 @@ export default {
   methods: {
     save() {
       console.log(this.description);
-      window.alert("Ecole créée !");
+      window.alert("School successfully added!");
     },
   },
 };

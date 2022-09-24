@@ -31,11 +31,11 @@
       </div>
       <div class="question-categories">
         <div
-          class="categorie"
-          v-for="categorie in question.categories"
-          :key="categorie"
+          class="category"
+          v-for="category in question.categories"
+          :key="category"
         >
-          {{ categorie }}
+          {{ category }}
         </div>
       </div>
       <div v-if="showQuestion">
@@ -233,7 +233,7 @@ h3 {
   margin-top: 0.3vh;
 }
 
-.categorie {
+.category {
   display: inline-block;
   font-size: 0.8rem;
   background-color: white;

@@ -1,7 +1,7 @@
 <template>
-  Login success!
+  <h1>Login success!</h1>
   <br />
-  Your id is : {{ currentUser }}
+  Your id is: {{ currentUser }}
 </template>
 
 <script>

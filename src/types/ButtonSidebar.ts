@@ -1,5 +1,4 @@
 export interface ButtonSidebar {
-  index: number;
   buttonName: string;
   label: string;
   iconPath: string;

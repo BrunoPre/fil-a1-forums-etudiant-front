@@ -1,8 +1,8 @@
 <template>
   <h1>Welcome to Redd'IMT!</h1>
-  <h2>Accédez directement aux écoles ci-dessous</h2>
+  <h2>Reach out to one of the schools down below</h2>
   <div v-for="school in schools" :key="school.id" class="school">
-    <router-link :to="'/ecole/' + school.id">
+    <router-link :to="'/school/' + school.id">
       <div class="school-link-container">
         <h3>
           {{ school.libelle }}
@@ -30,7 +30,7 @@ export default {
         })
         .catch((err) => {
           console.log(err);
-          window.alert("Erreur : les écoles n'ont pas pu être chargées");
+          window.alert("ERROR : schools couldn't be loaded");
           history.back();
         });
     },

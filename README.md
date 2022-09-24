@@ -1,23 +1,31 @@
 # Redd'imt
 
-Partie _front_ du projet en Vue.js (TypeScript)
+Front-end part of *Redd'IMT* project in Vue (TypeScript) by [@TheElysium](https://github.com/TheElysium) and [@BrunoPre](https://github.com/BrunoPre)
 
-## Setup
+Back-end part can be found here: [Back-end repo](https://github.com/PeP-dev/fil-a1-forums-etudiant) by [@PeP-dev](https://github.com/PeP-dev) and [@Jfouille](https://github.com/Jfouille)
+
+## Setup (frontend)
+
+### Back-end configuration
+1. Clone back-end repo
+2. Load the necessary dependencies from the `pom.xml` file
+3. Enable containerized PostgreSQL database by running `docker-compose up` on `src/main/docker/docker-compose.yml`
+4. Run main class `src/main/java/org/filmt/projetagile/ProjetAgileApplication.java`
 
 ### Prettify `git log`
 ```
 git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 ```
-Ajout d'un alias `git lg` (l'argument `--global` le rend global à tous vos repos git locaux)
+Add `git lg` alias (`--global` argument makes it global to all your local repos)
 ```
 git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 ```
-Vue des différences
+View differences
 ```
 git lg -p
 ```
 
-### Installer les packages pré-requis
+### Install pre-requisite packages
 ```
 npm install
 ```
