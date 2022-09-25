@@ -1,6 +1,7 @@
 import { Commit } from "vuex";
 import AuthService from "@/services/auth.service";
 import store from "@/store";
+import { IUser } from "@/types/IUser";
 
 const user = JSON.parse(localStorage.getItem("user") || "{}");
 
@@ -28,11 +29,15 @@ const actions = {
     );
   },
 
-  async register({ commit }: { commit: Commit }, user: any) {
+  async register({ commit }: { commit: Commit }, user: IUser): Promise<number> {
     return AuthService.register(user).then(
-      (response) => {
-        commit("registerSuccess");
-        return Promise.resolve(response.data);
+      (status_code) => {
+        if (status_code >= 200 || status_code < 300) {
+          commit("registerSuccess");
+          return Promise.resolve(status_code);
+        }
+        commit("registerFailure");
+        return Promise.reject(status_code);
       },
       (error) => {
         commit("registerFailure");

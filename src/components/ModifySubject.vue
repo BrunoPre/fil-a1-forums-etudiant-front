@@ -76,7 +76,7 @@ export default {
     try {
       await this.setAttrs();
     } catch {
-      await this.$router.push(this.$route.fullPath.split("/")[0] + "/error");
+      await this.$router.push("/error");
     }
   },
 };

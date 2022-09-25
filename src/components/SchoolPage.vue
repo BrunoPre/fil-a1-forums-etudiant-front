@@ -174,7 +174,7 @@ export default {
       await this.setGroups(this.$route.params.id);
       this.filteredQuestions = [...this.questions];
     } catch {
-      await this.$router.push(this.$route.fullPath.split("/")[0] + "/error");
+      await this.$router.push("/error");
     }
   },
 };

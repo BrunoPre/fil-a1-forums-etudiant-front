@@ -47,23 +47,30 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+import store from "@/store";
+import { User } from "@/types/User";
+
+export default defineComponent({
   name: "LoginPage",
   data() {
     return {
-      user: { username: "", password: "" },
+      user: new User(),
       logInIconPath: require("./../assets/login/profilePicLoginIcon.svg"),
       passwordIconPath: require("./../assets/login/passwordIcon.svg"),
       revealPasswordIconPath: require("../assets/login/revealPasswordIcon.svg"),
       hidePasswordIconPath: require("../assets/login/undisclosePasswordIcon.svg"),
       registerRoute: "/register",
       hidePassword: true,
+      errorMessage: "",
     };
   },
   methods: {
     changePasswordDisclosureState() {
-      var x = document.getElementById("password-input");
+      let x: HTMLInputElement = document.getElementById(
+        "password-input"
+      ) as HTMLInputElement;
       if (x.type === "password") {
         this.hidePassword = false;
         x.type = "text";
@@ -73,15 +80,12 @@ export default {
       }
     },
     async handleLogin() {
-      this.loading = true;
-      console.log("user = ", this.user);
-      this.$store.dispatch("auth/login", this.user).then(
+      store.dispatch("auth/login", this.user).then(
         () => {
-          this.$router.push("/login-success"); // TODO: "/profile"
+          this.$router.push("/login-success");
         },
         (error) => {
           console.log(error);
-          this.loading = false;
           this.errorMessage = error.response.data.message || error.toString();
           if (this.errorMessage === "Invalid credentials") {
             window.alert("Invalid password");
@@ -92,7 +96,7 @@ export default {
       );
     },
   },
-};
+});
 </script>
 
 <style>

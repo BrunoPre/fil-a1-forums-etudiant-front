@@ -44,7 +44,7 @@
         <p v-if="moreCategories === false" @click="moreCategories = true">
           Show more categories ↓
         </p>
-        <p v-else @click="moreCategories = false">Montrer - de catégories ↑</p>
+        <p v-else @click="moreCategories = false">Show less categories ↑</p>
       </div>
     </div>
     <button @click="(event) => submitQuestion(event)" class="button-submit">
@@ -53,31 +53,20 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue";
 import postService from "@/services/post.service";
 import { mapGetters } from "vuex";
 import Utils from "@/utils/Utils";
+import { IPost } from "@/types/IPost";
+import { ICategory } from "@/types/ICategory";
+import { PostFetched } from "@/types/PostFetched";
 
 export default defineComponent({
-  name: "ReplyToQuestionInput",
+  name: "CreateQuestion",
   props: {
-    questionProp: {
-      title: String,
-      description: String,
-      user: String,
-      date: String,
-      voteCount: Number,
-      bestAnswer: {
-        content: String,
-        user: String,
-        date: String,
-        voteCount: Number,
-      },
-    },
-    categories: Array,
-    initSelectedCategory: Object, // ICategory
-    groupId: String,
+    categories: { type: Array as () => Array<ICategory>, required: true },
+    initSelectedCategory: { type: Object as () => ICategory, required: true },
   },
   computed: {
     ...mapGetters("auth", {
@@ -86,54 +75,62 @@ export default defineComponent({
   },
   data() {
     return {
-      question: {
-        title: "",
-        description: "",
-        user: "User Name",
-        date: Utils.convertTimestampToHumanReadable(new Date().getDate()),
-        voteCount: 0,
-        bestAnswer: null,
-        categories: [],
-      },
+      question: this.initQuestion(),
       placeholder_write_msg_here: "Write your question here",
       placeholder_write_description: "Write a description (optional)",
       submit_label: "Submit",
-      selectedCategories: [],
+      selectedCategories: new Array<ICategory>(),
       moreCategories: false,
     };
   },
   methods: {
-    async submitQuestion(event) {
+    initQuestion() {
+      return {
+        title: "",
+        description: "",
+        user: "",
+        date: Utils.convertTimestampToHumanReadable(new Date().getDate()),
+        voteCount: 0,
+        bestAnswer: null,
+      };
+    },
+    async submitQuestion(event: any) {
       // Submits a message
       if (event) {
-        // TODO: post message
         // TODO: Do dynamic or at least a better validation
         if (this.question.title === "") {
+          window.alert("Please write a question before continuing");
           return;
         }
-        this.question.categories = [...this.selectedCategories];
         let params = this.$route.params;
-        let post = {
-          groupId: params.id2,
+        const _groupId: string = params.id2 as string;
+        let post: IPost = {
+          groupId: _groupId,
           title: this.question.title,
           content: this.question.description,
-          categoryId: this.selectedCategories[0].id,
+          categoryId: this.selectedCategories[0].id, // back-end does not handle multiple categories
           userName: this.getState.user.username,
         };
-        await postService.postPost(post);
-        this.$emit("newQuestion", this.question);
-        this.question = "";
-        this.selectedCategories = [];
-        this.moreCategories = false;
+        await postService
+          .postPost(post)
+          .then((res: PostFetched) => {
+            this.$emit("newQuestion", this.question); // update front-end and destroy this component
+            window.alert("Your question has successfully been submitted");
+          })
+          .catch((err) => {
+            if (err.response.status === 500)
+              window.alert(
+                "ERROR: an internal server error occurred and your message hasn't been posted"
+              );
+          });
       } else {
-        // TODO: exception handling
         window.alert("ERROR: message couldn't be posted");
       }
     },
-    updateSelectedCategories(category) {
+    updateSelectedCategories(category: ICategory) {
       if (this.selectedCategories.includes(category)) {
         this.selectedCategories = this.selectedCategories.filter(
-          (c) => c !== category
+          (c: ICategory) => c !== category
         );
       } else {
         this.selectedCategories.push(category);

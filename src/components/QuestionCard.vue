@@ -24,8 +24,8 @@
           />
         </div>
         <p>
-          Question posée par
-          <span class="user-span">{{ question.userName }}</span> le
+          Question asked by
+          <span class="user-span">{{ question.userName }}</span> on
           <span class="date-span">{{ question.createdAt }}</span>
         </p>
       </div>
@@ -80,21 +80,16 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Utils from "@/utils/Utils";
+import { IPostFetched } from "@/types/IPostFetched";
+import { defineComponent } from "vue";
+import { ICategory } from "@/types/ICategory";
 
-export default {
+export default defineComponent({
   name: "QuestionCard",
   props: {
-    questionProp: {
-      id: String,
-      groupId: String,
-      title: String,
-      content: String,
-      categoryId: String,
-      userName: String,
-      createdAt: String,
-    },
+    questionProp: { type: Object as () => IPostFetched },
     categoryName: String,
   },
   data() {
@@ -106,20 +101,19 @@ export default {
         date: String,
         voteCount: Number,
       },
-      categories: Array,
+      categories: new Array<ICategory>(),
       showQuestion: false,
     };
   },
   mounted() {
+    if (!this.question) {
+      return;
+    }
     this.question.createdAt = Utils.convertTimestampToHumanReadable(
       this.question.createdAt
     );
-    //real case (mocks have multiple cats)
-    if (this.categories.length === 1) {
-      this.categories[0] = this.categoryName;
-    }
   },
-};
+});
 </script>
 
 <style scoped>

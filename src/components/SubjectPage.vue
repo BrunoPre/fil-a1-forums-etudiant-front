@@ -40,7 +40,7 @@
               :key="category"
               @click="updateCategory(category)"
               :class="
-                selectedCategory === category
+                selectedCategory.isEqual(category)
                   ? 'selected-category'
                   : 'category-button'
               "
@@ -54,7 +54,7 @@
               :key="category"
               @click="updateCategory(category)"
               :class="
-                selectedCategory === category
+                selectedCategory.isEqual(category)
                   ? 'selected-category'
                   : 'category-button'
               "
@@ -101,163 +101,94 @@
   </div>
 </template>
 
-<script>
-import QuestionCard from "@/components/QuestionCard";
-import CreateQuestion from "@/components/CreateQuestion";
+<script lang="ts">
+import QuestionCard from "@/components/QuestionCard.vue";
+import CreateQuestion from "@/components/CreateQuestion.vue";
 import GroupService from "@/services/group.service";
 import PostService from "@/services/post.service";
+import { defineComponent } from "vue";
+import { MockData } from "@/assets/mockData/MockData";
+import { ICategory } from "@/types/ICategory";
+import { Category } from "@/types/Category";
+import { IPostFetched } from "@/types/IPostFetched";
+import { Group } from "@/types/Group";
 
-export default {
+export default defineComponent({
   name: "SubjectPage",
   components: { QuestionCard, CreateQuestion },
 
   data() {
     return {
-      groupe: [],
+      groupe: new Group(),
       subject: "Formations",
       isAddQuestionButtonClicked: false,
-      categories: [
-        "Administration",
-        "Mathématiques",
-        "Entreprise",
-        "Législation",
-        "FIL",
-        "ITII",
-        "Projet Agile",
-        "Bipbapbop",
-      ],
-      selectedCategory: null,
+      categories: MockData.categories,
+      selectedCategory: new Category(),
       moreCategories: false,
-      description: `
-        <h2>Est dolorem</h2>
-        <p>
-          Ut omnis nostrum sit nihil Quis vel blanditiis dolor rem libero galisum. Aut veniam aliquid aut porro nemo
-          et quibusdam atque? Aut ipsa rerum et adipisci aperiam aut impedit veritatis! Quo molestiae officiis 33 nulla
-          et repellat libero nam accusamus voluptatem aut aspernatur possimus 33 nobis sunt. Est dolorem dolorem et
-          excepturi explicabo Ea animi ut quaerat sapiente.
-        </p>
-        <br>
-        <h2>Quo dolore</h2>
-        <p>
-          Ut omnis nostrum sit nihil Quis vel blanditiis dolor rem libero galisum. Aut veniam aliquid aut porro nemo
-          et quibusdam atque? Aut ipsa rerum et adipisci aperiam aut impedit veritatis! Quo molestiae officiis 33 nulla
-          et repellat libero nam accusamus voluptatem aut aspernatur possimus 33 nobis sunt. Est dolorem dolorem et
-          excepturi explicabo Ea animi ut quaerat sapiente.
-        </p>
-        <br>
-        <h2>Quo molestiae</h2>
-        <p>
-          Ut omnis nostrum sit nihil Quis vel blanditiis dolor rem libero galisum. Aut veniam aliquid aut porro nemo
-          et quibusdam atque? Aut ipsa rerum et adipisci aperiam aut impedit veritatis! Quo molestiae officiis 33 nulla
-          et repellat libero nam accusamus voluptatem aut aspernatur possimus 33 nobis sunt. Est dolorem dolorem et
-          excepturi explicabo Ea animi ut quaerat sapiente.
-        </p>
-      `,
-      filteredQuestions: [],
-      questions: [
-        {
-          id: "0",
-          groupId: "",
-          categoryId: "",
-          title: "Vestibulum ac condimentum metus ?",
-          content: ` Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec lacus
-          nulla. Vivamus tempus diam et ligula finibus, vitae feugiat ipsum commodo.
-          Suspendisse potenti. Duis ac velit at libero efficitur ullamcorper ac
-          efficitur risus. Donec cursus pharetra vulputate. Donec eu imperdiet nibh.
-          Aliquam vitae rutrum mi, a fermentum elit.`,
-          userName: "User Name",
-          createdAt: "24 Mai 2022",
-          bestAnswer: null,
-          categories: ["Administration", "Législation"],
-        },
-        {
-          groupId: "",
-          id: "1",
-          title: "Vestibulum ac condimentum metus ?",
-          description: ` Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec lacus
-          nulla. Vivamus tempus diam et ligula finibus, vitae feugiat ipsum commodo.
-          Suspendisse potenti. Duis ac velit at libero efficitur ullamcorper ac
-          efficitur risus. Donec cursus pharetra vulputate. Donec eu imperdiet nibh.
-          Aliquam vitae rutrum mi, a fermentum elit.`,
-          userName: "User Name",
-          date: "24 Mai 2022",
-          bestAnswer: {
-            content: `
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec lacus nulla. Vivamus tempus diam et
-            ligula finibus, vitae feugiat ipsum commodo. Suspendisse potenti. Duis ac velit at libero efficitur
-            ullamcorper ac efficitur risus. Donec cursus pharetra vulputate. Donec eu imperdiet nibh. Aliquam vitae
-            rutrum mi, a fermentum elit.`,
-            user: "Bip Bap",
-            date: "24 Mai 2022",
-            voteCount: 8,
-          },
-          categories: ["Mathématiques"],
-        },
-      ],
+      description: MockData.description,
+      filteredQuestions: new Array<IPostFetched>(),
+      questions: new Array<IPostFetched>(),
     };
   },
   methods: {
     clickAddQuestion() {
       this.isAddQuestionButtonClicked = !this.isAddQuestionButtonClicked;
     },
-    newQuestion(question) {
+    newQuestion(question: any) {
       this.questions.push(question);
-      console.log(this.questions);
       this.isAddQuestionButtonClicked = false;
       this.filterByCategory();
     },
-    updateCategory(category) {
+    updateCategory(category: Category) {
       if (this.isCategorySelected(category)) {
-        this.selectedCategory = null;
+        this.selectedCategory = new Category();
       } else {
         this.selectedCategory = category;
       }
-      console.log("Cat updated to : " + this.selectedCategory);
       this.filterByCategory();
     },
     async filterByCategory() {
-      if (this.selectedCategory === null) {
+      if (this.selectedCategory.isEmpty()) {
         this.filteredQuestions = [...this.questions];
         return;
       }
       let groupId = this.$route.params.id2;
-      console.log("groupeid=", groupId, " catId=", this.selectedCategory.id);
       await PostService.getQuestionsByCategoryId(
         groupId,
         this.selectedCategory.id
       ).then((questions) => (this.filteredQuestions = questions));
     },
-    isCategorySelected(category) {
-      return this.selectedCategory === category;
+    isCategorySelected(category: Category) {
+      return this.selectedCategory.isEqual(category);
     },
     deleteSubject() {
       // TODO DELETE request
       window.alert("Subject successfully deleted");
     },
     async setGroup() {
-      let params = this.$route.params;
-      let groupId = params.id2;
-      await GroupService.getGroupById(groupId).then((group) => {
+      let groupId: string = this.$route.params.id2 as string;
+      await GroupService.getGroupById(groupId).then((group: Group) => {
         this.groupe = group;
       });
     },
     initSelectedCategory() {
-      if (this.groupe.length === 0) {
+      if (this.groupe.isEmpty()) {
         return;
       }
-      this.selectedCategory = this.groupe.categories[0];
+      const _cat: Category = this.groupe.categories[0];
+      this.selectedCategory = new Category(
+        _cat.id,
+        _cat.libelle,
+        _cat.description
+      );
     },
   },
   async mounted() {
-    try {
-      await this.setGroup();
-      this.initSelectedCategory();
-      await this.filterByCategory();
-    } catch {
-      await this.$router.push(this.$route.fullPath.split("/")[0] + "/error");
-    }
+    await this.setGroup();
+    this.initSelectedCategory();
+    await this.filterByCategory();
   },
-};
+});
 </script>
 
 <style scoped>
