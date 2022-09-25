@@ -4,6 +4,7 @@ Front-end part of *Redd'IMT* project in Vue (TypeScript) by [@TheElysium](https:
 
 Back-end part can be found here: [Back-end repo](https://github.com/PeP-dev/fil-a1-forums-etudiant) by [@PeP-dev](https://github.com/PeP-dev) and [@Jfouille](https://github.com/Jfouille)
 
+*Note: features are missing (such as creating a group), but the essential is here to prove the feasibility* 
 ## Setup (frontend)
 
 ### Back-end configuration
