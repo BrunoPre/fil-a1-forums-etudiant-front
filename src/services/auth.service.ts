@@ -1,4 +1,5 @@
 import axios from "axios";
+import { IUser } from "@/types/IUser";
 
 const API_PORT = "8080";
 const BASE_URL = "http://localhost:" + API_PORT + "/api/auth";
@@ -24,15 +25,24 @@ class AuthService {
       });
   }
 
-  async register(user: any) {
-    return axios.post(
-      BASE_URL + REGISTER_ROUTE,
-      {
-        username: user.username,
-        password: user.password,
-      },
-      {}
-    );
+  async register(user: IUser): Promise<number> {
+    if (user.username === "" || user.password === "") {
+      return Promise.reject("Username or password missing");
+    }
+    return axios
+      .post(
+        BASE_URL + REGISTER_ROUTE,
+        {
+          username: user.username,
+          password: user.password,
+        },
+        {}
+      )
+      .then((res) => Promise.resolve(res.status))
+      .catch((err) => {
+        console.log(err);
+        return Promise.reject(err);
+      });
   }
 
   logout() {

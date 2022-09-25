@@ -84,22 +84,26 @@
         </div>
       </div>
       <router-link :to="loginRoute" class="register"
-        >Have an account? Login</router-link
+        >Have an account? Log in</router-link
       >
       <div style="padding-top: 5vh"></div>
-      <div class="login-button" v-on:click="postSignUp">S'inscrire</div>
+      <div class="login-button" v-on:click="postSignUp">Sign up</div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+import store from "@/store";
+import { User } from "@/types/User";
+
+export default defineComponent({
   name: "LoginPage",
   data() {
     return {
-      user: { username: "", password: "" },
-      selectedSchool: null, // TODO: POST school to /api/register aswell
-      confirmPassword: null,
+      user: new User(),
+      selectedSchool: "", // TODO: POST school to /api/register aswell
+      confirmPassword: "",
       logInIconPath: require("./../assets/login/profilePicLoginIcon.svg"),
       schoolIconPath: require("./../assets/school.svg"),
       passwordIconPath: require("./../assets/login/passwordIcon.svg"),
@@ -128,9 +132,10 @@ export default {
     };
   },
   methods: {
-    changePasswordDisclosureState(i) {
-      console.log("password-input-" + i.toString());
-      let x = document.getElementById("password-input-" + i.toString());
+    changePasswordDisclosureState(i: number) {
+      let x: HTMLInputElement = document.getElementById(
+        "password-input-" + i.toString()
+      ) as HTMLInputElement;
       if (x.type === "password") {
         this.hidePassword[i] = false;
         x.type = "text";
@@ -140,10 +145,24 @@ export default {
       }
     },
     postSignUp() {
+      if (this.user.username === "") {
+        window.alert("Please provide a username");
+        return;
+      }
+      if (this.user.password === "") {
+        window.alert("Please provide a password");
+        return;
+      }
+      if (this.confirmPassword === "") {
+        window.alert("Please confirm your password");
+        return;
+      }
       console.log(this.selectedSchool);
-      let school = this.schools.find((e) => e.name === this.selectedSchool);
+      let school: { id: number; name: string } | undefined = this.schools.find(
+        (e) => e.name === this.selectedSchool
+      );
       console.log(school);
-      if (school === null) {
+      if (school === undefined) {
         window.alert("Please give a school before continuing");
         return;
       }
@@ -151,31 +170,27 @@ export default {
         window.alert("Passwords mismatch, please check them before continuing");
         return;
       }
-      this.$store.dispatch("auth/register", this.user).then(
-        (data) => {
+      store.dispatch("auth/register", this.user).then(
+        (status_code: number) => {
           window.alert(
             "Account created! Please go ahead and login with your new credentials"
           );
-          this.message = data.message;
-          this.successful = true;
-          this.loading = false;
+          this.$router.push("/login");
         },
-        (error) => {
+        (error: number | any) => {
           console.log(error);
-          this.errorMessage = error.response.data.message || error.toString();
-          this.statusCode = error.response.status || 400;
-          if (this.statusCode === 400) {
+          const statusCode: number | any =
+            error.response.status || error || 400;
+          if (statusCode === 400) {
             window.alert("Username already taken! Please choose another one.");
           } else {
             window.alert("Internal issue, please try again.");
           }
-          this.successful = false;
-          this.loading = false;
         }
       );
     },
   },
-};
+});
 </script>
 
 <style>

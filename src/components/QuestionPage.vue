@@ -169,7 +169,7 @@ export default {
       await this.setAnswersByPostId(this.$route.params.id);
       await this.setHeaderAttrs();
     } catch {
-      await this.$router.push(this.$route.fullPath.split("/")[0] + "/error");
+      await this.$router.push("/error");
     }
   },
 };

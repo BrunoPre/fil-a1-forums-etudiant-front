@@ -12,20 +12,22 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import SchoolService from "@/services/school.service";
+import { defineComponent } from "vue";
+import { ISchool } from "@/types/ISchool";
 
-export default {
+export default defineComponent({
   name: "HomePage",
   data() {
     return {
-      schools: [],
+      schools: new Array<ISchool>(),
     };
   },
   methods: {
     async setSchools() {
       await SchoolService.getAllSchools()
-        .then((_schools) => {
+        .then((_schools: ISchool[]) => {
           this.schools = _schools;
         })
         .catch((err) => {
@@ -38,7 +40,7 @@ export default {
   async mounted() {
     await this.setSchools();
   },
-};
+});
 </script>
 
 <style scoped>

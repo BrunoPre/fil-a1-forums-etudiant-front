@@ -6,4 +6,6 @@ export interface IGroup {
   label: string;
   description: string;
   categories: ICategory[];
+
+  isEmpty(): boolean;
 }

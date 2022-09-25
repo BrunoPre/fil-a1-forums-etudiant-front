@@ -2,6 +2,6 @@ export interface IPost {
   groupId: string;
   title: string;
   content: string;
-  categoryId: bigint;
+  categoryId: string;
   userName: string;
 }

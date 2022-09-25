@@ -19,6 +19,7 @@
 import { defineComponent } from "vue";
 import Sidebar from "@/components/Sidebar.vue";
 import { mapGetters } from "vuex";
+import store from "@/store";
 
 export default defineComponent({
   name: "App",
@@ -28,7 +29,7 @@ export default defineComponent({
       getState: "getState",
     }),
     currentUser() {
-      return this.$store.state.auth.user;
+      return store.state.auth.user;
     },
   },
 });
